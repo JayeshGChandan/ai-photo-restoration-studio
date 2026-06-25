@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Model weights (large binaries — download separately, see README)
+weights/
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+
+# Local tooling / editor
+.claude/
+.vscode/
+.idea/
+.DS_Store
+
+# Runtime artifacts
+*.log
+outputs/
+tmp/
+gradio_cached_examples/
+flagged/

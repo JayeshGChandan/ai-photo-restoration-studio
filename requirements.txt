@@ -1,0 +1,39 @@
+# AI Photo Restoration Studio
+# Verified installable on Python 3.11 (Apple Silicon / macOS).
+# Create the env with:  python3.11 -m venv venv && ./venv/bin/pip install -r requirements.txt
+#
+# Model weights are NOT pip-installed. They auto-download on first use:
+#   - LaMa big-lama.pt            -> ~/.cache/torch/hub/checkpoints/
+#   - facexlib detection/parsing  -> facexlib package weights dir
+# and these go in ./weights/ (download once, see README):
+#   - RealESRGAN_x4plus.pth, codeformer.pth
+
+# Core ML
+torch==2.12.1
+torchvision==0.27.1
+
+# Restoration backends
+simple-lama-inpainting==0.1.2   # LaMa (Fourier-conv) inpainting -- localized repair
+spandrel==0.4.2                 # basicsr-free loader for Real-ESRGAN
+spandrel_extra_arches==0.2.0    # adds CodeFormer (face restoration) to spandrel
+facexlib==0.3.0                 # face detection / alignment / parsing for face restore
+
+# Computer vision
+opencv-python==4.11.0.86
+numpy==1.26.4
+Pillow==9.5.0                    # pinned <10 by simple-lama-inpainting
+
+# Web interface
+gradio==6.19.0
+
+# --- No-reference IQA scorecard (MUSIQ / CLIP-IQA / NIQE) ---
+# pyiqa declares heavy training deps (transformers, datasets, tensorboard, ...)
+# and resolves numpy>=2 / pillow>=10, which would break the LaMa stack. Install
+# it WITHOUT deps and add only the lean runtime libraries it actually imports:
+#
+#   ./venv/bin/pip install --no-deps pyiqa==0.1.15.post2
+#   ./venv/bin/pip install timm==1.0.27 openai-clip==1.0.1 \
+#       ftfy==6.3.1 regex==2026.5.9 requests==2.34.2
+#
+# (NIQE needs only scipy, already present. MUSIQ/CLIP-IQA weights auto-download
+#  on first use.)
