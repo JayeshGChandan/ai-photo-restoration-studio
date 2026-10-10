@@ -34,11 +34,22 @@ _METRIC_SPECS = [
 ]
 
 # Full-reference metrics (need ground truth) used by the synthetic benchmark.
+# PSNR and SSIM are both computed on the luma channel of ITU-R BT.601 YCbCr
+# (Y in [16, 235]), the super-resolution convention (BasicSR / MATLAB
+# rgb2ycbcr); the "_y" keys make the colour space explicit.
 _FR_METRIC_SPECS = [
-    ("psnr",  "PSNR",  False, "dB vs ground truth (higher is better)"),
-    ("ssim",  "SSIM",  False, "Structural similarity, 1 = identical"),
-    ("lpips", "LPIPS", True,  "Perceptual distance (lower is better)"),
+    ("psnr_y", "PSNR-Y", False, "dB on BT.601 luma vs ground truth (higher is better)"),
+    ("ssim_y", "SSIM-Y", False, "Structural similarity on BT.601 luma, 1 = identical"),
+    ("lpips",  "LPIPS",  True,  "Perceptual distance (lower is better)"),
 ]
+
+# Result key -> (pyiqa metric name, options overriding pyiqa's defaults).
+# pyiqa's test_y_channel converts with color_space='yiq' unless told otherwise,
+# and its PSNR defaults to all RGB channels, so both options are set explicitly.
+_PYIQA_METRICS = {
+    "psnr_y": ("psnr", {"test_y_channel": True, "color_space": "ycbcr"}),
+    "ssim_y": ("ssim", {"test_y_channel": True, "color_space": "ycbcr"}),
+}
 
 # Exposed so the UI can label benchmark columns without importing pyiqa.
 FR_METRICS = [(k, label, lower) for k, label, lower, _ in _FR_METRIC_SPECS]
@@ -88,7 +99,8 @@ class IQAScorer:
             return None
         try:
             import pyiqa
-            metric = pyiqa.create_metric(name, device=self._device)
+            pyiqa_name, opts = _PYIQA_METRICS.get(name, (name, {}))
+            metric = pyiqa.create_metric(pyiqa_name, device=self._device, **opts)
             metric.eval()
             self._metrics[name] = metric
             return metric
@@ -152,7 +164,7 @@ class IQAScorer:
                         reference: Image.Image) -> Dict[str, Optional[float]]:
         """Full-reference scores for ``candidate`` vs a ground-truth ``reference``.
 
-        Returns a dict keyed by metric name (psnr/ssim/lpips). Used by the
+        Returns a dict keyed by metric name (psnr_y/ssim_y/lpips). Used by the
         synthetic benchmark, where a real ground truth exists.
         """
         ref = reference.convert("RGB")

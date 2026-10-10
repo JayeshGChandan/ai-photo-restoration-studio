@@ -183,9 +183,10 @@ def _render_fr_table(applied, baseline_scores, restored_scores) -> str:
             f'<td class="{a_cls}">{a:.3f}</td></tr>'
         )
     note = (
-        "Measured against the original (ground truth). Higher PSNR/SSIM and "
-        "lower LPIPS are better. GAN restorers optimise <b>perceptual</b> quality "
-        "(LPIPS) and often trade a little PSNR/SSIM for it &mdash; LPIPS is the "
+        "Measured against the original (ground truth). Higher PSNR-Y/SSIM-Y and "
+        "lower LPIPS are better; PSNR-Y and SSIM-Y use BT.601 luma. GAN restorers "
+        "optimise <b>perceptual</b> quality "
+        "(LPIPS) and often trade a little PSNR-Y/SSIM-Y for it &mdash; LPIPS is the "
         "metric that tracks how good the result looks to a person."
     )
     return f"""
@@ -433,7 +434,7 @@ with gr.Blocks(title="AI Photo Restoration Studio") as app:
             gr.Markdown(
                 "Upload a **clean** image. We apply known degradations, restore "
                 "the result, and measure how close it gets to the original with "
-                "full-reference metrics (PSNR / SSIM / LPIPS) -- something only "
+                "full-reference metrics (PSNR-Y / SSIM-Y / LPIPS) -- something only "
                 "possible when the ground truth is known."
             )
             with gr.Row(equal_height=False):
