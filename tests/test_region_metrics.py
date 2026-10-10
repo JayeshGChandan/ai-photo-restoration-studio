@@ -8,7 +8,8 @@ from PIL import Image
 
 import region_metrics
 from region_metrics import (
-    lpips_inside, lpips_outside, luma_bt601, psnr_y_region, region_diff_stats, splice,
+    lpips_inside, lpips_outside, luma_bt601, psnr_y_region, region_diff_stats, region_diff_tail,
+    splice,
 )
 
 
@@ -145,3 +146,51 @@ def test_lpips_ignores_changes_on_the_other_side():
     assert lpips_outside(inside_only, ref, m) == 0.0
     assert lpips_inside(inside_only, ref, m) > 0.0
     assert lpips_outside(outside_only, ref, m) > 0.0
+
+
+def test_diff_tail_exact():
+    x, ref = _pair()   # pixel (0,0): +3 R; pixel (1,1): -5 G, +1 B; 18 pixels unchanged
+    # 60 channel values: 57 zeros, then 1, 3, 5. The 99th percentile is the
+    # ceil(0.99 * 60) = 60th smallest value, 5.
+    assert region_diff_tail(x, ref, np.ones((4, 5), bool)) == {"pct_changed_gt1": 10.0,
+                                                                "p99_abs": 5}
+
+
+def test_diff_tail_ramp():
+    # 100 pixels with R differing by i (i = 0..99), G and B unchanged: 300 values,
+    # 201 zeros then 1..99 once each. ceil(0.99 * 300) = 297th smallest = 96.
+    ref = np.zeros((10, 10, 3), dtype=np.uint8)
+    x = ref.copy()
+    x[..., 0] = np.arange(100, dtype=np.uint8).reshape(10, 10)
+    assert region_diff_tail(x, ref, np.ones((10, 10), bool)) == {"pct_changed_gt1": 98.0,
+                                                                  "p99_abs": 96}
+
+
+def test_diff_tail_counts_only_changes_above_one_level():
+    ref = np.full((2, 3, 3), 50, dtype=np.uint8)
+    x = ref.copy()
+    x[0, 0] = [51, 49, 51]      # every channel off by exactly 1: not counted
+    x[0, 1] = [50, 52, 50]      # off by 2: counted
+    out = region_diff_tail(x, ref, np.ones((2, 3), bool))
+    assert out["pct_changed_gt1"] == 100 / 6
+    assert region_diff_stats(x, ref, np.ones((2, 3), bool))["pct_changed"] == 200 / 6
+
+
+@pytest.mark.parametrize("x_val,ref_val", [(255, 0), (0, 255)])
+def test_diff_tail_cannot_overflow(x_val, ref_val):
+    x = np.full((300, 300, 3), x_val, dtype=np.uint8)
+    ref = np.full((300, 300, 3), ref_val, dtype=np.uint8)
+    assert region_diff_tail(x, ref, np.ones((300, 300), bool)) == {"pct_changed_gt1": 100.0,
+                                                                    "p99_abs": 255}
+
+
+@pytest.mark.parametrize("seed", [0, 1, 2])
+def test_diff_tail_p99_matches_numpy_inverted_cdf(seed):
+    rng = np.random.default_rng(seed)
+    ref = rng.integers(0, 256, (123, 157, 3), dtype=np.uint8)
+    noise = np.rint(rng.laplace(0, 4, ref.shape)).astype(int)
+    x = np.clip(ref.astype(int) + noise, 0, 255).astype(np.uint8)
+    region = rng.random((123, 157)) > 0.3
+    abs_d = np.abs(x[region].astype(int) - ref[region].astype(int)).ravel()
+    expected = int(np.percentile(abs_d, 99, method="inverted_cdf"))
+    assert region_diff_tail(x, ref, region)["p99_abs"] == expected

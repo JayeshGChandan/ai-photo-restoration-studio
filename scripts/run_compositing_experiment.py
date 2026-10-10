@@ -5,19 +5,26 @@ For each clean image I (from the manifest) and target coverage, with damage
 mask M (synthetic_damage.synthesize_mask) and D = I with M overwritten by the
 seeded damage fill:
 
-  L      = LaMa(D, M) at the default 1536 px cap (raw output, CPU)
-  C_r    = composite(D, L, M, r) for feather radius r in {0, 3, 15} (same L)
-  N1     = L itself: the naive whole-image result at the 1536 px cap
-  N2     = raw LaMa output with max_dimension=512 (the old 512 px pipeline)
+  L         = LaMa(D, M) at the default 1536 px cap (raw output, CPU)
+  C_r       = composite(D, L, M, r), r in {0, 3, 15} (same L): the fixed
+              composite, whose feather lies wholly outside M
+  C_r_legacy = legacy_composite(D, L, M, r), r in {3, 15}: the pre-fix
+              composite, whose feather is centred on M's edge (C_0 is the
+              same in both versions, so it is run once)
+  N1        = L itself: the naive whole-image result at the 1536 px cap
+  N2        = raw LaMa output with max_dimension=512 (the old 512 px pipeline)
 
-Regions: M = the binary mask; U = pixels where the r=15 feathered alpha is
-exactly 0 (the common untouched region); H_r = pixels outside M where the
-r-feathered alpha is > 0 (the halo).
+Regions: M = the binary mask; U = pixels where the FIXED r=15 feathered alpha
+is exactly 0 (the common untouched region; asserted to be untouched by every
+legacy condition too); H_r = pixels outside M where the r-feathered alpha is
+> 0 (the halo), computed separately for the fixed and legacy feathers.
 
 raw.csv gets one row per condition per (image, coverage) pair with U
-difference stats (all conditions), H_r stats (C_3 and C_15; C_0's halo is
-checked to be empty), PSNR-Y inside M (all), LPIPS of the repair spliced into
-I and of everything outside M spliced into I (C_3, N1, N2), and runtimes.
+difference stats and their tail (% changed by more than 1 level, 99th
+percentile |diff|) for all conditions, H_r stats (C_3, C_15 and their legacy
+versions; C_0's halo is checked to be empty), the mean weight of D inside M
+(composites), PSNR-Y inside M (all), LPIPS of the repair spliced into I and of
+everything outside M spliced into I (C_3, C_3_legacy, N1, N2), and runtimes.
 
 The run is resumable (complete pairs already in raw.csv are skipped, each
 new pair is appended and fsynced), fails loudly on any missing / non-finite
@@ -45,40 +52,56 @@ import time
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO_ROOT)
+# legacy_compositing lives next to this script, deliberately off the app's path.
+sys.path.insert(0, os.path.join(REPO_ROOT, "scripts"))
 
 import numpy as np  # noqa: E402
 from PIL import Image  # noqa: E402
 
 from compositing import composite, feather_mask  # noqa: E402
+from legacy_compositing import legacy_composite, legacy_feather_mask  # noqa: E402
 from region_metrics import (  # noqa: E402
-    lpips_inside, lpips_outside, psnr_y_region, region_diff_stats,
+    lpips_inside, lpips_outside, psnr_y_region, region_diff_stats, region_diff_tail,
 )
 from synthetic_damage import (  # noqa: E402
     FILL_SIGMA, FILL_VALUE, MASK_PARAMS, apply_damage, damage_fill, synthesize_mask,
 )
 
-RADII = [0, 3, 15]
+# Composite conditions: name -> (feather version, radius). N1 / N2 are raw LaMa.
+COMPOSITES = {
+    "C_0": ("fixed", 0),
+    "C_3": ("fixed", 3),
+    "C_15": ("fixed", 15),
+    "C_3_legacy": ("legacy", 3),
+    "C_15_legacy": ("legacy", 15),
+}
+FEATHERS = {"fixed": (composite, feather_mask), "legacy": (legacy_composite, legacy_feather_mask)}
+CONDITIONS = list(COMPOSITES) + ["N1", "N2"]
 U_RADIUS = 15
-LPIPS_CONDITIONS = {"C_3", "N1", "N2"}
-CONDITIONS = [f"C_{r}" for r in RADII] + ["N1", "N2"]
+HALO_CONDITIONS = {"C_3", "C_15", "C_3_legacy", "C_15_legacy"}
+LPIPS_CONDITIONS = {"C_3", "C_3_legacy", "N1", "N2"}
 N2_MAX_DIMENSION = 512
 
 DIFF_KEYS = ["n_pixels", "pct_changed", "max_abs", "mean_abs", "mse"]
+U_KEYS = DIFF_KEYS + ["pct_changed_gt1", "p99_abs"]
 COLUMNS = (
     ["image", "split", "width", "height", "size_class", "image_index", "seed",
      "coverage_target", "coverage_actual", "mask_n_strokes", "mask_n_blobs",
-     "condition", "radius"]
-    + [f"u_{k}" for k in DIFF_KEYS]
+     "condition", "feather", "radius"]
+    + [f"u_{k}" for k in U_KEYS]
     + [f"h_{k}" for k in DIFF_KEYS]
-    + ["m_n_pixels", "m_psnr_y", "m_lpips", "off_lpips", "runtime_s", "pair_runtime_s"]
+    + ["m_n_pixels", "m_d_weight", "m_psnr_y", "m_lpips", "off_lpips",
+       "runtime_s", "pair_runtime_s"]
 )
 METRIC_COLUMNS = [c for c in COLUMNS if c.startswith(("u_", "h_", "m_", "off_"))]
 
 
 def applicable_columns(condition: str) -> set:
     """Metric columns that must hold a finite number for ``condition``."""
-    cols = {f"u_{k}" for k in DIFF_KEYS} | {"m_n_pixels", "m_psnr_y"}
-    if condition in ("C_3", "C_15"):
+    cols = {f"u_{k}" for k in U_KEYS} | {"m_n_pixels", "m_psnr_y"}
+    if condition in COMPOSITES:
+        cols |= {"m_d_weight"}
+    if condition in HALO_CONDITIONS:
         cols |= {f"h_{k}" for k in DIFF_KEYS}
     if condition == "C_0":
         cols |= {"h_n_pixels"}  # recorded as 0: a binary mask has no halo
@@ -163,6 +186,29 @@ def load_existing(raw_path: str, seed: int) -> set:
     return set(pairs)
 
 
+def preflight(todo, done, seed) -> None:
+    """Fail before any LaMa work if a pair to run would have an empty U or M.
+
+    Masks and the fixed r=15 feather depend only on the image size, so this
+    checks every pending pair in seconds, using the manifest's dimensions.
+    """
+    problems = []
+    for index, row, cov in todo:
+        if (row["split"], row["filename"], f"{cov:g}") in done:
+            continue
+        w, h = int(row["width"]), int(row["height"])
+        mask, _ = synthesize_mask(w, h, cov / 100.0, index, seed)
+        n_u = int(np.count_nonzero(
+            np.asarray(feather_mask(Image.fromarray(mask, "L"), (w, h), U_RADIUS)) == 0))
+        if n_u == 0 or not mask.any():
+            problems.append(f"{row['split']}/{row['filename']} ({w}x{h}) at {cov:g}%: "
+                            f"U has {n_u} px, M has {int(np.count_nonzero(mask))} px")
+    if problems:
+        raise SystemExit("Preflight failed: U (fixed alpha == 0 at r=15) or M is empty for "
+                         f"{len(problems)} pair(s); U metrics would be undefined:\n  "
+                         + "\n  ".join(problems))
+
+
 def fmt(value) -> str:
     if value is None:
         return ""
@@ -212,18 +258,30 @@ def run_pair(index, row, coverage_pct, seed, lama, lama_n2, cap):
             raise RuntimeError(f"{name} size {im.size} != {(w, h)}")
 
     outputs, runtimes, alphas = {}, {}, {}
-    for r in RADII:
-        alphas[r] = np.asarray(feather_mask(m_img, (w, h), r))
+    for cond, (version, r) in COMPOSITES.items():
+        composite_fn, feather_fn = FEATHERS[version]
+        alphas[cond] = np.asarray(feather_fn(m_img, (w, h), r))
         t = time.perf_counter()
-        outputs[f"C_{r}"] = np.asarray(composite(d_img, L_img, m_img, feather_radius=r))
-        runtimes[f"C_{r}"] = t_lama + (time.perf_counter() - t)
+        outputs[cond] = np.asarray(composite_fn(d_img, L_img, m_img, feather_radius=r))
+        runtimes[cond] = t_lama + (time.perf_counter() - t)
     outputs["N1"], runtimes["N1"] = np.asarray(L_img), t_lama
     outputs["N2"], runtimes["N2"] = np.asarray(N2_img), t_n2
 
-    U = alphas[U_RADIUS] == 0
-    halos = {r: ~in_m & (alphas[r] > 0) for r in RADII}
-    if halos[0].any():
+    # U is defined by the FIXED feather at r=15; it must be disjoint from M and
+    # untouched by every legacy composite (legacy alpha 0 there, output == I).
+    U = alphas[f"C_{U_RADIUS}"] == 0
+    if (U & in_m).any():
+        raise RuntimeError("U overlaps the mask")
+    for cond, (version, _) in COMPOSITES.items():
+        if version == "legacy":
+            if (alphas[cond][U] != 0).any():
+                raise RuntimeError(f"{cond}: legacy feather reaches into U")
+            if not np.array_equal(outputs[cond][U], I[U]):
+                raise RuntimeError(f"{cond}: legacy composite changes pixels in U")
+    halos = {cond: ~in_m & (alphas[cond] > 0) for cond in COMPOSITES}
+    if halos["C_0"].any():
         raise RuntimeError("r=0 feather produced a halo outside the binary mask")
+    n_m = int(in_m.sum())
 
     base = {
         "image": row["filename"], "split": row["split"], "width": w, "height": h,
@@ -235,15 +293,20 @@ def run_pair(index, row, coverage_pct, seed, lama, lama_n2, cap):
     rows = []
     for cond in CONDITIONS:
         X = outputs[cond]
-        out = dict(base, condition=cond, radius=int(cond[2:]) if cond.startswith("C_") else None)
+        version, radius = COMPOSITES.get(cond, (None, None))
+        out = dict(base, condition=cond, feather=version, radius=radius)
         out.update({col: None for col in METRIC_COLUMNS})
         out.update({f"u_{k}": v for k, v in region_diff_stats(X, I, U).items()})
-        if cond in ("C_3", "C_15"):
-            out.update({f"h_{k}": v for k, v in
-                        region_diff_stats(X, I, halos[int(cond[2:])]).items()})
+        out.update({f"u_{k}": v for k, v in region_diff_tail(X, I, U).items()})
+        if cond in HALO_CONDITIONS:
+            out.update({f"h_{k}": v for k, v in region_diff_stats(X, I, halos[cond]).items()})
         elif cond == "C_0":
             out["h_n_pixels"] = 0
-        out["m_n_pixels"] = int(in_m.sum())
+        out["m_n_pixels"] = n_m
+        if cond in COMPOSITES:
+            # Mean of (1 - alpha/255) over M: the weight the composite gives D
+            # inside the repair. Integer sum, so 0 means exactly 0.
+            out["m_d_weight"] = int((255 - alphas[cond][in_m].astype(np.int64)).sum()) / (255 * n_m)
         out["m_psnr_y"] = psnr_y_region(X, I, in_m)
         if cond in LPIPS_CONDITIONS:
             out["m_lpips"] = lpips_inside(X, I, in_m)
@@ -330,17 +393,30 @@ def main() -> int:
             "definitions": {
                 "D": "I with pixels inside M overwritten by the damage fill",
                 "L": "LamaInpainter(device='cpu').inpaint(D, M), default 1536 px cap, raw",
-                "C_r": "composite(D, L, M, feather_radius=r), r in {0, 3, 15}, same L",
+                "C_r": "compositing.composite(D, L, M, feather_radius=r), r in {0, 3, 15}, "
+                       "same L (feather wholly outside M)",
+                "C_r_legacy": "legacy_compositing.legacy_composite(D, L, M, feather_radius=r), "
+                              "r in {3, 15}, same L (feather centred on M's edge)",
                 "N1": "L itself",
                 "N2": "LamaInpainter(device='cpu', max_dimension=512).inpaint(D, M), raw",
-                "U": "pixels where feather_mask(M, r=15) == 0",
-                "H_r": "pixels outside M where feather_mask(M, r) > 0",
+                "U": "pixels where the fixed feather_mask(M, r=15) == 0; asserted disjoint "
+                     "from M and untouched by every legacy composite",
+                "H_r": "pixels outside M where the condition's own feather (fixed or "
+                       "legacy) at radius r is > 0",
                 "size_class": "above_cap if long edge > LaMa cap (1536) else at_or_below_cap",
+                "u_pct_changed_gt1": "% of U pixels where any channel differs by > 1 level",
+                "u_p99_abs": "99th percentile (inverted CDF) of per-channel |X - I| over U",
+                "m_d_weight": "mean of (1 - alpha/255) over M: the weight of D inside M",
                 "m_lpips": "LPIPS(X inside M + I outside M, I)",
                 "off_lpips": "LPIPS(I inside M + X outside M, I)",
-                "runtime_s": "time to produce the condition's output (C_r includes L)",
+                "runtime_s": "time to produce the condition's output (composites include L)",
             },
-            "conditions": CONDITIONS, "radii": RADII, "u_radius": U_RADIUS,
+            "conditions": CONDITIONS,
+            "composites": {k: {"feather": v, "radius": r} for k, (v, r) in COMPOSITES.items()},
+            "u_radius": U_RADIUS,
+            "code": {"compositing_py_blob": git("hash-object", "compositing.py"),
+                     "legacy_compositing_py_blob": git("hash-object",
+                                                       "scripts/legacy_compositing.py")},
             "manifest": os.path.relpath(os.path.abspath(args.manifest), REPO_ROOT),
             "manifest_sha256": manifest_sha,
             "damage_fill": {"value": FILL_VALUE, "sigma": FILL_SIGMA, "clip": [0, 255],
@@ -355,6 +431,10 @@ def main() -> int:
     done = load_existing(raw_path, args.seed)
     images = select_images(args.manifest, args.images, args.limit)
     todo = [(i, r, c) for i, r in images for c in args.coverages]
+    t = time.perf_counter()
+    preflight(todo, done, args.seed)
+    print(f"Preflight: U and M non-empty for all pending pairs ({time.perf_counter() - t:.1f}s).",
+          flush=True)
 
     lama = LamaInpainter(device="cpu")
     lama_n2 = LamaInpainter(device="cpu", max_dimension=N2_MAX_DIMENSION)
@@ -394,7 +474,9 @@ def main() -> int:
             print(f"[{k}/{len(todo)}] {key[0]}/{key[1]} {key[2]}% ({rows[0]['size_class']}): "
                   f"LaMa {timing['lama_s']:.1f}s, N2 {timing['n2_s']:.1f}s, pair "
                   f"{timing['pair_s']:.1f}s | U changed: N1 {by['N1']['u_pct_changed']:.2f}% "
-                  f"N2 {by['N2']['u_pct_changed']:.2f}% C_3 {by['C_3']['u_pct_changed']:.2f}%",
+                  f"N2 {by['N2']['u_pct_changed']:.2f}% C_3 {by['C_3']['u_pct_changed']:.2f}% | "
+                  f"D weight in M: C_3 {by['C_3']['m_d_weight']:.4f} "
+                  f"C_3_legacy {by['C_3_legacy']['m_d_weight']:.4f}",
                   flush=True)
             write_json(meta_path, meta)
         run["status"] = "completed"

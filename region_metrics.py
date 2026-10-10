@@ -101,3 +101,24 @@ def lpips_outside(x: np.ndarray, ref: np.ndarray, mask: np.ndarray) -> float:
     """LPIPS of X_out vs I, where X_out = X outside ``mask`` and I inside it."""
     _check(x, ref, mask)
     return _lpips(splice(ref, x, mask), ref)
+
+
+def region_diff_tail(x: np.ndarray, ref: np.ndarray, region: np.ndarray) -> Dict[str, float]:
+    """Tail of the difference distribution of ``x`` vs ``ref`` over ``region``.
+
+    Returns ``pct_changed_gt1``, the percent of region pixels where any channel
+    differs by more than 1 level, and ``p99_abs``, the 99th percentile of the
+    per-channel absolute difference over region pixels x 3 channels (the same
+    population as ``mean_abs``), taken as the smallest value v with at least 99%
+    of values <= v (numpy's ``inverted_cdf`` method). Exact integer arithmetic.
+    """
+    _check(x, ref, region)
+    abs_d = np.abs(x[region].astype(np.int16) - ref[region].astype(np.int16))  # (n, 3), 0..255
+    n = abs_d.shape[0]
+    cum = np.cumsum(np.bincount(abs_d.ravel(), minlength=256))
+    total = int(cum[-1])
+    p99 = int(np.argmax(cum * 100 >= 99 * total))
+    return {
+        "pct_changed_gt1": 100.0 * int(np.count_nonzero(abs_d.max(axis=1) > 1)) / n,
+        "p99_abs": p99,
+    }
