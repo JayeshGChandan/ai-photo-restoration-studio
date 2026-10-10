@@ -63,4 +63,4 @@ def composite(
     rep_arr = np.asarray(restored, dtype=np.float32)
 
     blended = rep_arr * alpha + orig_arr * (1.0 - alpha)
-    return Image.fromarray(np.clip(blended, 0, 255).astype(np.uint8), "RGB")
+    return Image.fromarray(np.clip(np.rint(blended), 0, 255).astype(np.uint8), "RGB")
