@@ -28,6 +28,9 @@ weights/
 # Test images (fetched by scripts/fetch_data.py; never commit image files)
 data/clic2020/
 
+# Compositing experiment smoke-run output (not committed)
+results/compositing_smoke/
+
 # Runtime artifacts
 *.log
 outputs/
