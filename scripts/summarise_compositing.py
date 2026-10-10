@@ -5,13 +5,17 @@ Writes summary.csv and prints a table with, for each condition x size class
 x target coverage, the mean across images and a percentile-bootstrap 95% CI
 (10,000 resamples of images, seed 0, fresh RNG per statistic) of:
 
-  U pct_changed, U mean_abs, U max_abs, H_r pct_changed (C_3, C_15),
-  M PSNR-Y, M LPIPS and off-repair LPIPS (C_3, N1, N2).
+  U pct_changed, U pct_changed_gt1 (> 1 level), U mean_abs, U p99_abs,
+  U max_abs, H_r pct_changed (C_3, C_15 and legacy versions), the weight of D
+  inside M (composites), M PSNR-Y, M LPIPS and off-repair LPIPS (C_3,
+  C_3_legacy, N1, N2).
 
-Then paired per-image differences C_3 - N1 and C_3 - N2 on U mean_abs,
-M PSNR-Y and M LPIPS (bootstrap CI of the mean difference, and how many
-images C_3 is better / equal / worse on), and the null case: N1's U
-pct_changed for images at or below the LaMa cap.
+Then paired per-image differences, each with a bootstrap CI of the mean
+difference and how many images C_3 is better / equal / worse on:
+  C_3 - C_3_legacy on M PSNR-Y, M LPIPS, off-repair LPIPS
+  C_3 - N1 and C_3 - N2 on M PSNR-Y, M LPIPS, U mean_abs
+the null case (N1's U pct_changed for images at or below the LaMa cap), and
+how many images are at most 512 px on the long edge, where N2 equals N1.
 
 Usage (from the repo root):
   ./venv/bin/python scripts/summarise_compositing.py                      # results/compositing/
@@ -29,28 +33,38 @@ import numpy as np
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-CONDITIONS = ["C_0", "C_3", "C_15", "N1", "N2"]
+COMPOSITES = ["C_0", "C_3", "C_15", "C_3_legacy", "C_15_legacy"]
+CONDITIONS = COMPOSITES + ["N1", "N2"]
+HALO_CONDITIONS = ["C_3", "C_15", "C_3_legacy", "C_15_legacy"]
+LPIPS_CONDITIONS = ["C_3", "C_3_legacy", "N1", "N2"]
 SIZE_CLASSES = ["above_cap", "at_or_below_cap"]
+N2_CAP = 512  # N2's LaMa max_dimension: at or below it, N2 runs at native size like N1
 N_RESAMPLES = 10_000
 BOOT_SEED = 0
 
 # (column, label, conditions it applies to, format)
 METRICS = [
     ("u_pct_changed", "U % changed", CONDITIONS, "{:.3f}"),
+    ("u_pct_changed_gt1", "U % changed >1", CONDITIONS, "{:.3f}"),
     ("u_mean_abs", "U mean |diff|", CONDITIONS, "{:.4f}"),
+    ("u_p99_abs", "U p99 |diff|", CONDITIONS, "{:.1f}"),
     ("u_max_abs", "U max |diff|", CONDITIONS, "{:.1f}"),
-    ("h_pct_changed", "H_r % changed", ["C_3", "C_15"], "{:.2f}"),
+    ("h_pct_changed", "H_r % changed", HALO_CONDITIONS, "{:.2f}"),
+    ("m_d_weight", "M weight of D", COMPOSITES, "{:.4f}"),
     ("m_psnr_y", "M PSNR-Y (dB)", CONDITIONS, "{:.2f}"),
-    ("m_lpips", "M LPIPS", ["C_3", "N1", "N2"], "{:.5f}"),
-    ("off_lpips", "off-repair LPIPS", ["C_3", "N1", "N2"], "{:.5f}"),
+    ("m_lpips", "M LPIPS", LPIPS_CONDITIONS, "{:.5f}"),
+    ("off_lpips", "off-repair LPIPS", LPIPS_CONDITIONS, "{:.5f}"),
 ]
-# (column, lower is better) for the paired comparisons.
-PAIRED = [("u_mean_abs", True), ("m_psnr_y", False), ("m_lpips", True)]
-COMPARISONS = [("C_3", "N1"), ("C_3", "N2")]
+# Paired comparisons: (a, b, [(column, lower is better), ...]); differences are a - b.
+COMPARISONS = [
+    ("C_3", "C_3_legacy", [("m_psnr_y", False), ("m_lpips", True), ("off_lpips", True)]),
+    ("C_3", "N1", [("m_psnr_y", False), ("m_lpips", True), ("u_mean_abs", True)]),
+    ("C_3", "N2", [("m_psnr_y", False), ("m_lpips", True), ("u_mean_abs", True)]),
+]
 
 SUMMARY_COLUMNS = ["section", "size_class", "coverage_target", "condition", "metric", "n",
                    "mean", "ci_low", "ci_high", "max", "n_better", "n_equal", "n_worse",
-                   "n_images_changed"]
+                   "n_images_changed", "n_total"]
 
 
 def bootstrap_ci(values):
@@ -77,8 +91,6 @@ def load(raw_path):
             raise SystemExit(f"{raw_path}:{i}: duplicate row for {img} {key}")
         for col, _, conds, _ in METRICS:
             if row["condition"] in conds:
-                if col == "h_pct_changed" and row["condition"] == "C_0":
-                    continue
                 try:
                     v = float(row[col])
                 except (TypeError, ValueError):
@@ -121,14 +133,14 @@ def paired(groups):
     out = []
     for sc in SIZE_CLASSES:
         for cov in coverage_order(groups):
-            for a, b in COMPARISONS:
+            for a, b, metrics in COMPARISONS:
                 ra, rb = groups.get((sc, cov, a)), groups.get((sc, cov, b))
                 if not ra or not rb:
                     continue
                 if set(ra) != set(rb):
                     raise SystemExit(f"{sc} {cov}%: {a} and {b} cover different images")
                 imgs = sorted(ra)
-                for col, lower_better in PAIRED:
+                for col, lower_better in metrics:
                     d = np.array([float(ra[i][col]) - float(rb[i][col]) for i in imgs])
                     better = int(np.sum(d < 0) if lower_better else np.sum(d > 0))
                     equal = int(np.sum(d == 0))
@@ -156,11 +168,23 @@ def null_case(groups):
     return out
 
 
+def n2_equals_n1(groups):
+    """Images at most N2_CAP px on the long edge, where N2 runs exactly like N1."""
+    images = {}
+    for rows in groups.values():
+        for img, row in rows.items():
+            images[img] = max(int(row["width"]), int(row["height"]))
+    small = sorted(img for img, long_edge in images.items() if long_edge <= N2_CAP)
+    return [{"section": "n2_equals_n1", "size_class": "at_or_below_cap",
+             "condition": "N2 = N1", "metric": f"long_edge_le_{N2_CAP}",
+             "n": len(small), "n_total": len(images)}], small, len(images)
+
+
 def ci_text(fmt, mean, lo, hi):
     return f"{fmt.format(mean)} [{fmt.format(lo)}, {fmt.format(hi)}]"
 
 
-def print_tables(groups, cells, paired_rows, null_rows):
+def print_tables(groups, cells, paired_rows, null_rows, small_images, n_images):
     width = 29
     for sc in SIZE_CLASSES:
         for cov in coverage_order(groups):
@@ -179,12 +203,13 @@ def print_tables(groups, cells, paired_rows, null_rows):
 
     print("\n== Paired differences (per image), mean [95% bootstrap CI]; "
           "better/equal/worse counts are for C_3")
-    print("size_class".ljust(17) + "cov".ljust(5) + "comparison".ljust(11) + "metric".ljust(12)
+    print("size_class".ljust(17) + "cov".ljust(5) + "comparison".ljust(16) + "metric".ljust(12)
           + "mean diff [CI]".ljust(36) + "better/equal/worse")
-    fmts = {"u_mean_abs": "{:+.4f}", "m_psnr_y": "{:+.3f}", "m_lpips": "{:+.5f}"}
+    fmts = {"u_mean_abs": "{:+.4f}", "m_psnr_y": "{:+.3f}", "m_lpips": "{:+.5f}",
+            "off_lpips": "{:+.5f}"}
     for r in paired_rows:
         print(r["size_class"].ljust(17) + f"{r['coverage_target']}%".ljust(5)
-              + r["condition"].replace(" ", "").ljust(11) + r["metric"].ljust(12)
+              + r["condition"].replace(" ", "").ljust(16) + r["metric"].ljust(12)
               + ci_text(fmts[r["metric"]], r["mean"], r["ci_low"], r["ci_high"]).ljust(36)
               + f"{r['n_better']}/{r['n_equal']}/{r['n_worse']} of {r['n']}")
 
@@ -194,6 +219,10 @@ def print_tables(groups, cells, paired_rows, null_rows):
     for r in null_rows:
         print(f"coverage {r['coverage_target']}%: n = {r['n']}, mean {r['mean']:.6f}%, "
               f"max {r['max']:.6f}%, images with any U change: {r['n_images_changed']}")
+
+    print(f"\n== N2 equals N1 (long edge <= {N2_CAP} px, so N2's cap does not apply): "
+          f"{len(small_images)} of {n_images} images"
+          + (f": {', '.join('/'.join(i) for i in small_images)}" if small_images else ""))
 
 
 def main() -> int:
@@ -208,15 +237,16 @@ def main() -> int:
     metric_rows, cells = summarise(groups)
     paired_rows = paired(groups)
     null_rows = null_case(groups)
+    n2_rows, small_images, n_images = n2_equals_n1(groups)
 
     summary_path = os.path.join(args.dir, "summary.csv")
     with open(summary_path, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=SUMMARY_COLUMNS, lineterminator="\n")
         w.writeheader()
-        for r in metric_rows + paired_rows + null_rows:
+        for r in metric_rows + paired_rows + null_rows + n2_rows:
             w.writerow({k: (repr(v) if isinstance(v, float) else v) for k, v in r.items()})
 
-    print_tables(groups, cells, paired_rows, null_rows)
+    print_tables(groups, cells, paired_rows, null_rows, small_images, n_images)
     print(f"\nWrote {summary_path}")
     return 0
 
