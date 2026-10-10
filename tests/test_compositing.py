@@ -8,7 +8,9 @@ which pixels are allowed to change:
   1. where the feathered alpha is exactly 0, the output equals the original;
   2. where it is exactly 255, the output equals the restored image;
   3. when restored == original, the output equals the original everywhere;
-  4. every changed pixel lies inside the support (alpha > 0) of the feather.
+  4. every changed pixel lies inside the support (alpha > 0) of the feather;
+  5. the alpha is exactly 255 on every pixel of the binary mask, so the
+     whole soft edge lies outside the repair.
 
 Inputs are random uint8 images with fixed seeds at two sizes: one at or below
 LaMa's 1536 px long-edge cap and one above it. For each case the test for (4)
@@ -104,3 +106,10 @@ def test_changes_stay_inside_feather_support(case, capsys):
         print(f"\n[{w}x{h}] feather radius {radius:2d}: changes extend up to "
               f"{extension:.2f} px beyond the binary mask "
               f"({int(outside.sum())} changed px outside it)")
+
+
+@pytest.mark.parametrize("case", CASES, ids=_case_id)
+def test_alpha_is_full_on_every_mask_pixel(case):
+    _, _, mask, alpha, _, _ = _run(*case)
+    assert mask.any()
+    assert (alpha[mask] == 255).all()
