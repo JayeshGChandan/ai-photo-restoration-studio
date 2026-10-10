@@ -38,14 +38,18 @@ def run_benchmark(
     do_face: bool = True,
     fidelity: float = 0.7,
     score: bool = True,
+    seed: int = 0,
 ) -> BenchmarkResult:
-    """Degrade ``clean``, restore it, and score both restoration and a baseline."""
+    """Degrade ``clean``, restore it, and score both restoration and a baseline.
+
+    ``seed`` sets the RNG for the synthetic sensor noise (see ``degrade``).
+    """
     if clean is None:
         raise ValueError("No clean image provided.")
     clean = clean.convert("RGB")
     size = clean.size
 
-    deg = degrade(clean, downscale_factor, blur_sigma, noise_sigma, jpeg_quality)
+    deg = degrade(clean, downscale_factor, blur_sigma, noise_sigma, jpeg_quality, seed=seed)
     degraded = deg.image
     baseline = degraded.resize(size, Image.BICUBIC)
 
