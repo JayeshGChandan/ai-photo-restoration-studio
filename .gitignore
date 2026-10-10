@@ -25,6 +25,9 @@ weights/
 .idea/
 .DS_Store
 
+# Test images (fetched by scripts/fetch_data.py; never commit image files)
+data/clic2020/
+
 # Runtime artifacts
 *.log
 outputs/
