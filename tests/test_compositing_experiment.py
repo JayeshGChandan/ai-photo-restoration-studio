@@ -181,3 +181,27 @@ def test_aggregation_rejects_u_metric_on_empty_u(raw_csv, tmp_path):
         w.writerows(rows)
     with pytest.raises(SystemExit, match="empty U"):
         summ.load(str(bad))
+
+
+def test_c3_n2fill_matches_n2_inside_m_and_leaves_u_untouched():
+    rng = np.random.default_rng(7)
+    h, w = 180, 240
+    I = rng.integers(0, 256, (h, w, 3), dtype=np.uint8)
+    mask = np.zeros((h, w), dtype=np.uint8)
+    mask[4:14, 4:14] = 255
+    D = I.copy()
+    D[mask > 0] = 235
+    L = np.clip(I.astype(int) + rng.integers(-2, 3, I.shape), 0, 255).astype(np.uint8)
+    N2 = np.clip(I.astype(int) + rng.integers(-9, 10, I.shape), 0, 255).astype(np.uint8)
+    base = {"image": "x.png", "split": "synthetic", "width": w, "height": h,
+            "size_class": "at_or_below_cap", "image_index": 0, "seed": 0,
+            "coverage_target": "1", "coverage_actual": 0.2,
+            "mask_n_strokes": 1, "mask_n_blobs": 0}
+    by = {r["condition"]: r for r in runner.score_conditions(I, D, mask, L, N2, base)}
+    fill = by["C_3_N2fill"]
+    assert fill["feather"] == "fixed" and fill["radius"] == 3
+    assert fill["m_d_weight"] == 0.0
+    assert fill["m_psnr_y"] == by["N2"]["m_psnr_y"]
+    assert fill["m_lpips"] == by["N2"]["m_lpips"]
+    assert fill["u_pct_changed"] == 0.0 and by["N2"]["u_pct_changed"] > 90.0
+    assert fill["h_n_pixels"] == by["C_3"]["h_n_pixels"]   # same fixed r=3 feather

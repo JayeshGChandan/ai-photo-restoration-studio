@@ -13,6 +13,8 @@ seeded damage fill:
               same in both versions, so it is run once)
   N1        = L itself: the naive whole-image result at the 1536 px cap
   N2        = raw LaMa output with max_dimension=512 (the old 512 px pipeline)
+  C_3_N2fill = composite(D, N2, M, 3): the 512 px fill composited into the
+              original with the fixed feather
 
 Regions: M = the binary mask; U = pixels where the FIXED r=15 feathered alpha
 is exactly 0 (the common untouched region; asserted to be untouched by every
@@ -23,9 +25,10 @@ raw.csv gets one row per condition per (image, coverage) pair with the size
 of U (u_pixels, u_fraction of the image, u_empty), U difference stats and
 their tail (% changed by more than 1 level, 99th percentile |diff|) for all
 conditions, H_r stats (C_3, C_15 and their legacy
-versions; C_0's halo is checked to be empty), the mean weight of D inside M
-(composites), PSNR-Y inside M (all), LPIPS of the repair spliced into I and of
-everything outside M spliced into I (C_3, C_3_legacy, N1, N2), and runtimes.
+versions, C_3_N2fill; C_0's halo is checked to be empty), the mean weight of
+D inside M (composites), PSNR-Y inside M (all), LPIPS of the repair spliced
+into I and of everything outside M spliced into I (C_3, C_3_legacy,
+C_3_N2fill, N1, N2), and runtimes.
 
 An empty U (the fixed r=15 halo covers every non-mask pixel, which happens
 for small images at high coverage) is a recorded state, not a failure: the
@@ -74,19 +77,21 @@ from synthetic_damage import (  # noqa: E402
     FILL_SIGMA, FILL_VALUE, MASK_PARAMS, apply_damage, damage_fill, synthesize_mask,
 )
 
-# Composite conditions: name -> (feather version, radius). N1 / N2 are raw LaMa.
+# Composite conditions: name -> (feather version, radius, fill composited into D).
+# N1 / N2 are the raw LaMa outputs; "L" is N1's fill (1536 px cap), "N2" the 512 px one.
 COMPOSITES = {
-    "C_0": ("fixed", 0),
-    "C_3": ("fixed", 3),
-    "C_15": ("fixed", 15),
-    "C_3_legacy": ("legacy", 3),
-    "C_15_legacy": ("legacy", 15),
+    "C_0": ("fixed", 0, "L"),
+    "C_3": ("fixed", 3, "L"),
+    "C_15": ("fixed", 15, "L"),
+    "C_3_legacy": ("legacy", 3, "L"),
+    "C_15_legacy": ("legacy", 15, "L"),
+    "C_3_N2fill": ("fixed", 3, "N2"),
 }
 FEATHERS = {"fixed": (composite, feather_mask), "legacy": (legacy_composite, legacy_feather_mask)}
 CONDITIONS = list(COMPOSITES) + ["N1", "N2"]
 U_RADIUS = 15
-HALO_CONDITIONS = {"C_3", "C_15", "C_3_legacy", "C_15_legacy"}
-LPIPS_CONDITIONS = {"C_3", "C_3_legacy", "N1", "N2"}
+HALO_CONDITIONS = {"C_3", "C_15", "C_3_legacy", "C_15_legacy", "C_3_N2fill"}
+LPIPS_CONDITIONS = {"C_3", "C_3_legacy", "C_3_N2fill", "N1", "N2"}
 N2_MAX_DIMENSION = 512
 
 DIFF_KEYS = ["n_pixels", "pct_changed", "max_abs", "mean_abs", "mse"]
@@ -316,16 +321,17 @@ def score_conditions(I, D, mask, L, N2, base, t_lama=0.0, t_n2=0.0):
     """
     h, w = mask.shape
     m_img, d_img = Image.fromarray(mask, "L"), Image.fromarray(D, "RGB")
-    L_img = Image.fromarray(L, "RGB")
+    fills = {"L": (Image.fromarray(L, "RGB"), t_lama), "N2": (Image.fromarray(N2, "RGB"), t_n2)}
     in_m = mask > 0
 
     outputs, runtimes, alphas = {}, {}, {}
-    for cond, (version, r) in COMPOSITES.items():
+    for cond, (version, r, source) in COMPOSITES.items():
         composite_fn, feather_fn = FEATHERS[version]
+        fill_img, t_fill = fills[source]
         alphas[cond] = np.asarray(feather_fn(m_img, (w, h), r))
         t = time.perf_counter()
-        outputs[cond] = np.asarray(composite_fn(d_img, L_img, m_img, feather_radius=r))
-        runtimes[cond] = t_lama + (time.perf_counter() - t)
+        outputs[cond] = np.asarray(composite_fn(d_img, fill_img, m_img, feather_radius=r))
+        runtimes[cond] = t_fill + (time.perf_counter() - t)
     outputs["N1"], runtimes["N1"] = L, t_lama
     outputs["N2"], runtimes["N2"] = N2, t_n2
 
@@ -336,7 +342,7 @@ def score_conditions(I, D, mask, L, N2, base, t_lama=0.0, t_n2=0.0):
         raise RuntimeError("U differs from u_region(mask)")
     if (U & in_m).any():
         raise RuntimeError("U overlaps the mask")
-    for cond, (version, _) in COMPOSITES.items():
+    for cond, (version, _, _) in COMPOSITES.items():
         if version == "legacy":
             if (alphas[cond][U] != 0).any():
                 raise RuntimeError(f"{cond}: legacy feather reaches into U")
@@ -352,7 +358,7 @@ def score_conditions(I, D, mask, L, N2, base, t_lama=0.0, t_n2=0.0):
     rows = []
     for cond in CONDITIONS:
         X = outputs[cond]
-        version, radius = COMPOSITES.get(cond, (None, None))
+        version, radius, _ = COMPOSITES.get(cond, (None, None, None))
         out = dict(base, condition=cond, feather=version, radius=radius, **u_state)
         out.update({col: None for col in METRIC_COLUMNS})
         if n_u:  # an empty U leaves the U metrics blank (undefined), by design
@@ -514,6 +520,8 @@ def main() -> int:
                               "r in {3, 15}, same L (feather centred on M's edge)",
                 "N1": "L itself",
                 "N2": "LamaInpainter(device='cpu', max_dimension=512).inpaint(D, M), raw",
+                "C_3_N2fill": "compositing.composite(D, N2, M, feather_radius=3): the 512 px "
+                              "fill with the fixed feather",
                 "U": "pixels where the fixed feather_mask(M, r=15) == 0; asserted disjoint "
                      "from M and untouched by every legacy composite",
                 "H_r": "pixels outside M where the condition's own feather (fixed or "
@@ -530,7 +538,8 @@ def main() -> int:
                 "runtime_s": "time to produce the condition's output (composites include L)",
             },
             "conditions": CONDITIONS,
-            "composites": {k: {"feather": v, "radius": r} for k, (v, r) in COMPOSITES.items()},
+            "composites": {k: {"feather": v, "radius": r, "fill": f}
+                           for k, (v, r, f) in COMPOSITES.items()},
             "u_radius": U_RADIUS,
             "code": {"compositing_py_blob": git("hash-object", "compositing.py"),
                      "legacy_compositing_py_blob": git("hash-object",
@@ -595,7 +604,8 @@ def main() -> int:
             print(f"[{k}/{len(todo)}] {key[0]}/{key[1]} {key[2]}% ({rows[0]['size_class']}): "
                   f"LaMa {timing['lama_s']:.1f}s, N2 {timing['n2_s']:.1f}s, pair "
                   f"{timing['pair_s']:.1f}s | U {by['N1']['u_fraction'] * 100:.1f}% of image, "
-                  f"changed: N1 {u_txt('N1')} N2 {u_txt('N2')} C_3 {u_txt('C_3')} | "
+                  f"changed: N1 {u_txt('N1')} N2 {u_txt('N2')} C_3 {u_txt('C_3')} "
+                  f"C_3_N2fill {u_txt('C_3_N2fill')} | "
                   f"D weight in M: C_3 {by['C_3']['m_d_weight']:.4f} "
                   f"C_3_legacy {by['C_3_legacy']['m_d_weight']:.4f}",
                   flush=True)

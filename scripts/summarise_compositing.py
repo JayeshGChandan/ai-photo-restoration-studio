@@ -8,12 +8,13 @@ x target coverage, the mean across images and a percentile-bootstrap 95% CI
   U pct_changed, U pct_changed_gt1 (> 1 level), U mean_abs, U p99_abs,
   U max_abs, H_r pct_changed (C_3, C_15 and legacy versions), the weight of D
   inside M (composites), M PSNR-Y, M LPIPS and off-repair LPIPS (C_3,
-  C_3_legacy, N1, N2).
+  C_3_legacy, C_3_N2fill, N1, N2).
 
-Then paired per-image differences, each with a bootstrap CI of the mean
-difference and how many images C_3 is better / equal / worse on:
+Then paired per-image differences a - b, each with a bootstrap CI of the mean
+difference and how many images a is better / equal / worse on:
   C_3 - C_3_legacy on M PSNR-Y, M LPIPS, off-repair LPIPS
   C_3 - N1 and C_3 - N2 on M PSNR-Y, M LPIPS, U mean_abs
+  C_3_N2fill - C_3 and C_3_N2fill - N2 on M PSNR-Y, M LPIPS, off-repair LPIPS
 the null case (N1's U pct_changed for images at or below the LaMa cap), and
 how many images are at most 512 px on the long edge, where N2 equals N1.
 
@@ -39,10 +40,10 @@ import numpy as np
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-COMPOSITES = ["C_0", "C_3", "C_15", "C_3_legacy", "C_15_legacy"]
+COMPOSITES = ["C_0", "C_3", "C_15", "C_3_legacy", "C_15_legacy", "C_3_N2fill"]
 CONDITIONS = COMPOSITES + ["N1", "N2"]
-HALO_CONDITIONS = ["C_3", "C_15", "C_3_legacy", "C_15_legacy"]
-LPIPS_CONDITIONS = ["C_3", "C_3_legacy", "N1", "N2"]
+HALO_CONDITIONS = ["C_3", "C_15", "C_3_legacy", "C_15_legacy", "C_3_N2fill"]
+LPIPS_CONDITIONS = ["C_3", "C_3_legacy", "C_3_N2fill", "N1", "N2"]
 SIZE_CLASSES = ["above_cap", "at_or_below_cap"]
 N2_CAP = 512  # N2's LaMa max_dimension: at or below it, N2 runs at native size like N1
 N_RESAMPLES = 10_000
@@ -66,6 +67,8 @@ COMPARISONS = [
     ("C_3", "C_3_legacy", [("m_psnr_y", False), ("m_lpips", True), ("off_lpips", True)]),
     ("C_3", "N1", [("m_psnr_y", False), ("m_lpips", True), ("u_mean_abs", True)]),
     ("C_3", "N2", [("m_psnr_y", False), ("m_lpips", True), ("u_mean_abs", True)]),
+    ("C_3_N2fill", "C_3", [("m_psnr_y", False), ("m_lpips", True), ("off_lpips", True)]),
+    ("C_3_N2fill", "N2", [("m_psnr_y", False), ("m_lpips", True), ("off_lpips", True)]),
 ]
 
 SUMMARY_COLUMNS = ["section", "size_class", "coverage_target", "condition", "metric", "n",
@@ -278,15 +281,15 @@ def print_tables(groups, cells, paired_rows, null_rows, small_images, n_images, 
                     line += cell_text(cells.get((sc, cov, cond, col)), fmt, col).ljust(width)
                 print(line.rstrip())
 
-    print("\n== Paired differences (per image), mean [95% bootstrap CI]; "
-          "better/equal/worse counts are for C_3")
-    print("size_class".ljust(17) + "cov".ljust(5) + "comparison".ljust(16) + "metric".ljust(12)
+    print("\n== Paired differences a - b (per image), mean [95% bootstrap CI]; "
+          "better/equal/worse counts are for a")
+    print("size_class".ljust(17) + "cov".ljust(5) + "comparison".ljust(22) + "metric".ljust(12)
           + "mean diff [CI]".ljust(36) + "better/equal/worse")
     fmts = {"u_mean_abs": "{:+.4f}", "m_psnr_y": "{:+.3f}", "m_lpips": "{:+.5f}",
             "off_lpips": "{:+.5f}"}
     for r in paired_rows:
         head = (r["size_class"].ljust(17) + f"{r['coverage_target']}%".ljust(5)
-                + r["condition"].replace(" ", "").ljust(16) + r["metric"].ljust(12))
+                + r["condition"].replace(" ", "").ljust(22) + r["metric"].ljust(12))
         excl = (f" ({r['n_u_empty']} u_empty excluded)" if r.get("n_u_empty") else "")
         if r["n"] == 0:
             print(head + "n/a".ljust(36) + f"n = 0{excl}")
