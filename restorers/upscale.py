@@ -153,20 +153,13 @@ class RealESRGANUpscaler:
             w, h = image.size
 
         self.load()
-        scale = self._native_scale
-        target = (max(1, round(w * outscale)), max(1, round(h * outscale)))
+        target =(max(1, round(w * outscale)), max(1, round(h * outscale)))
 
-        # The model upscales by a fixed native factor (e.g. 4x). When the caller
-        # wants less than that (e.g. 2x), pre-shrink the input so native
-        # upscaling lands on the target -- running the full 4x and discarding
-        # half the pixels would cost ~4x the compute and memory for nothing.
-        if outscale < scale:
-            pre = outscale / float(scale)
-            work = image.resize((max(1, round(w * pre)), max(1, round(h * pre))), Image.LANCZOS)
-        else:
-            work = image
-
-        up = self._tiled_upscale(work)
+        # The model upscales by a fixed native factor (e.g. 4x). Always run it
+        # on the full-resolution input, then LANCZOS-resample to the target.
+        # Pre-shrinking the input to land on a smaller target (e.g. 2x) would
+        # be ~4x cheaper but throws away input detail before the model sees it.
+        up = self._tiled_upscale(image)
         if up.size != target:
             up = up.resize(target, Image.LANCZOS)
         return up
