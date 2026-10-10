@@ -1,0 +1,247 @@
+{
+  "description": "Real-ESRGAN outscale=2 half-resolution fix: before/after measurements",
+  "quality": {
+    "images": [
+      "mobile/0067.png",
+      "mobile/20151208_222739.png",
+      "mobile/2017-07-27 16.21.36.png",
+      "mobile/2017-08-28 10.51.27.png",
+      "mobile/2017-09-25 10.37.24.png",
+      "mobile/2017-09-26 11.52.39.png",
+      "mobile/2017-09-26 18.05.49.png",
+      "mobile/20170719_152434.png",
+      "mobile/20170930_131716.png",
+      "mobile/20171109_082958.png"
+    ],
+    "crop": 512,
+    "seed": 0,
+    "benchmark_defaults": "downscale 2x, blur 1.0, noise 8.0, JPEG 60, do_face True, fidelity 0.7",
+    "old": {
+      "provenance": {
+        "label": "old",
+        "git_head": "90e08974532060d3dd30a4eec432ee0b81e288f2",
+        "upscale_py_dirty": false,
+        "upscale_py_sha256": "8b6322c539145a627dafbae8c71dcaa8a73be953e48727d96323efb3526f8e42",
+        "restore_device_env": "cpu",
+        "torch": "2.12.1",
+        "torch_threads": 4,
+        "python": "3.11.15",
+        "platform": "macOS-26.4.1-arm64-arm-64bit",
+        "machine": "arm64"
+      },
+      "device": {
+        "upscaler": "cpu",
+        "metrics": "cpu"
+      },
+      "steps": {
+        "mobile/0067.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/20151208_222739.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/2017-07-27 16.21.36.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/2017-08-28 10.51.27.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/2017-09-25 10.37.24.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/2017-09-26 11.52.39.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/2017-09-26 18.05.49.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/20170719_152434.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/20170930_131716.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/20171109_082958.png": "Real-ESRGAN x2 -> no faces found (upscale only)"
+      }
+    },
+    "fixed": {
+      "provenance": {
+        "label": "fixed",
+        "git_head": "38e4a7131719e8d42027bcab39a25cf29c81e814",
+        "upscale_py_dirty": false,
+        "upscale_py_sha256": "31e3efc4d0fb6f7cd36baed38a18db5e36bf9338c2356bc893ec696e5f27a61c",
+        "restore_device_env": "cpu",
+        "torch": "2.12.1",
+        "torch_threads": 4,
+        "python": "3.11.15",
+        "platform": "macOS-26.4.1-arm64-arm-64bit",
+        "machine": "arm64"
+      },
+      "device": {
+        "upscaler": "cpu",
+        "metrics": "cpu"
+      },
+      "steps": {
+        "mobile/0067.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/20151208_222739.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/2017-07-27 16.21.36.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/2017-08-28 10.51.27.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/2017-09-25 10.37.24.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/2017-09-26 11.52.39.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/2017-09-26 18.05.49.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/20170719_152434.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/20170930_131716.png": "Real-ESRGAN x2 -> no faces found (upscale only)",
+        "mobile/20171109_082958.png": "Real-ESRGAN x2 -> no faces found (upscale only)"
+      }
+    },
+    "bicubic_identical_across_runs": true
+  },
+  "latency": [
+    {
+      "label": "old",
+      "device": "cpu",
+      "device_after": "cpu",
+      "outscale": 2,
+      "source_image": "mobile/0067.png",
+      "runs": [
+        {
+          "input": "256x256",
+          "output": "512x512",
+          "times_s": [
+            3.3820169169994188,
+            3.3276091669977177,
+            3.2963227079962962
+          ],
+          "median_s": 3.3276091669977177
+        },
+        {
+          "input": "512x512",
+          "output": "1024x1024",
+          "times_s": [
+            13.585823250003159,
+            15.447359792000498,
+            12.884341334000055
+          ],
+          "median_s": 13.585823250003159
+        }
+      ],
+      "provenance": {
+        "label": "old",
+        "git_head": "90e08974532060d3dd30a4eec432ee0b81e288f2",
+        "upscale_py_dirty": false,
+        "upscale_py_sha256": "8b6322c539145a627dafbae8c71dcaa8a73be953e48727d96323efb3526f8e42",
+        "restore_device_env": "cpu",
+        "torch": "2.12.1",
+        "torch_threads": 4,
+        "python": "3.11.15",
+        "platform": "macOS-26.4.1-arm64-arm-64bit",
+        "machine": "arm64"
+      }
+    },
+    {
+      "label": "old",
+      "device": "mps",
+      "device_after": "mps",
+      "outscale": 2,
+      "source_image": "mobile/0067.png",
+      "runs": [
+        {
+          "input": "256x256",
+          "output": "512x512",
+          "times_s": [
+            0.39687858300021617,
+            0.3648745829996187,
+            0.36672687499958556
+          ],
+          "median_s": 0.36672687499958556
+        },
+        {
+          "input": "512x512",
+          "output": "1024x1024",
+          "times_s": [
+            1.5668474590056576,
+            1.592341875002603,
+            1.5739855830033775
+          ],
+          "median_s": 1.5739855830033775
+        }
+      ],
+      "provenance": {
+        "label": "old",
+        "git_head": "90e08974532060d3dd30a4eec432ee0b81e288f2",
+        "upscale_py_dirty": false,
+        "upscale_py_sha256": "8b6322c539145a627dafbae8c71dcaa8a73be953e48727d96323efb3526f8e42",
+        "restore_device_env": "mps",
+        "torch": "2.12.1",
+        "torch_threads": 4,
+        "python": "3.11.15",
+        "platform": "macOS-26.4.1-arm64-arm-64bit",
+        "machine": "arm64"
+      }
+    },
+    {
+      "label": "fixed",
+      "device": "cpu",
+      "device_after": "cpu",
+      "outscale": 2,
+      "source_image": "mobile/0067.png",
+      "runs": [
+        {
+          "input": "256x256",
+          "output": "512x512",
+          "times_s": [
+            18.0793923750025,
+            16.888814291000017,
+            16.378991792000306
+          ],
+          "median_s": 16.888814291000017
+        },
+        {
+          "input": "512x512",
+          "output": "1024x1024",
+          "times_s": [
+            55.952594749993295,
+            52.79825512500247,
+            49.197129250002035
+          ],
+          "median_s": 52.79825512500247
+        }
+      ],
+      "provenance": {
+        "label": "fixed",
+        "git_head": "38e4a7131719e8d42027bcab39a25cf29c81e814",
+        "upscale_py_dirty": false,
+        "upscale_py_sha256": "31e3efc4d0fb6f7cd36baed38a18db5e36bf9338c2356bc893ec696e5f27a61c",
+        "restore_device_env": "cpu",
+        "torch": "2.12.1",
+        "torch_threads": 4,
+        "python": "3.11.15",
+        "platform": "macOS-26.4.1-arm64-arm-64bit",
+        "machine": "arm64"
+      }
+    },
+    {
+      "label": "fixed",
+      "device": "mps",
+      "device_after": "mps",
+      "outscale": 2,
+      "source_image": "mobile/0067.png",
+      "runs": [
+        {
+          "input": "256x256",
+          "output": "512x512",
+          "times_s": [
+            1.7244169999976293,
+            1.706289416004438,
+            1.6857365830001072
+          ],
+          "median_s": 1.706289416004438
+        },
+        {
+          "input": "512x512",
+          "output": "1024x1024",
+          "times_s": [
+            7.90525012499711,
+            7.673979000006511,
+            7.814574874995742
+          ],
+          "median_s": 7.814574874995742
+        }
+      ],
+      "provenance": {
+        "label": "fixed",
+        "git_head": "38e4a7131719e8d42027bcab39a25cf29c81e814",
+        "upscale_py_dirty": false,
+        "upscale_py_sha256": "31e3efc4d0fb6f7cd36baed38a18db5e36bf9338c2356bc893ec696e5f27a61c",
+        "restore_device_env": "mps",
+        "torch": "2.12.1",
+        "torch_threads": 4,
+        "python": "3.11.15",
+        "platform": "macOS-26.4.1-arm64-arm-64bit",
+        "machine": "arm64"
+      }
+    }
+  ]
+}
