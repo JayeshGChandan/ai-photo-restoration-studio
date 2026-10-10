@@ -17,6 +17,12 @@ difference and how many images C_3 is better / equal / worse on:
 the null case (N1's U pct_changed for images at or below the LaMa cap), and
 how many images are at most 512 px on the long edge, where N2 equals N1.
 
+Pairs whose U is empty (u_empty = true: the fixed r=15 halo covers every
+non-mask pixel) have blank U metrics. They are excluded from every U statistic
+and U paired difference, and kept for everything else; each U cell prints its
+own n. A U-size table gives, per size class x coverage, the mean and minimum
+u_fraction (U as a share of the image) and the number of u_empty pairs.
+
 Usage (from the repo root):
   ./venv/bin/python scripts/summarise_compositing.py                      # results/compositing/
   ./venv/bin/python scripts/summarise_compositing.py --dir results/compositing_smoke
@@ -63,8 +69,16 @@ COMPARISONS = [
 ]
 
 SUMMARY_COLUMNS = ["section", "size_class", "coverage_target", "condition", "metric", "n",
-                   "mean", "ci_low", "ci_high", "max", "n_better", "n_equal", "n_worse",
-                   "n_images_changed", "n_total"]
+                   "mean", "ci_low", "ci_high", "max", "min", "n_better", "n_equal", "n_worse",
+                   "n_images_changed", "n_total", "n_u_empty"]
+
+
+def is_u_metric(col: str) -> bool:
+    return col.startswith("u_")
+
+
+def u_empty(row) -> bool:
+    return row["u_empty"] == "true"
 
 
 def bootstrap_ci(values):
@@ -84,13 +98,26 @@ def load(raw_path):
         raise SystemExit(f"{raw_path} has no rows")
     groups = defaultdict(dict)
     pairs = defaultdict(set)
+    u_state = {}
     for i, row in enumerate(rows, start=2):
         key = (row["size_class"], row["coverage_target"], row["condition"])
         img = (row["split"], row["image"])
         if img in groups[key]:
             raise SystemExit(f"{raw_path}:{i}: duplicate row for {img} {key}")
+        if row["u_empty"] not in ("true", "false"):
+            raise SystemExit(f"{raw_path}:{i}: u_empty = {row['u_empty']!r}")
+        if (int(row["u_pixels"]) == 0) != u_empty(row):
+            raise SystemExit(f"{raw_path}:{i}: u_empty {row['u_empty']} with "
+                             f"u_pixels {row['u_pixels']}")
+        state = (row["u_pixels"], row["u_fraction"], row["u_empty"])
+        if u_state.setdefault((img, row["coverage_target"]), state) != state:
+            raise SystemExit(f"{raw_path}:{i}: U size differs between conditions of {img}")
         for col, _, conds, _ in METRICS:
             if row["condition"] in conds:
+                if is_u_metric(col) and u_empty(row):
+                    if row[col] != "":
+                        raise SystemExit(f"{raw_path}:{i}: {col} = {row[col]!r} with empty U")
+                    continue
                 try:
                     v = float(row[col])
                 except (TypeError, ValueError):
@@ -120,12 +147,21 @@ def summarise(groups):
                 for col, _, conds, _ in METRICS:
                     if cond not in conds:
                         continue
-                    vals = [float(r[col]) for r in rows.values()]
+                    use = [r for r in rows.values() if not (is_u_metric(col) and u_empty(r))]
+                    n_empty = len(rows) - len(use)
+                    vals = [float(r[col]) for r in use]
+                    if not vals:  # every pair in the group has an empty U
+                        cells[(sc, cov, cond, col)] = (None, None, None, 0)
+                        out.append({"section": "metric", "size_class": sc,
+                                    "coverage_target": cov, "condition": cond, "metric": col,
+                                    "n": 0, "n_u_empty": n_empty})
+                        continue
                     mean, lo, hi = bootstrap_ci(vals)
                     cells[(sc, cov, cond, col)] = (mean, lo, hi, len(vals))
                     out.append({"section": "metric", "size_class": sc, "coverage_target": cov,
                                 "condition": cond, "metric": col, "n": len(vals), "mean": mean,
-                                "ci_low": lo, "ci_high": hi, "max": max(vals)})
+                                "ci_low": lo, "ci_high": hi, "max": max(vals),
+                                "n_u_empty": n_empty if is_u_metric(col) else None})
     return out, cells
 
 
@@ -139,8 +175,14 @@ def paired(groups):
                     continue
                 if set(ra) != set(rb):
                     raise SystemExit(f"{sc} {cov}%: {a} and {b} cover different images")
-                imgs = sorted(ra)
                 for col, lower_better in metrics:
+                    imgs = sorted(i for i in ra if not (is_u_metric(col) and u_empty(ra[i])))
+                    n_empty = len(ra) - len(imgs)
+                    if not imgs:
+                        out.append({"section": "paired_diff", "size_class": sc,
+                                    "coverage_target": cov, "condition": f"{a} - {b}",
+                                    "metric": col, "n": 0, "n_u_empty": n_empty})
+                        continue
                     d = np.array([float(ra[i][col]) - float(rb[i][col]) for i in imgs])
                     better = int(np.sum(d < 0) if lower_better else np.sum(d > 0))
                     equal = int(np.sum(d == 0))
@@ -149,7 +191,8 @@ def paired(groups):
                                 "coverage_target": cov, "condition": f"{a} - {b}",
                                 "metric": col, "n": len(d), "mean": mean, "ci_low": lo,
                                 "ci_high": hi, "n_better": better, "n_equal": equal,
-                                "n_worse": len(d) - better - equal})
+                                "n_worse": len(d) - better - equal,
+                                "n_u_empty": n_empty if is_u_metric(col) else None})
     return out
 
 
@@ -159,12 +202,35 @@ def null_case(groups):
         rows = groups.get(("at_or_below_cap", cov, "N1"))
         if not rows:
             continue
-        vals = [float(r["u_pct_changed"]) for r in rows.values()]
+        vals = [float(r["u_pct_changed"]) for r in rows.values() if not u_empty(r)]
+        n_empty = len(rows) - len(vals)
+        if not vals:
+            out.append({"section": "null_case", "size_class": "at_or_below_cap",
+                        "coverage_target": cov, "condition": "N1", "metric": "u_pct_changed",
+                        "n": 0, "n_u_empty": n_empty})
+            continue
         mean, lo, hi = bootstrap_ci(vals)
         out.append({"section": "null_case", "size_class": "at_or_below_cap",
                     "coverage_target": cov, "condition": "N1", "metric": "u_pct_changed",
                     "n": len(vals), "mean": mean, "ci_low": lo, "ci_high": hi,
-                    "max": max(vals), "n_images_changed": sum(v > 0 for v in vals)})
+                    "max": max(vals), "n_images_changed": sum(v > 0 for v in vals),
+                    "n_u_empty": n_empty})
+    return out
+
+
+def u_size(groups):
+    """Per size class x coverage: mean / min u_fraction and u_empty pair count."""
+    out = []
+    for sc in SIZE_CLASSES:
+        for cov in coverage_order(groups):
+            rows = groups.get((sc, cov, "N1"))  # U size is pair-level; N1 has one row per pair
+            if not rows:
+                continue
+            fr = [float(r["u_fraction"]) for r in rows.values()]
+            out.append({"section": "u_size", "size_class": sc, "coverage_target": cov,
+                        "metric": "u_fraction", "n": len(fr), "mean": sum(fr) / len(fr),
+                        "min": min(fr), "max": max(fr),
+                        "n_u_empty": sum(u_empty(r) for r in rows.values())})
     return out
 
 
@@ -184,21 +250,32 @@ def ci_text(fmt, mean, lo, hi):
     return f"{fmt.format(mean)} [{fmt.format(lo)}, {fmt.format(hi)}]"
 
 
-def print_tables(groups, cells, paired_rows, null_rows, small_images, n_images):
-    width = 29
+def cell_text(cell, fmt, col):
+    if cell is None:
+        return "-"
+    mean, lo, hi, n = cell
+    if not is_u_metric(col):
+        return ci_text(fmt, mean, lo, hi)
+    return "n/a n=0" if n == 0 else f"{ci_text(fmt, mean, lo, hi)} n={n}"
+
+
+def print_tables(groups, cells, paired_rows, null_rows, small_images, n_images, size_rows):
+    width = 34
+    sizes = {(r["size_class"], r["coverage_target"]): r for r in size_rows}
     for sc in SIZE_CLASSES:
         for cov in coverage_order(groups):
             ns = {len(groups[(sc, cov, c)]) for c in CONDITIONS if (sc, cov, c) in groups}
             if not ns:
                 continue
-            print(f"\n== {sc}, coverage {cov}% (n = {', '.join(map(str, sorted(ns)))} images) "
-                  "-- mean [95% bootstrap CI]")
+            u = sizes[(sc, cov)]
+            print(f"\n== {sc}, coverage {cov}% (n = {', '.join(map(str, sorted(ns)))} images; "
+                  f"mean u_fraction {u['mean']:.4f}, u_empty pairs {u['n_u_empty']}) "
+                  "-- mean [95% bootstrap CI]; U rows show their own n")
             print("metric".ljust(18) + "".join(c.ljust(width) for c in CONDITIONS))
             for col, label, _, fmt in METRICS:
                 line = label.ljust(18)
                 for cond in CONDITIONS:
-                    cell = cells.get((sc, cov, cond, col))
-                    line += (ci_text(fmt, *cell[:3]) if cell else "-").ljust(width)
+                    line += cell_text(cells.get((sc, cov, cond, col)), fmt, col).ljust(width)
                 print(line.rstrip())
 
     print("\n== Paired differences (per image), mean [95% bootstrap CI]; "
@@ -208,17 +285,33 @@ def print_tables(groups, cells, paired_rows, null_rows, small_images, n_images):
     fmts = {"u_mean_abs": "{:+.4f}", "m_psnr_y": "{:+.3f}", "m_lpips": "{:+.5f}",
             "off_lpips": "{:+.5f}"}
     for r in paired_rows:
-        print(r["size_class"].ljust(17) + f"{r['coverage_target']}%".ljust(5)
-              + r["condition"].replace(" ", "").ljust(16) + r["metric"].ljust(12)
-              + ci_text(fmts[r["metric"]], r["mean"], r["ci_low"], r["ci_high"]).ljust(36)
-              + f"{r['n_better']}/{r['n_equal']}/{r['n_worse']} of {r['n']}")
+        head = (r["size_class"].ljust(17) + f"{r['coverage_target']}%".ljust(5)
+                + r["condition"].replace(" ", "").ljust(16) + r["metric"].ljust(12))
+        excl = (f" ({r['n_u_empty']} u_empty excluded)" if r.get("n_u_empty") else "")
+        if r["n"] == 0:
+            print(head + "n/a".ljust(36) + f"n = 0{excl}")
+            continue
+        print(head + ci_text(fmts[r["metric"]], r["mean"], r["ci_low"], r["ci_high"]).ljust(36)
+              + f"{r['n_better']}/{r['n_equal']}/{r['n_worse']} of {r['n']}{excl}")
 
     print("\n== Null case: N1 U % changed, images at or below the 1536 px cap")
     if not null_rows:
         print("(no at_or_below_cap images in raw.csv)")
     for r in null_rows:
+        excl = f" ({r['n_u_empty']} u_empty excluded)" if r.get("n_u_empty") else ""
+        if r["n"] == 0:
+            print(f"coverage {r['coverage_target']}%: n = 0{excl}")
+            continue
         print(f"coverage {r['coverage_target']}%: n = {r['n']}, mean {r['mean']:.6f}%, "
-              f"max {r['max']:.6f}%, images with any U change: {r['n_images_changed']}")
+              f"max {r['max']:.6f}%, images with any U change: {r['n_images_changed']}{excl}")
+
+    print("\n== U size: share of the image untouched at r=15 (fixed feather), per pair")
+    print("size_class".ljust(17) + "coverage".ljust(10) + "pairs".ljust(7)
+          + "mean u_fraction".ljust(17) + "min u_fraction".ljust(16) + "u_empty pairs")
+    for r in size_rows:
+        print(r["size_class"].ljust(17) + f"{r['coverage_target']}%".ljust(10)
+              + str(r["n"]).ljust(7) + f"{r['mean']:.4f}".ljust(17) + f"{r['min']:.4f}".ljust(16)
+              + str(r["n_u_empty"]))
 
     print(f"\n== N2 equals N1 (long edge <= {N2_CAP} px, so N2's cap does not apply): "
           f"{len(small_images)} of {n_images} images"
@@ -238,15 +331,17 @@ def main() -> int:
     paired_rows = paired(groups)
     null_rows = null_case(groups)
     n2_rows, small_images, n_images = n2_equals_n1(groups)
+    size_rows = u_size(groups)
 
     summary_path = os.path.join(args.dir, "summary.csv")
     with open(summary_path, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=SUMMARY_COLUMNS, lineterminator="\n")
         w.writeheader()
-        for r in metric_rows + paired_rows + null_rows + n2_rows:
-            w.writerow({k: (repr(v) if isinstance(v, float) else v) for k, v in r.items()})
+        for r in metric_rows + paired_rows + null_rows + size_rows + n2_rows:
+            w.writerow({k: (repr(v) if isinstance(v, float) else v) for k, v in r.items()
+                        if v is not None})
 
-    print_tables(groups, cells, paired_rows, null_rows, small_images, n_images)
+    print_tables(groups, cells, paired_rows, null_rows, small_images, n_images, size_rows)
     print(f"\nWrote {summary_path}")
     return 0
 
