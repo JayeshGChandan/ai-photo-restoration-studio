@@ -1,8 +1,9 @@
 {
   "generated_by": "scripts/make_figures.py",
   "code": {
-    "git_head": "47e263d9975af561097542fb37219e1244fbe6f3",
-    "make_figures_py_modified_vs_head": false
+    "git_head": "664475f8aad7a1081f9a011e610ce981eef034e0",
+    "make_figures_py_sha256": "58fb31766ed6aa7d964ccf31cfca38c1a340cf55aa7615db6e9de2185ffa43da",
+    "make_figures_py_modified_vs_head": true
   },
   "inputs": {
     "raw_csv_sha256": "0da006854bbd6e38ab65d59b4d6530a025dcfb431f868361dd4d2908a160be4b",
@@ -123,6 +124,53 @@
     },
     "F": {
       "form": "SVG schematic: boxes, arrows, short labels"
+    },
+    "charts": {
+      "1": {
+        "source": "summary.csv section metric, above_cap, u_pct_changed",
+        "conditions": [
+          "N2",
+          "N1",
+          "C_3"
+        ],
+        "error_bars": "95% bootstrap CI"
+      },
+      "2": {
+        "source": "raw.csv m_psnr_y per (image, coverage)",
+        "x": "C_3_legacy",
+        "y": "C_3",
+        "panels": [
+          "above_cap",
+          "at_or_below_cap"
+        ],
+        "reference": "y = x"
+      },
+      "3": {
+        "source": "summary.csv section metric, above_cap, coverage 5",
+        "x": "off_lpips",
+        "y": "m_lpips",
+        "conditions": [
+          "C_3",
+          "C_3_legacy",
+          "C_3_N2fill",
+          "N1",
+          "N2"
+        ],
+        "error_bars": "95% bootstrap CI on both axes",
+        "x_scale": "log when the largest x mean exceeds 4x the second largest"
+      },
+      "4": {
+        "source": "tests/test_compositing.py identity-test inputs (both sizes), max Euclidean distance from the binary mask of any changed pixel",
+        "radii": [
+          0,
+          3,
+          15
+        ],
+        "versions": [
+          "legacy",
+          "fixed"
+        ]
+      }
     }
   },
   "outcomes": {
@@ -674,6 +722,224 @@
         "location": null,
         "outcome": "schematic"
       }
+    },
+    "charts": {
+      "1": {
+        "files": [
+          "chart_1_u_changed.png",
+          "chart_1_u_changed.svg"
+        ],
+        "outcome": {
+          "N2@1": [
+            93.30546812726722,
+            92.20566218550798,
+            94.34589382139906,
+            92
+          ],
+          "N1@1": [
+            78.00920588829965,
+            75.68778319657397,
+            80.26853963046042,
+            92
+          ],
+          "C_3@1": [
+            0.0,
+            0.0,
+            0.0,
+            92
+          ],
+          "N2@5": [
+            92.97011983926717,
+            91.78743488910067,
+            94.081384038776,
+            92
+          ],
+          "N1@5": [
+            77.2023750551457,
+            74.77074302995112,
+            79.57384237762678,
+            92
+          ],
+          "C_3@5": [
+            0.0,
+            0.0,
+            0.0,
+            92
+          ],
+          "N2@15": [
+            93.30810571977362,
+            92.21872889256315,
+            94.34542855097182,
+            92
+          ],
+          "N1@15": [
+            77.34080107784385,
+            74.76733785013762,
+            79.80142191563078,
+            92
+          ],
+          "C_3@15": [
+            0.0,
+            0.0,
+            0.0,
+            92
+          ]
+        }
+      },
+      "2": {
+        "files": [
+          "chart_2_m_psnr_legacy_vs_fixed.png",
+          "chart_2_m_psnr_legacy_vs_fixed.svg"
+        ],
+        "outcome": {
+          "pairs_per_panel": {
+            "above_cap": 276,
+            "at_or_below_cap": 30
+          },
+          "axis_limits_db": [
+            5.0,
+            35.0
+          ],
+          "pairs_above_y_equals_x": 306,
+          "pairs_total": 306
+        }
+      },
+      "3": {
+        "files": [
+          "chart_3_lpips_tradeoff.png",
+          "chart_3_lpips_tradeoff.svg"
+        ],
+        "outcome": {
+          "x_scale": "log",
+          "values": {
+            "C_3": {
+              "off_lpips": [
+                0.047895266137936196,
+                0.041503641768054954,
+                0.054858398742963686,
+                92
+              ],
+              "m_lpips": [
+                0.13405570602449385,
+                0.12485437221197493,
+                0.143722032652358,
+                92
+              ]
+            },
+            "C_3_legacy": {
+              "off_lpips": [
+                0.013139620699803345,
+                0.010426093550347066,
+                0.016219489651136784,
+                92
+              ],
+              "m_lpips": [
+                0.14695102354997527,
+                0.13773341806119552,
+                0.15665124834555647,
+                92
+              ]
+            },
+            "C_3_N2fill": {
+              "off_lpips": [
+                0.08815378576274151,
+                0.08076018348852497,
+                0.09618313651906488,
+                92
+              ],
+              "m_lpips": [
+                0.11639078844176687,
+                0.10857040237473405,
+                0.12471289828055254,
+                92
+              ]
+            },
+            "N1": {
+              "off_lpips": [
+                0.08328573558601024,
+                0.07534001200186576,
+                0.09151095207299753,
+                92
+              ],
+              "m_lpips": [
+                0.13405570602449385,
+                0.12485437221197493,
+                0.143722032652358,
+                92
+              ]
+            },
+            "N2": {
+              "off_lpips": [
+                0.40631392760121304,
+                0.3841927338270066,
+                0.42894707869981297,
+                92
+              ],
+              "m_lpips": [
+                0.11639078844176687,
+                0.10857040237473405,
+                0.12471289828055254,
+                92
+              ]
+            }
+          }
+        }
+      },
+      "4": {
+        "files": [
+          "chart_4_halo_reach.png",
+          "chart_4_halo_reach.svg"
+        ],
+        "outcome": {
+          "radii": [
+            0,
+            3,
+            15
+          ],
+          "reach_px": {
+            "fixed": [
+              0.0,
+              19.4164878389476,
+              97.45255255764212
+            ],
+            "legacy": [
+              0.0,
+              8.48528137423857,
+              41.012193308819754
+            ]
+          },
+          "per_test_size": {
+            "fixed": {
+              "0": {
+                "1536x1024": 0.0,
+                "2400x1600": 0.0
+              },
+              "3": {
+                "1536x1024": 19.4164878389476,
+                "2400x1600": 19.4164878389476
+              },
+              "15": {
+                "1536x1024": 97.45255255764212,
+                "2400x1600": 97.45255255764212
+              }
+            },
+            "legacy": {
+              "0": {
+                "1536x1024": 0.0,
+                "2400x1600": 0.0
+              },
+              "3": {
+                "1536x1024": 8.48528137423857,
+                "2400x1600": 8.48528137423857
+              },
+              "15": {
+                "1536x1024": 41.012193308819754,
+                "2400x1600": 41.012193308819754
+              }
+            }
+          }
+        }
+      }
     }
   },
   "images_used": [
@@ -683,6 +949,14 @@
     }
   ],
   "files": {
+    "chart_1_u_changed.png": "092236b54fa5e3d6d8697533cf1908634b713bfd9c95afe556a020e3bdcf9670",
+    "chart_1_u_changed.svg": "e48afcc86ac1ce2fdbb553d5375c2c452ff6d5962f7f46a4f7cfe1dd15498e3e",
+    "chart_2_m_psnr_legacy_vs_fixed.png": "6a10bad9ef2300cafd348e9021877e1ed18e2656b7043580bab1ae24a6a17cd7",
+    "chart_2_m_psnr_legacy_vs_fixed.svg": "f953715eca820123f8e2ff5afa8cebe2d6af44728881efba62cb432b245fb05b",
+    "chart_3_lpips_tradeoff.png": "cb68efe33111bbde76d349fe4a89932b119347ed5ce6bf7b69307f417fc6b35c",
+    "chart_3_lpips_tradeoff.svg": "1c17c98aa03b712e0f40d593f939ba3a4f6f453c35222814076ffccc37e8e61b",
+    "chart_4_halo_reach.png": "81e30869f50bb4de98d66d9006983714e7d6395c9e1150f1d07aa9fe1ff6cdf1",
+    "chart_4_halo_reach.svg": "01962b09997f72254d3c14c60405142ceac2c546a81a7246c08b4c02703937b6",
     "fig_a_change_maps.png": "08d4639e9562309428e3ebb1cbfaee7bd546f2c048f303e83222656b373fb98c",
     "fig_a_change_maps_full.png": "46bd3dd70e447054bb18950e32d0e7ddaf74bccc59a2d828a83f8c9c231ef1ff",
     "fig_b_detail_crops.png": "7a72faa555e4406ea3fce2324c4b2a737078c235920cd633695a949710f48a90",

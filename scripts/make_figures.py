@@ -1,5 +1,5 @@
 """
-Regenerate every figure for the compositing write-up into docs/figures/.
+Regenerate every figure and chart for the compositing write-up into docs/figures/.
 
 Inputs, and nothing else:
   * data/manifest.csv and the images it lists (sha256-checked),
@@ -13,6 +13,11 @@ Example images are recomputed with the experiment's own code: the same mask
 and the composite / legacy_composite definitions from the runner. Every
 recomputed condition's U pct_changed and M PSNR-Y must equal its raw.csv row
 exactly, or the script stops before writing anything.
+
+Charts 1-3 read results/compositing/summary.csv (means and 95% bootstrap
+CIs) and raw.csv (per-image values); chart 4 recomputes the halo reach on the
+identity-test inputs of tests/test_compositing.py with the fixed composite
+and legacy_composite.
 
 Every example image, crop window and boundary point is chosen by a fixed
 rule; each rule and its outcome is written to docs/figures/manifest.json
@@ -69,10 +74,13 @@ runner = _load_module("run_compositing_experiment",
                       os.path.join(REPO_ROOT, "scripts", "run_compositing_experiment.py"))
 
 # ---------------------------------------------------------------------------
-# Palette (dataviz reference palette, light mode; validated with
-# validate_palette.js: {C_3, C_3_legacy} adjacent and the ordinal coverage
-# ramp pass; {N2, N1, C_3} bars pass with a contrast WARN, relieved by value
-# labels at the bar tips and the tables on the page).
+# Palette (dataviz reference palette, light mode), checked with
+# validate_palette.js. Entity hues use only the first three categorical slots,
+# which pass every check with all pairs compared (needed for the chart 3
+# scatter): C_3 blue, C_3_legacy orange, N1 aqua (contrast WARN 2.74:1,
+# relieved by direct labels and the tables on the page). N2 is a neutral
+# grey; C_3_N2fill reuses C_3's blue as a hollow square. The coverage ramp is
+# blue steps 250/450/650, which pass the ordinal checks.
 # ---------------------------------------------------------------------------
 SURFACE = "#fcfcfb"
 INK = "#0b0b0b"
@@ -81,7 +89,11 @@ MUTED = "#898781"
 GRID = "#e1e0d9"
 AXIS = "#c3c2b7"
 WASH = "#f0efec"
-COLOR = {"C_3": "#2a78d6", "C_3_legacy": "#eb6834", "N1": "#1baf7a", "N2": "#eda100"}
+COLOR = {"C_3": "#2a78d6", "C_3_legacy": "#eb6834", "N1": "#1baf7a", "N2": "#77766f",
+         "C_3_N2fill": "#2a78d6"}
+LABEL = {"C_3": "Composite (C_3)", "C_3_legacy": "Legacy composite (C_3_legacy)",
+         "N1": "Raw LaMa (N1)", "N2": "512 px LaMa (N2)",
+         "C_3_N2fill": "512 px fill, composited (C_3_N2fill)"}
 OUTLINE = "#eb6834"
 BLUE_RAMP = ["#cde2fb", "#b7d3f6", "#9ec5f4", "#86b6ef", "#6da7ec", "#5598e7", "#3987e5",
              "#2a78d6", "#256abf", "#1c5cab", "#184f95", "#104281", "#0d366b"]
@@ -158,6 +170,21 @@ DEFAULT_RULES = {
     "E": {"panels": ["C_3", "C_3_N2fill", "I"], "location": "same crop as C",
           "upscale": 4, "upscale_method": "nearest"},
     "F": {"form": "SVG schematic: boxes, arrows, short labels"},
+    "charts": {
+        "1": {"source": "summary.csv section metric, above_cap, u_pct_changed",
+              "conditions": ["N2", "N1", "C_3"], "error_bars": "95% bootstrap CI"},
+        "2": {"source": "raw.csv m_psnr_y per (image, coverage)",
+              "x": "C_3_legacy", "y": "C_3", "panels": ["above_cap", "at_or_below_cap"],
+              "reference": "y = x"},
+        "3": {"source": "summary.csv section metric, above_cap, coverage 5",
+              "x": "off_lpips", "y": "m_lpips",
+              "conditions": ["C_3", "C_3_legacy", "C_3_N2fill", "N1", "N2"],
+              "error_bars": "95% bootstrap CI on both axes",
+              "x_scale": "log when the largest x mean exceeds 4x the second largest"},
+        "4": {"source": "tests/test_compositing.py identity-test inputs (both sizes), "
+                        "max Euclidean distance from the binary mask of any changed pixel",
+              "radii": [0, 3, 15], "versions": ["legacy", "fixed"]},
+    },
 }
 
 
@@ -178,12 +205,12 @@ def git(*args):
 
 
 def load_rules():
+    """Rules recorded in manifest.json win; rule keys it lacks come from DEFAULT_RULES."""
+    rules = dict(DEFAULT_RULES)
     if os.path.exists(MANIFEST_JSON):
         with open(MANIFEST_JSON) as f:
-            rules = json.load(f).get("rules")
-        if rules:
-            return rules
-    return DEFAULT_RULES
+            rules.update(json.load(f).get("rules") or {})
+    return rules
 
 
 def read_raw():
@@ -620,6 +647,202 @@ def alpha_chart(prof, outputs):
     save_chart(fig, "fig_c_alpha_profile", outputs)
 
 
+def bar_path(x0, x1, h, rx, ry):
+    """Bar from the baseline to h with rounded data-end corners (radius rx, ry in data units)."""
+    from matplotlib.path import Path
+    ry = min(ry, h)
+    rx = min(rx, (x1 - x0) / 2)
+    if h <= 0:
+        return None
+    verts = [(x0, 0), (x0, h - ry), (x0, h), (x0 + rx, h), (x1 - rx, h), (x1, h), (x1, h - ry),
+             (x1, 0), (x0, 0)]
+    codes = [Path.MOVETO, Path.LINETO, Path.CURVE3, Path.CURVE3, Path.LINETO, Path.CURVE3,
+             Path.CURVE3, Path.LINETO, Path.CLOSEPOLY]
+    return Path(verts, codes)
+
+
+def data_per_px(ax):
+    (x0, y0), (x1, y1) = ax.transData.transform([(0, 0), (1, 1)])
+    return 1.0 / (x1 - x0), 1.0 / (y1 - y0)
+
+
+def read_summary():
+    with open(SUMMARY_CSV, newline="") as f:
+        rows = list(csv.DictReader(f))
+    out = {}
+    for r in rows:
+        if r["section"] == "metric" and r["mean"] != "":
+            out[(r["size_class"], r["coverage_target"], r["condition"], r["metric"])] = (
+                float(r["mean"]), float(r["ci_low"]), float(r["ci_high"]), int(r["n"]))
+    return out
+
+
+def chart_1(summary, outputs):
+    from matplotlib.patches import PathPatch
+    conds = ["N2", "N1", "C_3"]
+    covs = ["1", "5", "15"]
+    fig = plt.figure(figsize=(7.2, 4.0), dpi=100)
+    ax = fig.add_axes([0.09, 0.12, 0.88, 0.70])
+    style_axes(ax, grid_axis="y")
+    ax.set_xlim(-0.6, len(covs) - 0.4)
+    ax.set_ylim(0, 105)
+    dx, dy = data_per_px(ax)
+    bw, gap = 22 * dx, 2 * dx
+    values = {}
+    for gi, cov in enumerate(covs):
+        for bi, cond in enumerate(conds):
+            mean, lo, hi, n = summary[("above_cap", cov, cond, "u_pct_changed")]
+            values[f"{cond}@{cov}"] = [mean, lo, hi, n]
+            xc = gi + (bi - 1) * (bw + gap)
+            path = bar_path(xc - bw / 2, xc + bw / 2, mean, 4 * dx, 4 * dy)
+            if path is not None:
+                ax.add_patch(PathPatch(path, facecolor=COLOR[cond], edgecolor="none", zorder=2))
+            ax.errorbar([xc], [mean], yerr=[[mean - lo], [hi - mean]], fmt="none",
+                        ecolor=INK2, elinewidth=PX, capsize=3, capthick=PX, zorder=3)
+            ax.text(xc, hi + 6 * dy, f"{mean:.1f}", ha="center", va="bottom", color=INK2,
+                    fontsize=11 * PX)
+    ax.axhline(0, color=AXIS, linewidth=PX, zorder=4)
+    ax.set_xticks(range(len(covs)), [f"{c}% coverage" for c in covs])
+    ax.tick_params(axis="x", length=0)
+    ax.set_ylabel("U pixels changed (%), above cap")
+    handles = [plt.Rectangle((0, 0), 1, 1, color=COLOR[c]) for c in conds]
+    fig.legend(handles, [LABEL[c] for c in conds], loc="upper left", ncol=3,
+               bbox_to_anchor=(0.08, 0.98), handlelength=1.0, columnspacing=1.6)
+    save_chart(fig, "chart_1_u_changed", outputs)
+    return values
+
+
+def chart_2(rows, outputs):
+    pts = {}
+    for r in rows:
+        if r["condition"] in ("C_3", "C_3_legacy"):
+            key = (r["size_class"], r["split"], r["image"], r["coverage_target"])
+            pts.setdefault(key, {})[r["condition"]] = float(r["m_psnr_y"])
+    xs = [v["C_3_legacy"] for v in pts.values()]
+    ys = [v["C_3"] for v in pts.values()]
+    lo = np.floor(min(xs + ys) / 5) * 5
+    hi = np.ceil(max(xs + ys) / 5) * 5
+    fig = plt.figure(figsize=(9.6, 4.6), dpi=100)
+    panels = [("above_cap", "Above the 1536 px cap"), ("at_or_below_cap", "At or below the cap")]
+    counts = {}
+    for pi, (sc, title) in enumerate(panels):
+        ax = fig.add_axes([0.07 + pi * 0.48, 0.12, 0.40, 0.72])
+        style_axes(ax, grid_axis="both")
+        ax.plot([lo, hi], [lo, hi], color=MUTED, linewidth=PX, zorder=1)
+        n = 0
+        for cov in ("1", "5", "15"):
+            sel = [v for k, v in pts.items() if k[0] == sc and k[3] == cov]
+            n += len(sel)
+            ax.scatter([v["C_3_legacy"] for v in sel], [v["C_3"] for v in sel],
+                       s=(11 * PX) ** 2, marker=COVERAGE_MARKER[cov], color=COVERAGE_RAMP[cov],
+                       edgecolors=SURFACE, linewidths=1.5 * PX, zorder=2,
+                       label=f"{cov}% coverage")
+        counts[sc] = n
+        ax.set_xlim(lo, hi)
+        ax.set_ylim(lo, hi)
+        ax.set_aspect("equal")
+        ax.set_title(f"{title} · {n} pairs", loc="left", color=INK, fontsize=13 * PX)
+        ax.set_xlabel("M PSNR-Y, legacy composite (dB)")
+        if pi == 0:
+            ax.set_ylabel("M PSNR-Y, fixed composite C_3 (dB)")
+        ax.text(hi - 0.5, hi - 0.5, "y = x", ha="right", va="top", color=MUTED,
+                fontsize=11 * PX, rotation=45, rotation_mode="anchor")
+    handles, labels = fig.axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="upper right", ncol=3, bbox_to_anchor=(0.99, 0.99),
+               markerscale=1.4)
+    save_chart(fig, "chart_2_m_psnr_legacy_vs_fixed", outputs)
+    above = sum(1 for k, v in pts.items() if v["C_3"] > v["C_3_legacy"])
+    return {"pairs_per_panel": counts, "axis_limits_db": [float(lo), float(hi)],
+            "pairs_above_y_equals_x": above, "pairs_total": len(pts)}
+
+
+def chart_3(summary, outputs):
+    conds = ["C_3", "C_3_legacy", "C_3_N2fill", "N1", "N2"]
+    vals = {c: {"off_lpips": summary[("above_cap", "5", c, "off_lpips")],
+                "m_lpips": summary[("above_cap", "5", c, "m_lpips")]} for c in conds}
+    xm = sorted(v["off_lpips"][0] for v in vals.values())
+    use_log = xm[-1] > 4 * xm[-2]
+    fig = plt.figure(figsize=(7.2, 4.6), dpi=100)
+    ax = fig.add_axes([0.11, 0.12, 0.85, 0.64])
+    style_axes(ax, grid_axis="both")
+    marker = {"C_3": "o", "C_3_legacy": "o", "C_3_N2fill": "s", "N1": "o", "N2": "o"}
+    offset = {"C_3": (8, 8), "C_3_legacy": (8, 8), "C_3_N2fill": (8, -14), "N1": (8, 8),
+              "N2": (-8, 8)}
+    for c in conds:
+        (x, xlo, xhi, _), (y, ylo, yhi, _) = vals[c]["off_lpips"], vals[c]["m_lpips"]
+        ax.errorbar([x], [y], xerr=[[x - xlo], [xhi - x]], yerr=[[y - ylo], [yhi - y]],
+                    fmt="none", ecolor=INK2, elinewidth=PX, capsize=3, capthick=PX, zorder=2)
+        hollow = c == "C_3_N2fill"
+        ax.scatter([x], [y], s=(10 * PX) ** 2, marker=marker[c],
+                   facecolors=SURFACE if hollow else COLOR[c], edgecolors=COLOR[c],
+                   linewidths=2 * PX, zorder=3, label=LABEL[c])
+        ax.annotate(c, (x, y), xytext=offset[c], textcoords="offset points",
+                    ha="right" if offset[c][0] < 0 else "left", color=INK, fontsize=12 * PX)
+    if use_log:
+        ax.set_xscale("log")
+    ax.set_xlabel("Off-repair LPIPS (lower is better)" + (", log scale" if use_log else ""))
+    ax.set_ylabel("M LPIPS (lower is better)")
+    fig.legend(*ax.get_legend_handles_labels(), loc="upper left", ncol=2,
+               bbox_to_anchor=(0.10, 0.99), handletextpad=0.4, columnspacing=1.4)
+    save_chart(fig, "chart_3_lpips_tradeoff", outputs)
+    return {"x_scale": "log" if use_log else "linear",
+            "values": {c: {m: list(v) for m, v in d.items()} for c, d in vals.items()}}
+
+
+def halo_reach_values():
+    """Max distance beyond the binary mask of any changed pixel, on the identity-test inputs."""
+    from compositing import composite
+    from legacy_compositing import legacy_composite
+    tests = _load_module("test_compositing", os.path.join(REPO_ROOT, "tests",
+                                                          "test_compositing.py"))
+    out = {}
+    for (w, h, seed) in tests.SIZES:
+        original, restored, mask = tests._inputs(w, h, seed)
+        dist = ndimage.distance_transform_edt(mask == 0)
+        o, rimg, m = Image.fromarray(original), Image.fromarray(restored), Image.fromarray(mask)
+        for version, fn in (("fixed", composite), ("legacy", legacy_composite)):
+            for r in tests.RADII:
+                res = np.asarray(fn(o, rimg, m, feather_radius=r))
+                changed = (res != original).any(-1) & (mask == 0)
+                out.setdefault(version, {}).setdefault(str(r), {})[f"{w}x{h}"] = (
+                    float(dist[changed].max()) if changed.any() else 0.0)
+    return out, tests.RADII
+
+
+def chart_4(outputs):
+    reach, radii = halo_reach_values()
+    per_version = {}
+    for version, by_r in reach.items():
+        per_version[version] = []
+        for r in radii:
+            vals = set(by_r[str(r)].values())
+            if len(vals) != 1:
+                raise SystemExit(f"halo reach differs between test sizes: {version} r={r}")
+            per_version[version].append(vals.pop())
+    fig = plt.figure(figsize=(7.2, 4.0), dpi=100)
+    ax = fig.add_axes([0.10, 0.13, 0.78, 0.72])
+    style_axes(ax, grid_axis="y")
+    for version, key in (("legacy", "C_3_legacy"), ("fixed", "C_3")):
+        ys = per_version[version]
+        ax.plot(radii, ys, color=COLOR[key], linewidth=2 * PX, solid_joinstyle="round",
+                solid_capstyle="round", marker="o", markersize=8 * PX, markeredgecolor=SURFACE,
+                markeredgewidth=2 * PX, label=f"{version.capitalize()} feather", zorder=3)
+        for r, y in zip(radii, ys):
+            if r == 0:
+                continue
+            ax.annotate(f"{y:.2f}", (r, y), xytext=(8, 0), textcoords="offset points",
+                        va="center", color=INK2, fontsize=11 * PX)
+    ax.set_xticks(radii)
+    ax.set_xlim(-0.8, max(radii) + 2.6)
+    ax.set_ylim(0, max(max(v) for v in per_version.values()) * 1.12)
+    ax.set_xlabel("Feather radius r (px)")
+    ax.set_ylabel("Max reach of changes beyond mask (px)")
+    fig.legend(*ax.get_legend_handles_labels(), loc="upper left", ncol=2,
+               bbox_to_anchor=(0.09, 0.99))
+    save_chart(fig, "chart_4_halo_reach", outputs)
+    return {"radii": radii, "reach_px": per_version, "per_test_size": reach}
+
+
 # ---------------------------------------------------------------------------
 # Figure F: schematic
 # ---------------------------------------------------------------------------
@@ -729,9 +952,18 @@ def main() -> int:
     figs["F"] = {"files": outputs[n0:], "source": None, "location": None,
                  "outcome": "schematic"}
 
+    summary = read_summary()
+    charts = {}
+    for cid, fn in (("1", lambda o: chart_1(summary, o)), ("2", lambda o: chart_2(rows, o)),
+                    ("3", lambda o: chart_3(summary, o)), ("4", chart_4)):
+        n0 = len(outputs)
+        outcome = fn(outputs)
+        charts[cid] = {"files": outputs[n0:], "outcome": outcome}
+
     manifest = {
         "generated_by": "scripts/make_figures.py",
         "code": {"git_head": git("rev-parse", "HEAD"),
+                 "make_figures_py_sha256": sha256_file(os.path.abspath(__file__)),
                  "make_figures_py_modified_vs_head": bool(git("status", "--porcelain", "--",
                                                               "scripts/make_figures.py"))},
         "inputs": {"raw_csv_sha256": sha256_file(RAW_CSV),
@@ -739,7 +971,8 @@ def main() -> int:
                    "data_manifest_sha256": sha256_file(DATA_MANIFEST), "seed": seed,
                    "lama_devices": ex["lama_devices"]},
         "rules": rules,
-        "outcomes": {"representative_image": rep, "verification": checks, "figures": figs},
+        "outcomes": {"representative_image": rep, "verification": checks, "figures": figs,
+                     "charts": charts},
         "images_used": [{"split": rep["split"], "filename": rep["filename"]}],
         "files": {name: sha256_file(os.path.join(OUT_DIR, name)) for name in sorted(outputs)},
     }
