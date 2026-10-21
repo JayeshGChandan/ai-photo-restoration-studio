@@ -1,0 +1,242 @@
+{
+  "experiment": "compositing",
+  "definitions": {
+    "D": "I with pixels inside M overwritten by the damage fill",
+    "L": "LamaInpainter(device='cpu').inpaint(D, M), default 1536 px cap, raw",
+    "C_r": "compositing.composite(D, L, M, feather_radius=r), r in {0, 3, 15}, same L (feather wholly outside M)",
+    "C_r_legacy": "legacy_compositing.legacy_composite(D, L, M, feather_radius=r), r in {3, 15}, same L (feather centred on M's edge)",
+    "N1": "L itself",
+    "N2": "LamaInpainter(device='cpu', max_dimension=512).inpaint(D, M), raw",
+    "C_3_N2fill": "compositing.composite(D, N2, M, feather_radius=3): the 512 px fill with the fixed feather",
+    "U": "pixels where the fixed feather_mask(M, r=15) == 0; asserted disjoint from M and untouched by every legacy composite",
+    "H_r": "pixels outside M where the condition's own feather (fixed or legacy) at radius r is > 0",
+    "size_class": "above_cap if long edge > LaMa cap (1536) else at_or_below_cap",
+    "u_pixels": "number of U pixels (pair-level; same on every condition row)",
+    "u_fraction": "u_pixels / (width * height)",
+    "u_empty": "true when u_pixels == 0; the U metrics are then blank",
+    "u_pct_changed_gt1": "% of U pixels where any channel differs by > 1 level",
+    "u_p99_abs": "99th percentile (inverted CDF) of per-channel |X - I| over U",
+    "m_d_weight": "mean of (1 - alpha/255) over M: the weight of D inside M",
+    "m_lpips": "LPIPS(X inside M + I outside M, I)",
+    "off_lpips": "LPIPS(I inside M + X outside M, I)",
+    "runtime_s": "time to produce the condition's output (composites include L)"
+  },
+  "conditions": [
+    "C_0",
+    "C_3",
+    "C_15",
+    "C_3_legacy",
+    "C_15_legacy",
+    "C_3_N2fill",
+    "N1",
+    "N2"
+  ],
+  "composites": {
+    "C_0": {
+      "feather": "fixed",
+      "radius": 0,
+      "fill": "L"
+    },
+    "C_3": {
+      "feather": "fixed",
+      "radius": 3,
+      "fill": "L"
+    },
+    "C_15": {
+      "feather": "fixed",
+      "radius": 15,
+      "fill": "L"
+    },
+    "C_3_legacy": {
+      "feather": "legacy",
+      "radius": 3,
+      "fill": "L"
+    },
+    "C_15_legacy": {
+      "feather": "legacy",
+      "radius": 15,
+      "fill": "L"
+    },
+    "C_3_N2fill": {
+      "feather": "fixed",
+      "radius": 3,
+      "fill": "N2"
+    }
+  },
+  "u_radius": 15,
+  "code": {
+    "compositing_py_blob": "5b9c8327f1752e535f9dc800aa33b8d738b5149b",
+    "legacy_compositing_py_blob": "de8e1880fb75a538f5758a77c1a4c3b8641eaed8"
+  },
+  "manifest": "data/manifest.csv",
+  "manifest_sha256": "6e1907224bb34e2859ca518273b9b7bd47fac5742aa24096383f1e8ec530d1a9",
+  "damage_fill": {
+    "value": 235,
+    "sigma": 10.0,
+    "clip": [
+      0,
+      255
+    ],
+    "rounding": "nearest (np.rint)",
+    "rng": "SeedSequence([seed, image_index, round(coverage*1e6), 1])"
+  },
+  "mask_params": {
+    "stroke_share": 0.4,
+    "stroke_segments": [
+      3,
+      8
+    ],
+    "stroke_segment_len_long_edge": [
+      0.03,
+      0.1
+    ],
+    "stroke_turn_sigma_rad": 0.35,
+    "stroke_thickness_short_edge": [
+      0.002,
+      0.005
+    ],
+    "stroke_min_thickness_px": 2,
+    "blob_expected_count": 6,
+    "blob_radius_jitter": [
+      0.6,
+      1.4
+    ],
+    "blob_vertices": 16,
+    "blob_radial_noise": 0.35,
+    "overshoot_shrink": 0.6,
+    "inner_band": 0.02,
+    "coverage_tolerance": 0.1,
+    "line_type": "cv2.LINE_8 (binary, no anti-aliasing)"
+  },
+  "mask_rng": "SeedSequence([seed, image_index, round(coverage*1e6), 0])",
+  "runs": [
+    {
+      "git_head": "a476359547d435528f59742c18fe283f325d47be",
+      "git_branch": "evidence/compositing-experiment",
+      "git_dirty": false,
+      "python": "3.11.15",
+      "platform": "macOS-26.4.1-arm64-arm-64bit",
+      "torch": "2.12.1",
+      "torch_threads": 4,
+      "pyiqa": "0.1.15.post2",
+      "env": {
+        "LAMA_DEVICE": null,
+        "RESTORE_DEVICE": null
+      },
+      "pip_freeze": [
+        "annotated-doc==0.0.4",
+        "annotated-types==0.7.0",
+        "anyio==4.14.0",
+        "brotli==1.2.0",
+        "certifi==2026.6.17",
+        "charset-normalizer==3.4.7",
+        "click==8.4.1",
+        "contourpy==1.3.3",
+        "cycler==0.12.1",
+        "einops==0.8.2",
+        "facexlib==0.3.0",
+        "fastapi==0.137.2",
+        "filelock==3.29.4",
+        "filterpy==1.4.5",
+        "fire==0.5.0",
+        "fonttools==4.63.0",
+        "fsspec==2026.6.0",
+        "ftfy==6.3.1",
+        "gradio==6.19.0",
+        "gradio_client==2.5.0",
+        "groovy==0.1.2",
+        "h11==0.16.0",
+        "hf-gradio==0.4.1",
+        "hf-xet==1.5.1",
+        "httpcore==1.0.9",
+        "httpx==0.28.1",
+        "huggingface_hub==1.20.1",
+        "idna==3.18",
+        "iniconfig==2.3.1",
+        "Jinja2==3.1.6",
+        "kiwisolver==1.5.0",
+        "llvmlite==0.47.0",
+        "markdown-it-py==4.2.0",
+        "MarkupSafe==3.0.3",
+        "matplotlib==3.11.0",
+        "mdurl==0.1.2",
+        "mpmath==1.3.0",
+        "networkx==3.6.1",
+        "numba==0.65.1",
+        "numpy==1.26.4",
+        "openai-clip==1.0.1",
+        "opencv-python==4.11.0.86",
+        "orjson==3.11.9",
+        "packaging==26.2",
+        "pandas==3.0.3",
+        "Pillow==9.5.0",
+        "pluggy==1.6.0",
+        "pydantic==2.13.4",
+        "pydantic_core==2.46.4",
+        "pydub==0.25.1",
+        "Pygments==2.20.0",
+        "pyiqa==0.1.15.post2",
+        "pyparsing==3.3.2",
+        "pytest==9.1.1",
+        "python-dateutil==2.9.0.post0",
+        "python-multipart==0.0.32",
+        "pytz==2026.2",
+        "PyYAML==6.0.3",
+        "regex==2026.5.9",
+        "requests==2.34.2",
+        "rich==15.0.0",
+        "safehttpx==0.1.7",
+        "safetensors==0.8.0",
+        "scipy==1.17.1",
+        "semantic-version==2.10.0",
+        "shellingham==1.5.4",
+        "simple-lama-inpainting==0.1.2",
+        "six==1.17.0",
+        "spandrel==0.4.2",
+        "spandrel_extra_arches==0.2.0",
+        "starlette==1.3.1",
+        "sympy==1.14.0",
+        "termcolor==3.3.0",
+        "timm==1.0.27",
+        "tomlkit==0.14.0",
+        "torch==2.12.1",
+        "torchvision==0.27.1",
+        "tqdm==4.68.3",
+        "typer==0.25.1",
+        "typing-inspection==0.4.2",
+        "typing_extensions==4.15.0",
+        "urllib3==2.7.0",
+        "uvicorn==0.49.0",
+        "wcwidth==0.8.1"
+      ],
+      "start": "2026-10-21T01:53:15+05:30",
+      "end": "2026-10-21T04:34:30+05:30",
+      "status": "completed",
+      "args": {
+        "manifest": "/Users/jayeshc7/Documents/Resume projects/AI repair studio/data/manifest.csv",
+        "coverages": [
+          1,
+          5,
+          15
+        ],
+        "seed": 0,
+        "limit": null,
+        "images": null,
+        "out": "results/compositing",
+        "allow_dirty": false,
+        "preflight_only": false
+      },
+      "devices": {
+        "lama_n1": "cpu",
+        "lama_n2": "cpu",
+        "metrics": "cpu"
+      },
+      "lama": {
+        "max_dimension_n1": 1536,
+        "max_dimension_n2": 512
+      },
+      "pairs_completed": 306,
+      "pairs_skipped": 0
+    }
+  ]
+}

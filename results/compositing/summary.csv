@@ -1,0 +1,515 @@
+section,size_class,coverage_target,condition,metric,n,mean,ci_low,ci_high,max,min,n_better,n_equal,n_worse,n_images_changed,n_total,n_u_empty
+metric,above_cap,1,C_0,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_0,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_0,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_0,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_0,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_0,m_d_weight,92,0.0,0.0,0.0,0.0,,,,,,,
+metric,above_cap,1,C_0,m_psnr_y,92,11.37193595834016,10.930445293086894,11.83344377365119,19.16675365905184,,,,,,,
+metric,above_cap,1,C_3,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_3,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_3,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_3,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_3,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_3,h_pct_changed,92,52.24280785544293,50.51963784917604,53.90288758554361,70.47896298965455,,,,,,,
+metric,above_cap,1,C_3,m_d_weight,92,0.0,0.0,0.0,0.0,,,,,,,
+metric,above_cap,1,C_3,m_psnr_y,92,11.37193595834016,10.930445293086894,11.83344377365119,19.16675365905184,,,,,,,
+metric,above_cap,1,C_3,m_lpips,92,0.03599877648926138,0.03318910706084748,0.03893685584670216,0.07196283340454102,,,,,,,
+metric,above_cap,1,C_3,off_lpips,92,0.012974335610203485,0.011130620672196055,0.014989095773236602,0.04712522029876709,,,,,,,
+metric,above_cap,1,C_15,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_15,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_15,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_15,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_15,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_15,h_pct_changed,92,47.29050559535737,45.306153342182505,49.21499388227485,70.53577299643187,,,,,,,
+metric,above_cap,1,C_15,m_d_weight,92,0.0,0.0,0.0,0.0,,,,,,,
+metric,above_cap,1,C_15,m_psnr_y,92,11.37193595834016,10.930445293086894,11.83344377365119,19.16675365905184,,,,,,,
+metric,above_cap,1,C_3_legacy,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_3_legacy,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_3_legacy,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_3_legacy,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_3_legacy,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_3_legacy,h_pct_changed,92,31.97500929877362,30.99221795261505,32.966119600058136,43.728363979679,,,,,,,
+metric,above_cap,1,C_3_legacy,m_d_weight,92,0.22359569047949385,0.21795247199559356,0.22936457183150402,0.2979608929125294,,,,,,,
+metric,above_cap,1,C_3_legacy,m_psnr_y,92,10.18863183454716,9.78218936695278,10.61394456940547,17.870228399978995,,,,,,,
+metric,above_cap,1,C_3_legacy,m_lpips,92,0.039754026954102774,0.036960073714346994,0.04274618608381032,0.0765419453382492,,,,,,,
+metric,above_cap,1,C_3_legacy,off_lpips,92,0.003422868765206342,0.0026340983814614684,0.004347173289866275,0.022020984441041946,,,,,,,
+metric,above_cap,1,C_15_legacy,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_15_legacy,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_15_legacy,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_15_legacy,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_15_legacy,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_15_legacy,h_pct_changed,92,10.073376107665405,9.01734904660179,11.207484595574048,27.30962106288417,,,,,,,
+metric,above_cap,1,C_15_legacy,m_d_weight,92,0.6034010910458509,0.5956278535087214,0.6112903643229011,0.6884837550839545,,,,,,,
+metric,above_cap,1,C_15_legacy,m_psnr_y,92,8.337868526363035,7.962319178825258,8.73068088268823,15.786239081623247,,,,,,,
+metric,above_cap,1,C_3_N2fill,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_3_N2fill,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_3_N2fill,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_3_N2fill,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_3_N2fill,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,1,C_3_N2fill,h_pct_changed,92,68.78756172142577,67.70018175165971,69.86424102027352,82.74272926406023,,,,,,,
+metric,above_cap,1,C_3_N2fill,m_d_weight,92,0.0,0.0,0.0,0.0,,,,,,,
+metric,above_cap,1,C_3_N2fill,m_psnr_y,92,12.573752685396311,12.113252360075455,13.072299461794199,23.498942837889683,,,,,,,
+metric,above_cap,1,C_3_N2fill,m_lpips,92,0.03002218524520488,0.027695752521622524,0.03251915645112445,0.05947379767894745,,,,,,,
+metric,above_cap,1,C_3_N2fill,off_lpips,92,0.02395306959869745,0.021741970233447122,0.026370408740552628,0.057420045137405396,,,,,,,
+metric,above_cap,1,N1,u_pct_changed,92,78.00920588829965,75.68778319657397,80.26853963046042,97.10413828257819,,,,,,,0
+metric,above_cap,1,N1,u_pct_changed_gt1,92,36.681308785038304,33.39894692428997,40.02132976665939,83.75496095616617,,,,,,,0
+metric,above_cap,1,N1,u_mean_abs,92,1.618225927488002,1.4054711684670627,1.8571129431818088,7.5005467322173045,,,,,,,0
+metric,above_cap,1,N1,u_p99_abs,92,11.23913043478261,9.75,12.83695652173913,38.0,,,,,,,0
+metric,above_cap,1,N1,u_max_abs,92,54.25,49.71739130434783,58.804619565217386,110.0,,,,,,,0
+metric,above_cap,1,N1,m_psnr_y,92,11.37193595834016,10.930445293086894,11.83344377365119,19.16675365905184,,,,,,,
+metric,above_cap,1,N1,m_lpips,92,0.03599877648926138,0.03318910706084748,0.03893685584670216,0.07196283340454102,,,,,,,
+metric,above_cap,1,N1,off_lpips,92,0.05186553315623947,0.046388461400815484,0.0577201608960699,0.1568470597267151,,,,,,,
+metric,above_cap,1,N2,u_pct_changed,92,93.30546812726722,92.20566218550798,94.34589382139906,99.58832596931023,,,,,,,0
+metric,above_cap,1,N2,u_pct_changed_gt1,92,70.24590119012807,67.75285338752555,72.72406812392485,96.26685110448084,,,,,,,0
+metric,above_cap,1,N2,u_mean_abs,92,5.121185895967389,4.51060404258715,5.787822011263727,20.399074731515306,,,,,,,0
+metric,above_cap,1,N2,u_p99_abs,92,37.77173913043478,33.79347826086956,41.858695652173914,93.0,,,,,,,0
+metric,above_cap,1,N2,u_max_abs,92,154.57608695652175,147.0326086956522,161.7173913043478,223.0,,,,,,,0
+metric,above_cap,1,N2,m_psnr_y,92,12.573752685396311,12.113252360075455,13.072299461794199,23.498942837889683,,,,,,,
+metric,above_cap,1,N2,m_lpips,92,0.03002218524520488,0.027695752521622524,0.03251915645112445,0.05947379767894745,,,,,,,
+metric,above_cap,1,N2,off_lpips,92,0.3817876472097376,0.3580087586953912,0.40628723091972263,0.73008131980896,,,,,,,
+metric,above_cap,5,C_0,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_0,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_0,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_0,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_0,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_0,m_d_weight,92,0.0,0.0,0.0,0.0,,,,,,,
+metric,above_cap,5,C_0,m_psnr_y,92,12.029625911449987,11.589557603267396,12.505360988429057,19.583597841960263,,,,,,,
+metric,above_cap,5,C_3,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_3,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_3,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_3,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_3,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_3,h_pct_changed,92,54.817544156721745,53.226342117958964,56.39366449672655,75.94170509203771,,,,,,,
+metric,above_cap,5,C_3,m_d_weight,92,0.0,0.0,0.0,0.0,,,,,,,
+metric,above_cap,5,C_3,m_psnr_y,92,12.029625911449987,11.589557603267396,12.505360988429057,19.583597841960263,,,,,,,
+metric,above_cap,5,C_3,m_lpips,92,0.13405570602449385,0.12485437221197493,0.143722032652358,0.2732822299003601,,,,,,,
+metric,above_cap,5,C_3,off_lpips,92,0.047895266137936196,0.041503641768054954,0.054858398742963686,0.1596597284078598,,,,,,,
+metric,above_cap,5,C_15,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_15,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_15,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_15,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_15,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_15,h_pct_changed,92,55.87754235299609,53.95820741056596,57.7683125811715,78.80173378516825,,,,,,,
+metric,above_cap,5,C_15,m_d_weight,92,0.0,0.0,0.0,0.0,,,,,,,
+metric,above_cap,5,C_15,m_psnr_y,92,12.029625911449987,11.589557603267396,12.505360988429057,19.583597841960263,,,,,,,
+metric,above_cap,5,C_3_legacy,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_3_legacy,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_3_legacy,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_3_legacy,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_3_legacy,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_3_legacy,h_pct_changed,92,33.378737267101094,32.37979478714416,34.40309931159305,51.8396942537764,,,,,,,
+metric,above_cap,5,C_3_legacy,m_d_weight,92,0.17581018012458452,0.17237003555785205,0.1794553447638754,0.22381507737869039,,,,,,,
+metric,above_cap,5,C_3_legacy,m_psnr_y,92,10.923929400721482,10.511930311189342,11.370142688336335,18.44163961951082,,,,,,,
+metric,above_cap,5,C_3_legacy,m_lpips,92,0.14695102354997527,0.13773341806119552,0.15665124834555647,0.29125481843948364,,,,,,,
+metric,above_cap,5,C_3_legacy,off_lpips,92,0.013139620699803345,0.010426093550347066,0.016219489651136784,0.07414165139198303,,,,,,,
+metric,above_cap,5,C_15_legacy,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_15_legacy,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_15_legacy,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_15_legacy,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_15_legacy,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_15_legacy,h_pct_changed,92,11.863873952298674,10.762287172380457,13.067752765443934,38.3099221901833,,,,,,,
+metric,above_cap,5,C_15_legacy,m_d_weight,92,0.4391022182841537,0.43465091960942687,0.44370581115927454,0.4906714730283454,,,,,,,
+metric,above_cap,5,C_15_legacy,m_psnr_y,92,9.282138291751805,8.893574421290287,9.697477365528394,16.663296533699732,,,,,,,
+metric,above_cap,5,C_3_N2fill,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_3_N2fill,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_3_N2fill,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_3_N2fill,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_3_N2fill,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,5,C_3_N2fill,h_pct_changed,92,71.07013389139023,70.12566024917167,72.02489821179248,85.19598247698403,,,,,,,
+metric,above_cap,5,C_3_N2fill,m_d_weight,92,0.0,0.0,0.0,0.0,,,,,,,
+metric,above_cap,5,C_3_N2fill,m_psnr_y,92,12.743895728300911,12.304387188353397,13.210715746433072,21.644847720819136,,,,,,,
+metric,above_cap,5,C_3_N2fill,m_lpips,92,0.11639078844176687,0.10857040237473405,0.12471289828055254,0.25234076380729675,,,,,,,
+metric,above_cap,5,C_3_N2fill,off_lpips,92,0.08815378576274151,0.08076018348852497,0.09618313651906488,0.21934102475643158,,,,,,,
+metric,above_cap,5,N1,u_pct_changed,92,77.2023750551457,74.77074302995112,79.57384237762678,96.33432668118311,,,,,,,0
+metric,above_cap,5,N1,u_pct_changed_gt1,92,35.61165194106186,32.26920809843652,38.99791830298292,78.83585585558566,,,,,,,0
+metric,above_cap,5,N1,u_mean_abs,92,1.5648296396233703,1.3555702586543907,1.7968667377387142,5.953605634774368,,,,,,,0
+metric,above_cap,5,N1,u_p99_abs,92,10.902173913043478,9.41304347826087,12.5,35.0,,,,,,,0
+metric,above_cap,5,N1,u_max_abs,92,50.09782608695652,45.53260869565217,54.61983695652174,110.0,,,,,,,0
+metric,above_cap,5,N1,m_psnr_y,92,12.029625911449987,11.589557603267396,12.505360988429057,19.583597841960263,,,,,,,
+metric,above_cap,5,N1,m_lpips,92,0.13405570602449385,0.12485437221197493,0.143722032652358,0.2732822299003601,,,,,,,
+metric,above_cap,5,N1,off_lpips,92,0.08328573558601024,0.07534001200186576,0.09151095207299753,0.19628526270389557,,,,,,,
+metric,above_cap,5,N2,u_pct_changed,92,92.97011983926717,91.78743488910067,94.081384038776,99.45580699968059,,,,,,,0
+metric,above_cap,5,N2,u_pct_changed_gt1,92,69.17052748995766,66.55284639362908,71.80379627359164,96.12584784102103,,,,,,,0
+metric,above_cap,5,N2,u_mean_abs,92,4.95247346642588,4.326549329606408,5.6115034680092855,16.975864962958187,,,,,,,0
+metric,above_cap,5,N2,u_p99_abs,92,37.02173913043478,32.93478260869565,41.22826086956522,98.0,,,,,,,0
+metric,above_cap,5,N2,u_max_abs,92,144.2391304347826,136.6953804347826,151.41304347826087,213.0,,,,,,,0
+metric,above_cap,5,N2,m_psnr_y,92,12.743895728300911,12.304387188353397,13.210715746433072,21.644847720819136,,,,,,,
+metric,above_cap,5,N2,m_lpips,92,0.11639078844176687,0.10857040237473405,0.12471289828055254,0.25234076380729675,,,,,,,
+metric,above_cap,5,N2,off_lpips,92,0.40631392760121304,0.3841927338270066,0.42894707869981297,0.7117061018943787,,,,,,,
+metric,above_cap,15,C_0,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_0,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_0,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_0,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_0,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_0,m_d_weight,92,0.0,0.0,0.0,0.0,,,,,,,
+metric,above_cap,15,C_0,m_psnr_y,92,13.353452649048517,12.970353225421986,13.76847147280125,20.604132078508112,,,,,,,
+metric,above_cap,15,C_3,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_3,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_3,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_3,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_3,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_3,h_pct_changed,92,57.43352635014352,55.89709258326345,58.95996520809695,77.13140812934135,,,,,,,
+metric,above_cap,15,C_3,m_d_weight,92,0.0,0.0,0.0,0.0,,,,,,,
+metric,above_cap,15,C_3,m_psnr_y,92,13.353452649048517,12.970353225421986,13.76847147280125,20.604132078508112,,,,,,,
+metric,above_cap,15,C_3,m_lpips,92,0.2946031380282796,0.2779376438656903,0.31228144591998147,0.5554941296577454,,,,,,,
+metric,above_cap,15,C_3,off_lpips,92,0.10823184013386945,0.09496150584157516,0.12276756721789159,0.328723281621933,,,,,,,
+metric,above_cap,15,C_15,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_15,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_15,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_15,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_15,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_15,h_pct_changed,92,67.21114242079003,65.27551896281722,69.11777041448136,86.04158475899487,,,,,,,
+metric,above_cap,15,C_15,m_d_weight,92,0.0,0.0,0.0,0.0,,,,,,,
+metric,above_cap,15,C_15,m_psnr_y,92,13.353452649048517,12.970353225421986,13.76847147280125,20.604132078508112,,,,,,,
+metric,above_cap,15,C_3_legacy,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_3_legacy,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_3_legacy,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_3_legacy,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_3_legacy,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_3_legacy,h_pct_changed,92,34.71469282821083,33.7633953982777,35.684739227056205,51.287793952967526,,,,,,,
+metric,above_cap,15,C_3_legacy,m_d_weight,92,0.14659573222960673,0.14375158884819486,0.1495376234055814,0.19980418110269157,,,,,,,
+metric,above_cap,15,C_3_legacy,m_psnr_y,92,12.107560184761097,11.74099182870328,12.499580109599403,19.200215452786985,,,,,,,
+metric,above_cap,15,C_3_legacy,m_lpips,92,0.3196316027770872,0.30296414754474943,0.33729780931835585,0.5888639688491821,,,,,,,
+metric,above_cap,15,C_3_legacy,off_lpips,92,0.0337932011401711,0.02763671581874603,0.0408767016623128,0.15259087085723877,,,,,,,
+metric,above_cap,15,C_15_legacy,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_15_legacy,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_15_legacy,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_15_legacy,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_15_legacy,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_15_legacy,h_pct_changed,92,15.37443512379861,14.140792111379767,16.72040053314114,42.22726790450928,,,,,,,
+metric,above_cap,15,C_15_legacy,m_d_weight,92,0.3467020636529431,0.3432493510386768,0.35019609541819247,0.39449341849261366,,,,,,,
+metric,above_cap,15,C_15_legacy,m_psnr_y,92,10.41775134274697,10.069123918284612,10.796461964924307,17.261355423353287,,,,,,,
+metric,above_cap,15,C_3_N2fill,u_pct_changed,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_3_N2fill,u_pct_changed_gt1,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_3_N2fill,u_mean_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_3_N2fill,u_p99_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_3_N2fill,u_max_abs,92,0.0,0.0,0.0,0.0,,,,,,,0
+metric,above_cap,15,C_3_N2fill,h_pct_changed,92,73.64678628118195,72.77754588453968,74.53261963841608,86.3113319049154,,,,,,,
+metric,above_cap,15,C_3_N2fill,m_d_weight,92,0.0,0.0,0.0,0.0,,,,,,,
+metric,above_cap,15,C_3_N2fill,m_psnr_y,92,14.563804128550805,14.213466858474117,14.949626849101016,21.8302113123535,,,,,,,
+metric,above_cap,15,C_3_N2fill,m_lpips,92,0.2688827367256517,0.25411508458706994,0.284985446103889,0.5375311374664307,,,,,,,
+metric,above_cap,15,C_3_N2fill,off_lpips,92,0.19078177189373452,0.17651777784745007,0.2063837689752488,0.44106635451316833,,,,,,,
+metric,above_cap,15,N1,u_pct_changed,92,77.34080107784385,74.76733785013762,79.80142191563078,94.88446305075007,,,,,,,0
+metric,above_cap,15,N1,u_pct_changed_gt1,92,34.89851282311298,31.510684414392397,38.36286479264759,74.65793747886248,,,,,,,0
+metric,above_cap,15,N1,u_mean_abs,92,1.457704428204255,1.2725823841485944,1.6663290764166525,5.315269141578937,,,,,,,0
+metric,above_cap,15,N1,u_p99_abs,92,9.804347826086957,8.45625,11.282608695652174,34.0,,,,,,,0
+metric,above_cap,15,N1,u_max_abs,92,38.5,34.51059782608696,42.66304347826087,90.0,,,,,,,0
+metric,above_cap,15,N1,m_psnr_y,92,13.353452649048517,12.970353225421986,13.76847147280125,20.604132078508112,,,,,,,
+metric,above_cap,15,N1,m_lpips,92,0.2946031380282796,0.2779376438656903,0.31228144591998147,0.5554941296577454,,,,,,,
+metric,above_cap,15,N1,off_lpips,92,0.13608389461170073,0.1226396014681086,0.15061265179259783,0.35998639464378357,,,,,,,
+metric,above_cap,15,N2,u_pct_changed,92,93.30810571977362,92.21872889256315,94.34542855097182,99.44886343124631,,,,,,,0
+metric,above_cap,15,N2,u_pct_changed_gt1,92,69.08956620256194,66.34289073461028,71.82705286974193,93.53828553295783,,,,,,,0
+metric,above_cap,15,N2,u_mean_abs,92,4.611186517846023,4.038047838797297,5.233546449244839,14.841688183841285,,,,,,,0
+metric,above_cap,15,N2,u_p99_abs,92,33.56521739130435,29.5,37.77173913043478,103.0,,,,,,,0
+metric,above_cap,15,N2,u_max_abs,92,118.5,109.97798913043478,126.77173913043478,206.0,,,,,,,0
+metric,above_cap,15,N2,m_psnr_y,92,14.563804128550805,14.213466858474117,14.949626849101016,21.8302113123535,,,,,,,
+metric,above_cap,15,N2,m_lpips,92,0.2688827367256517,0.25411508458706994,0.284985446103889,0.5375311374664307,,,,,,,
+metric,above_cap,15,N2,off_lpips,92,0.43342671802510385,0.4145279679447412,0.45342043022746625,0.6629334688186646,,,,,,,
+metric,at_or_below_cap,1,C_0,u_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_0,u_pct_changed_gt1,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_0,u_mean_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_0,u_p99_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_0,u_max_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_0,m_d_weight,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,1,C_0,m_psnr_y,10,22.937802853003827,19.973891003879814,26.04438093796988,33.26919871979052,,,,,,,
+metric,at_or_below_cap,1,C_3,u_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_3,u_pct_changed_gt1,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_3,u_mean_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_3,u_p99_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_3,u_max_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_3,h_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,1,C_3,m_d_weight,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,1,C_3,m_psnr_y,10,22.937802853003827,19.973891003879814,26.04438093796988,33.26919871979052,,,,,,,
+metric,at_or_below_cap,1,C_3,m_lpips,10,0.0026312203670386227,0.002035079100169242,0.0031501272815512493,0.00374018307775259,,,,,,,
+metric,at_or_below_cap,1,C_3,off_lpips,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,1,C_15,u_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_15,u_pct_changed_gt1,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_15,u_mean_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_15,u_p99_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_15,u_max_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_15,h_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,1,C_15,m_d_weight,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,1,C_15,m_psnr_y,10,22.937802853003827,19.973891003879814,26.04438093796988,33.26919871979052,,,,,,,
+metric,at_or_below_cap,1,C_3_legacy,u_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_3_legacy,u_pct_changed_gt1,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_3_legacy,u_mean_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_3_legacy,u_p99_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_3_legacy,u_max_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_3_legacy,h_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,1,C_3_legacy,m_d_weight,10,0.35090518619958566,0.31343232944195354,0.39261815882067036,0.4716821334131617,,,,,,,
+metric,at_or_below_cap,1,C_3_legacy,m_psnr_y,10,12.618305360610597,11.843731461358765,13.315159540215445,14.125714044348527,,,,,,,
+metric,at_or_below_cap,1,C_3_legacy,m_lpips,10,0.035380025301128624,0.024511916439514607,0.049197543861810106,0.08567783981561661,,,,,,,
+metric,at_or_below_cap,1,C_3_legacy,off_lpips,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,1,C_15_legacy,u_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_15_legacy,u_pct_changed_gt1,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_15_legacy,u_mean_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_15_legacy,u_p99_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_15_legacy,u_max_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_15_legacy,h_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,1,C_15_legacy,m_d_weight,10,0.759652738806162,0.7139228738444435,0.8071477378366962,0.8770855161402984,,,,,,,
+metric,at_or_below_cap,1,C_15_legacy,m_psnr_y,10,7.858911285190639,6.900897462305937,8.763691658871299,9.75020709702431,,,,,,,
+metric,at_or_below_cap,1,C_3_N2fill,u_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_3_N2fill,u_pct_changed_gt1,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_3_N2fill,u_mean_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_3_N2fill,u_p99_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_3_N2fill,u_max_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,C_3_N2fill,h_pct_changed,10,65.38991545428786,50.14105296912114,74.36734753547974,77.95948987246811,,,,,,,
+metric,at_or_below_cap,1,C_3_N2fill,m_d_weight,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,1,C_3_N2fill,m_psnr_y,10,14.7237922643634,11.860274943689857,19.12674396356829,33.26919871979052,,,,,,,
+metric,at_or_below_cap,1,C_3_N2fill,m_lpips,10,0.023378484934801234,0.01599440724370652,0.03106175668290234,0.04990722984075546,,,,,,,
+metric,at_or_below_cap,1,C_3_N2fill,off_lpips,10,0.013891325611621142,0.009635017791297286,0.017840970060788094,0.023258719593286514,,,,,,,
+metric,at_or_below_cap,1,N1,u_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,N1,u_pct_changed_gt1,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,N1,u_mean_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,N1,u_p99_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,N1,u_max_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,1,N1,m_psnr_y,10,22.937802853003827,19.973891003879814,26.04438093796988,33.26919871979052,,,,,,,
+metric,at_or_below_cap,1,N1,m_lpips,10,0.0026312203670386227,0.002035079100169242,0.0031501272815512493,0.00374018307775259,,,,,,,
+metric,at_or_below_cap,1,N1,off_lpips,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,1,N2,u_pct_changed,10,85.19872360277074,65.45146175497666,97.34428223357064,99.36202418594877,,,,,,,0
+metric,at_or_below_cap,1,N2,u_pct_changed_gt1,10,69.56190853960167,51.607979519370915,83.34873876173424,91.99821379905896,,,,,,,0
+metric,at_or_below_cap,1,N2,u_mean_abs,10,5.666611537736559,4.125512711432814,7.027454960154152,8.554419519190516,,,,,,,0
+metric,at_or_below_cap,1,N2,u_p99_abs,10,37.0,26.097500000000004,47.0,57.0,,,,,,,0
+metric,at_or_below_cap,1,N2,u_max_abs,10,112.3,77.7,145.0,188.0,,,,,,,0
+metric,at_or_below_cap,1,N2,m_psnr_y,10,14.7237922643634,11.860274943689857,19.12674396356829,33.26919871979052,,,,,,,
+metric,at_or_below_cap,1,N2,m_lpips,10,0.023378484934801234,0.01599440724370652,0.03106175668290234,0.04990722984075546,,,,,,,
+metric,at_or_below_cap,1,N2,off_lpips,10,0.27871622145175934,0.19405147690325977,0.3605248984694481,0.4845561385154724,,,,,,,
+metric,at_or_below_cap,5,C_0,u_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_0,u_pct_changed_gt1,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_0,u_mean_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_0,u_p99_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_0,u_max_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_0,m_d_weight,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,5,C_0,m_psnr_y,10,22.53724798607048,20.816313773024408,24.861747440547937,31.715545601738548,,,,,,,
+metric,at_or_below_cap,5,C_3,u_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_3,u_pct_changed_gt1,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_3,u_mean_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_3,u_p99_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_3,u_max_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_3,h_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,5,C_3,m_d_weight,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,5,C_3,m_psnr_y,10,22.53724798607048,20.816313773024408,24.861747440547937,31.715545601738548,,,,,,,
+metric,at_or_below_cap,5,C_3,m_lpips,10,0.013136755907908082,0.010557936527766288,0.015657415067544207,0.01915639080107212,,,,,,,
+metric,at_or_below_cap,5,C_3,off_lpips,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,5,C_15,u_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_15,u_pct_changed_gt1,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_15,u_mean_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_15,u_p99_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_15,u_max_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_15,h_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,5,C_15,m_d_weight,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,5,C_15,m_psnr_y,10,22.53724798607048,20.816313773024408,24.861747440547937,31.715545601738548,,,,,,,
+metric,at_or_below_cap,5,C_3_legacy,u_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_3_legacy,u_pct_changed_gt1,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_3_legacy,u_mean_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_3_legacy,u_p99_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_3_legacy,u_max_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_3_legacy,h_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,5,C_3_legacy,m_d_weight,10,0.26241018648613,0.23837460225684062,0.2885215166121965,0.3348160394530158,,,,,,,
+metric,at_or_below_cap,5,C_3_legacy,m_psnr_y,10,14.36254381668905,13.325855790414256,15.2787693595599,16.435146743222635,,,,,,,
+metric,at_or_below_cap,5,C_3_legacy,m_lpips,10,0.12225755974650383,0.0970042698085308,0.15524778427556157,0.24915608763694763,,,,,,,
+metric,at_or_below_cap,5,C_3_legacy,off_lpips,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,5,C_15_legacy,u_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_15_legacy,u_pct_changed_gt1,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_15_legacy,u_mean_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_15_legacy,u_p99_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_15_legacy,u_max_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_15_legacy,h_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,5,C_15_legacy,m_d_weight,10,0.566527980611007,0.533723569148812,0.6053545147592486,0.701662714526779,,,,,,,
+metric,at_or_below_cap,5,C_15_legacy,m_psnr_y,10,10.174885950493714,9.041628401549975,11.224209805489984,12.644172288719869,,,,,,,
+metric,at_or_below_cap,5,C_3_N2fill,u_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_3_N2fill,u_pct_changed_gt1,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_3_N2fill,u_mean_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_3_N2fill,u_p99_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_3_N2fill,u_max_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,C_3_N2fill,h_pct_changed,10,66.36481673583327,51.005451953275696,75.57529800666411,79.53933101136886,,,,,,,
+metric,at_or_below_cap,5,C_3_N2fill,m_d_weight,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,5,C_3_N2fill,m_psnr_y,10,15.386597378478138,12.826259833798956,19.31968481182513,31.715545601738548,,,,,,,
+metric,at_or_below_cap,5,C_3_N2fill,m_lpips,10,0.09288992192596197,0.06921062444802373,0.11366217635571953,0.15600766241550446,,,,,,,
+metric,at_or_below_cap,5,C_3_N2fill,off_lpips,10,0.05067628622055054,0.036974461413919926,0.06187898791395127,0.07288385927677155,,,,,,,
+metric,at_or_below_cap,5,N1,u_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,N1,u_pct_changed_gt1,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,N1,u_mean_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,N1,u_p99_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,N1,u_max_abs,10,0.0,0.0,0.0,0.0,,,,,,,0
+metric,at_or_below_cap,5,N1,m_psnr_y,10,22.53724798607048,20.816313773024408,24.861747440547937,31.715545601738548,,,,,,,
+metric,at_or_below_cap,5,N1,m_lpips,10,0.013136755907908082,0.010557936527766288,0.015657415067544207,0.01915639080107212,,,,,,,
+metric,at_or_below_cap,5,N1,off_lpips,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,5,N2,u_pct_changed,10,86.18129149719401,66.44385966660857,97.50692309129747,99.2614793595072,,,,,,,0
+metric,at_or_below_cap,5,N2,u_pct_changed_gt1,10,71.00273882320741,53.707140643228946,83.16892581590928,90.93904720902121,,,,,,,0
+metric,at_or_below_cap,5,N2,u_mean_abs,10,5.8663631510405825,4.121061576219905,7.44845255106287,9.070310026230809,,,,,,,0
+metric,at_or_below_cap,5,N2,u_p99_abs,10,36.8,25.1,47.8,61.0,,,,,,,0
+metric,at_or_below_cap,5,N2,u_max_abs,10,103.6,71.0975,134.7,155.0,,,,,,,0
+metric,at_or_below_cap,5,N2,m_psnr_y,10,15.386597378478138,12.826259833798956,19.31968481182513,31.715545601738548,,,,,,,
+metric,at_or_below_cap,5,N2,m_lpips,10,0.09288992192596197,0.06921062444802373,0.11366217635571953,0.15600766241550446,,,,,,,
+metric,at_or_below_cap,5,N2,off_lpips,10,0.2860855728387833,0.20132469438016415,0.3663059294968843,0.48493266105651855,,,,,,,
+metric,at_or_below_cap,15,C_0,u_pct_changed,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_0,u_pct_changed_gt1,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_0,u_mean_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_0,u_p99_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_0,u_max_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_0,m_d_weight,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,15,C_0,m_psnr_y,10,20.76078698959108,19.018184081151244,22.51082170948841,26.39133774935334,,,,,,,
+metric,at_or_below_cap,15,C_3,u_pct_changed,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_3,u_pct_changed_gt1,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_3,u_mean_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_3,u_p99_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_3,u_max_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_3,h_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,15,C_3,m_d_weight,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,15,C_3,m_psnr_y,10,20.76078698959108,19.018184081151244,22.51082170948841,26.39133774935334,,,,,,,
+metric,at_or_below_cap,15,C_3,m_lpips,10,0.048090037517249586,0.04081032750196755,0.055138074699789284,0.06543004512786865,,,,,,,
+metric,at_or_below_cap,15,C_3,off_lpips,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,15,C_15,u_pct_changed,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_15,u_pct_changed_gt1,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_15,u_mean_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_15,u_p99_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_15,u_max_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_15,h_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,15,C_15,m_d_weight,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,15,C_15,m_psnr_y,10,20.76078698959108,19.018184081151244,22.51082170948841,26.39133774935334,,,,,,,
+metric,at_or_below_cap,15,C_3_legacy,u_pct_changed,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_3_legacy,u_pct_changed_gt1,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_3_legacy,u_mean_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_3_legacy,u_p99_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_3_legacy,u_max_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_3_legacy,h_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,15,C_3_legacy,m_d_weight,10,0.21377606955654613,0.19369687730326046,0.23574958977705768,0.28092407714973466,,,,,,,
+metric,at_or_below_cap,15,C_3_legacy,m_psnr_y,10,14.46427259959936,13.54342033609881,15.315049802977622,16.336004147636483,,,,,,,
+metric,at_or_below_cap,15,C_3_legacy,m_lpips,10,0.2524557039141655,0.21091599561274052,0.30193632185459135,0.42057496309280396,,,,,,,
+metric,at_or_below_cap,15,C_3_legacy,off_lpips,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,15,C_15_legacy,u_pct_changed,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_15_legacy,u_pct_changed_gt1,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_15_legacy,u_mean_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_15_legacy,u_p99_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_15_legacy,u_max_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_15_legacy,h_pct_changed,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,15,C_15_legacy,m_d_weight,10,0.42286950358620007,0.3954840950393307,0.4546827351465948,0.5342746882598318,,,,,,,
+metric,at_or_below_cap,15,C_15_legacy,m_psnr_y,10,11.145491303135833,10.185875301434264,12.053406953763291,13.238465207057759,,,,,,,
+metric,at_or_below_cap,15,C_3_N2fill,u_pct_changed,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_3_N2fill,u_pct_changed_gt1,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_3_N2fill,u_mean_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_3_N2fill,u_p99_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_3_N2fill,u_max_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,C_3_N2fill,h_pct_changed,10,69.39179076309807,53.2904137999112,79.16008217083387,82.658506535638,,,,,,,
+metric,at_or_below_cap,15,C_3_N2fill,m_d_weight,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,15,C_3_N2fill,m_psnr_y,10,15.582254854929968,13.898813406912435,18.182356030959987,26.39133774935334,,,,,,,
+metric,at_or_below_cap,15,C_3_N2fill,m_lpips,10,0.20894822534173726,0.15917938025202602,0.2516149777173996,0.33206701278686523,,,,,,,
+metric,at_or_below_cap,15,C_3_N2fill,off_lpips,10,0.10860781520605087,0.07819489123299718,0.13488742008805274,0.17312215268611908,,,,,,,
+metric,at_or_below_cap,15,N1,u_pct_changed,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,N1,u_pct_changed_gt1,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,N1,u_mean_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,N1,u_p99_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,N1,u_max_abs,8,0.0,0.0,0.0,0.0,,,,,,,2
+metric,at_or_below_cap,15,N1,m_psnr_y,10,20.76078698959108,19.018184081151244,22.51082170948841,26.39133774935334,,,,,,,
+metric,at_or_below_cap,15,N1,m_lpips,10,0.048090037517249586,0.04081032750196755,0.055138074699789284,0.06543004512786865,,,,,,,
+metric,at_or_below_cap,15,N1,off_lpips,10,0.0,0.0,0.0,0.0,,,,,,,
+metric,at_or_below_cap,15,N2,u_pct_changed,8,96.66525391587959,94.85661556771626,98.39123838872301,99.5049504950495,,,,,,,2
+metric,at_or_below_cap,15,N2,u_pct_changed_gt1,8,79.39829015607857,71.15487310230141,87.39596042657121,93.3749461902712,,,,,,,2
+metric,at_or_below_cap,15,N2,u_mean_abs,8,6.977210403393018,4.331410622534297,10.358628751169254,17.29102815979044,,,,,,,2
+metric,at_or_below_cap,15,N2,u_p99_abs,8,38.625,28.125,50.375,72.0,,,,,,,2
+metric,at_or_below_cap,15,N2,u_max_abs,8,93.0,72.625,112.25,136.0,,,,,,,2
+metric,at_or_below_cap,15,N2,m_psnr_y,10,15.582254854929968,13.898813406912435,18.182356030959987,26.39133774935334,,,,,,,
+metric,at_or_below_cap,15,N2,m_lpips,10,0.20894822534173726,0.15917938025202602,0.2516149777173996,0.33206701278686523,,,,,,,
+metric,at_or_below_cap,15,N2,off_lpips,10,0.2841014117002487,0.20213771879673006,0.36039805009961123,0.4712931513786316,,,,,,,
+paired_diff,above_cap,1,C_3 - C_3_legacy,m_psnr_y,92,1.1833041237930007,1.089756556341099,1.2847576990328269,,,92,0,0,,,
+paired_diff,above_cap,1,C_3 - C_3_legacy,m_lpips,92,-0.0037552504648413997,-0.004094956014760891,-0.0034415554837323725,,,92,0,0,,,
+paired_diff,above_cap,1,C_3 - C_3_legacy,off_lpips,92,0.009551466844997143,0.008385002141555915,0.01080235062137213,,,0,0,92,,,
+paired_diff,above_cap,1,C_3 - N1,m_psnr_y,92,0.0,0.0,0.0,,,0,92,0,,,
+paired_diff,above_cap,1,C_3 - N1,m_lpips,92,0.0,0.0,0.0,,,0,92,0,,,
+paired_diff,above_cap,1,C_3 - N1,u_mean_abs,92,-1.618225927488002,-1.8571129431818088,-1.4054711684670627,,,92,0,0,,,0
+paired_diff,above_cap,1,C_3 - N2,m_psnr_y,92,-1.2018167270561515,-1.468430732664161,-0.9306166847535938,,,15,0,77,,,
+paired_diff,above_cap,1,C_3 - N2,m_lpips,92,0.005976591244056497,0.0050913541728337085,0.006858251368596583,,,6,0,86,,,
+paired_diff,above_cap,1,C_3 - N2,u_mean_abs,92,-5.121185895967389,-5.787822011263728,-4.51060404258715,,,92,0,0,,,0
+paired_diff,above_cap,1,C_3_N2fill - C_3,m_psnr_y,92,1.2018167270561515,0.9306166847535936,1.468430732664161,,,77,0,15,,,
+paired_diff,above_cap,1,C_3_N2fill - C_3,m_lpips,92,-0.005976591244056497,-0.006858251368596583,-0.005091354172833709,,,86,0,6,,,
+paired_diff,above_cap,1,C_3_N2fill - C_3,off_lpips,92,0.010978733988493965,0.010207667937103669,0.011796441435612705,,,0,0,92,,,
+paired_diff,above_cap,1,C_3_N2fill - N2,m_psnr_y,92,0.0,0.0,0.0,,,0,92,0,,,
+paired_diff,above_cap,1,C_3_N2fill - N2,m_lpips,92,0.0,0.0,0.0,,,0,92,0,,,
+paired_diff,above_cap,1,C_3_N2fill - N2,off_lpips,92,-0.35783457761104015,-0.3827698774805353,-0.3335536825594634,,,92,0,0,,,
+paired_diff,above_cap,5,C_3 - C_3_legacy,m_psnr_y,92,1.1056965107285035,1.0281491804069656,1.1866745902447149,,,92,0,0,,,
+paired_diff,above_cap,5,C_3 - C_3_legacy,m_lpips,92,-0.0128953175254814,-0.014098884753943624,-0.011872716048104769,,,92,0,0,,,
+paired_diff,above_cap,5,C_3 - C_3_legacy,off_lpips,92,0.03475564543813285,0.030769781176169762,0.039059888954168696,,,0,0,92,,,
+paired_diff,above_cap,5,C_3 - N1,m_psnr_y,92,0.0,0.0,0.0,,,0,92,0,,,
+paired_diff,above_cap,5,C_3 - N1,m_lpips,92,0.0,0.0,0.0,,,0,92,0,,,
+paired_diff,above_cap,5,C_3 - N1,u_mean_abs,92,-1.5648296396233703,-1.7968667377387144,-1.3555702586543907,,,92,0,0,,,0
+paired_diff,above_cap,5,C_3 - N2,m_psnr_y,92,-0.7142698168509239,-0.9185266587463837,-0.5077203983734899,,,20,0,72,,,
+paired_diff,above_cap,5,C_3 - N2,m_lpips,92,0.017664917582726997,0.015239438404450597,0.020042849415103377,,,6,0,86,,,
+paired_diff,above_cap,5,C_3 - N2,u_mean_abs,92,-4.95247346642588,-5.611503468009286,-4.326549329606409,,,92,0,0,,,0
+paired_diff,above_cap,5,C_3_N2fill - C_3,m_psnr_y,92,0.7142698168509239,0.5077203983734899,0.9185266587463837,,,72,0,20,,,
+paired_diff,above_cap,5,C_3_N2fill - C_3,m_lpips,92,-0.017664917582726997,-0.02004284941510338,-0.015239438404450599,,,86,0,6,,,
+paired_diff,above_cap,5,C_3_N2fill - C_3,off_lpips,92,0.04025851962480532,0.0375670642977955,0.04308587851397613,,,0,0,92,,,
+paired_diff,above_cap,5,C_3_N2fill - N2,m_psnr_y,92,0.0,0.0,0.0,,,0,92,0,,,
+paired_diff,above_cap,5,C_3_N2fill - N2,m_lpips,92,0.0,0.0,0.0,,,0,92,0,,,
+paired_diff,above_cap,5,C_3_N2fill - N2,off_lpips,92,-0.3181601418384715,-0.3408102543599418,-0.2961318595026134,,,92,0,0,,,
+paired_diff,above_cap,15,C_3 - C_3_legacy,m_psnr_y,92,1.2458924642874205,1.173864221011779,1.3192517801530796,,,92,0,0,,,
+paired_diff,above_cap,15,C_3 - C_3_legacy,m_lpips,92,-0.025028464748807575,-0.0269105298768567,-0.023378362109803635,,,92,0,0,,,
+paired_diff,above_cap,15,C_3 - C_3_legacy,off_lpips,92,0.07443863899369836,0.06674138099381748,0.08272066845656018,,,0,0,92,,,
+paired_diff,above_cap,15,C_3 - N1,m_psnr_y,92,0.0,0.0,0.0,,,0,92,0,,,
+paired_diff,above_cap,15,C_3 - N1,m_lpips,92,0.0,0.0,0.0,,,0,92,0,,,
+paired_diff,above_cap,15,C_3 - N1,u_mean_abs,92,-1.457704428204255,-1.6663290764166525,-1.2725823841485944,,,92,0,0,,,0
+paired_diff,above_cap,15,C_3 - N2,m_psnr_y,92,-1.2103514795022903,-1.3817257812568908,-1.0423578901147879,,,2,0,90,,,
+paired_diff,above_cap,15,C_3 - N2,m_lpips,92,0.025720401302627895,0.021005795191487542,0.030202218586497978,,,9,0,83,,,
+paired_diff,above_cap,15,C_3 - N2,u_mean_abs,92,-4.611186517846023,-5.233546449244839,-4.038047838797297,,,92,0,0,,,0
+paired_diff,above_cap,15,C_3_N2fill - C_3,m_psnr_y,92,1.2103514795022903,1.0423578901147879,1.3817257812568906,,,90,0,2,,,
+paired_diff,above_cap,15,C_3_N2fill - C_3,m_lpips,92,-0.025720401302627895,-0.03020221858649798,-0.021005795191487542,,,83,0,9,,,
+paired_diff,above_cap,15,C_3_N2fill - C_3,off_lpips,92,0.08254993175986507,0.07743198045493994,0.08784342155710834,,,0,0,92,,,
+paired_diff,above_cap,15,C_3_N2fill - N2,m_psnr_y,92,0.0,0.0,0.0,,,0,92,0,,,
+paired_diff,above_cap,15,C_3_N2fill - N2,m_lpips,92,0.0,0.0,0.0,,,0,92,0,,,
+paired_diff,above_cap,15,C_3_N2fill - N2,off_lpips,92,-0.24264494613136933,-0.2610392147330972,-0.2248015852564055,,,92,0,0,,,
+paired_diff,at_or_below_cap,1,C_3 - C_3_legacy,m_psnr_y,10,10.319497492393229,7.040307190427756,14.007627790591078,,,10,0,0,,,
+paired_diff,at_or_below_cap,1,C_3 - C_3_legacy,m_lpips,10,-0.032748804934090006,-0.04707205991726369,-0.02148337859311141,,,10,0,0,,,
+paired_diff,at_or_below_cap,1,C_3 - C_3_legacy,off_lpips,10,0.0,0.0,0.0,,,0,10,0,,,
+paired_diff,at_or_below_cap,1,C_3 - N1,m_psnr_y,10,0.0,0.0,0.0,,,0,10,0,,,
+paired_diff,at_or_below_cap,1,C_3 - N1,m_lpips,10,0.0,0.0,0.0,,,0,10,0,,,
+paired_diff,at_or_below_cap,1,C_3 - N1,u_mean_abs,10,0.0,0.0,0.0,,,0,10,0,,,0
+paired_diff,at_or_below_cap,1,C_3 - N2,m_psnr_y,10,8.21401058864043,5.135474404154358,11.27742475540388,,,9,1,0,,,
+paired_diff,at_or_below_cap,1,C_3 - N2,m_lpips,10,-0.020747264567762613,-0.02857119997497648,-0.01354123611992691,,,9,1,0,,,
+paired_diff,at_or_below_cap,1,C_3 - N2,u_mean_abs,10,-5.666611537736559,-7.027454960154153,-4.125512711432814,,,9,1,0,,,0
+paired_diff,at_or_below_cap,1,C_3_N2fill - C_3,m_psnr_y,10,-8.21401058864043,-11.277424755403882,-5.135474404154359,,,0,1,9,,,
+paired_diff,at_or_below_cap,1,C_3_N2fill - C_3,m_lpips,10,0.020747264567762613,0.013541236119926907,0.02857119997497648,,,0,1,9,,,
+paired_diff,at_or_below_cap,1,C_3_N2fill - C_3,off_lpips,10,0.013891325611621142,0.009635017791297286,0.017840970060788094,,,0,1,9,,,
+paired_diff,at_or_below_cap,1,C_3_N2fill - N2,m_psnr_y,10,0.0,0.0,0.0,,,0,10,0,,,
+paired_diff,at_or_below_cap,1,C_3_N2fill - N2,m_lpips,10,0.0,0.0,0.0,,,0,10,0,,,
+paired_diff,at_or_below_cap,1,C_3_N2fill - N2,off_lpips,10,-0.2648248958401382,-0.34346234818687665,-0.18372969402465972,,,9,1,0,,,
+paired_diff,at_or_below_cap,5,C_3 - C_3_legacy,m_psnr_y,10,8.174704169381432,5.733552659877963,11.43111837972684,,,10,0,0,,,
+paired_diff,at_or_below_cap,5,C_3 - C_3_legacy,m_lpips,10,-0.10912080383859575,-0.14380855294410141,-0.08278170354897156,,,10,0,0,,,
+paired_diff,at_or_below_cap,5,C_3 - C_3_legacy,off_lpips,10,0.0,0.0,0.0,,,0,10,0,,,
+paired_diff,at_or_below_cap,5,C_3 - N1,m_psnr_y,10,0.0,0.0,0.0,,,0,10,0,,,
+paired_diff,at_or_below_cap,5,C_3 - N1,m_lpips,10,0.0,0.0,0.0,,,0,10,0,,,
+paired_diff,at_or_below_cap,5,C_3 - N1,u_mean_abs,10,0.0,0.0,0.0,,,0,10,0,,,0
+paired_diff,at_or_below_cap,5,C_3 - N2,m_psnr_y,10,7.150650607592342,4.961521941448083,9.219307861474334,,,9,1,0,,,
+paired_diff,at_or_below_cap,5,C_3 - N2,m_lpips,10,-0.07975316601805389,-0.10043246330460533,-0.05752031201147475,,,9,1,0,,,
+paired_diff,at_or_below_cap,5,C_3 - N2,u_mean_abs,10,-5.8663631510405825,-7.44845255106287,-4.121061576219905,,,9,1,0,,,0
+paired_diff,at_or_below_cap,5,C_3_N2fill - C_3,m_psnr_y,10,-7.150650607592342,-9.219307861474336,-4.961521941448083,,,0,1,9,,,
+paired_diff,at_or_below_cap,5,C_3_N2fill - C_3,m_lpips,10,0.07975316601805389,0.05752031201147474,0.10043246330460531,,,0,1,9,,,
+paired_diff,at_or_below_cap,5,C_3_N2fill - C_3,off_lpips,10,0.05067628622055054,0.036974461413919926,0.06187898791395127,,,0,1,9,,,
+paired_diff,at_or_below_cap,5,C_3_N2fill - N2,m_psnr_y,10,0.0,0.0,0.0,,,0,10,0,,,
+paired_diff,at_or_below_cap,5,C_3_N2fill - N2,m_lpips,10,0.0,0.0,0.0,,,0,10,0,,,
+paired_diff,at_or_below_cap,5,C_3_N2fill - N2,off_lpips,10,-0.23540928661823274,-0.3071607400290668,-0.1626161437481642,,,9,1,0,,,
+paired_diff,at_or_below_cap,15,C_3 - C_3_legacy,m_psnr_y,10,6.296514389991719,4.163344934696582,8.805613453526048,,,10,0,0,,,
+paired_diff,at_or_below_cap,15,C_3 - C_3_legacy,m_lpips,10,-0.20436566639691592,-0.258543055751361,-0.15919606838375333,,,10,0,0,,,
+paired_diff,at_or_below_cap,15,C_3 - C_3_legacy,off_lpips,10,0.0,0.0,0.0,,,0,10,0,,,
+paired_diff,at_or_below_cap,15,C_3 - N1,m_psnr_y,10,0.0,0.0,0.0,,,0,10,0,,,
+paired_diff,at_or_below_cap,15,C_3 - N1,m_lpips,10,0.0,0.0,0.0,,,0,10,0,,,
+paired_diff,at_or_below_cap,15,C_3 - N1,u_mean_abs,8,0.0,0.0,0.0,,,0,8,0,,,2
+paired_diff,at_or_below_cap,15,C_3 - N2,m_psnr_y,10,5.178532134661111,3.3297264584058976,6.958533245525435,,,9,1,0,,,
+paired_diff,at_or_below_cap,15,C_3 - N2,m_lpips,10,-0.1608581878244877,-0.20194282848387957,-0.11616060974076392,,,9,1,0,,,
+paired_diff,at_or_below_cap,15,C_3 - N2,u_mean_abs,8,-6.977210403393018,-10.358628751169261,-4.331410622534297,,,8,0,0,,,2
+paired_diff,at_or_below_cap,15,C_3_N2fill - C_3,m_psnr_y,10,-5.178532134661111,-6.958533245525436,-3.3297264584058976,,,0,1,9,,,
+paired_diff,at_or_below_cap,15,C_3_N2fill - C_3,m_lpips,10,0.1608581878244877,0.1161606097407639,0.20194282848387957,,,0,1,9,,,
+paired_diff,at_or_below_cap,15,C_3_N2fill - C_3,off_lpips,10,0.10860781520605087,0.07819489123299718,0.13488742008805274,,,0,1,9,,,
+paired_diff,at_or_below_cap,15,C_3_N2fill - N2,m_psnr_y,10,0.0,0.0,0.0,,,0,10,0,,,
+paired_diff,at_or_below_cap,15,C_3_N2fill - N2,m_lpips,10,0.0,0.0,0.0,,,0,10,0,,,
+paired_diff,at_or_below_cap,15,C_3_N2fill - N2,off_lpips,10,-0.17549359649419785,-0.23104536030441522,-0.11944338660687209,,,9,1,0,,,
+null_case,at_or_below_cap,1,N1,u_pct_changed,10,0.0,0.0,0.0,0.0,,,,,0,,0
+null_case,at_or_below_cap,5,N1,u_pct_changed,10,0.0,0.0,0.0,0.0,,,,,0,,0
+null_case,at_or_below_cap,15,N1,u_pct_changed,8,0.0,0.0,0.0,0.0,,,,,0,,2
+u_size,above_cap,1,,u_fraction,92,0.776608995159303,,,0.837600935828877,0.6835737568837059,,,,,,0
+u_size,above_cap,5,,u_fraction,92,0.39947601996876475,,,0.5087178495732371,0.22441184807256237,,,,,,0
+u_size,above_cap,15,,u_fraction,92,0.0887504506242363,,,0.16692798442906576,0.027850866653851083,,,,,,0
+u_size,at_or_below_cap,1,,u_fraction,10,0.5978064513366507,,,0.743634740080304,0.3989211592002025,,,,,,0
+u_size,at_or_below_cap,5,,u_fraction,10,0.1836538659809263,,,0.336003507242381,0.0294342041015625,,,,,,0
+u_size,at_or_below_cap,15,,u_fraction,10,0.01996219130956095,,,0.09724090309007428,0.0,,,,,,2
+n2_equals_n1,at_or_below_cap,,N2 = N1,long_edge_le_512,1,,,,,,,,,,102,
