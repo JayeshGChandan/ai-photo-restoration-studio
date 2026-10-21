@@ -233,6 +233,8 @@ python3.11 -m venv venv
 ./venv/bin/python scripts/summarise_compositing.py --dir results/compositing_repro
 ```
 
+Make the figures and tables (from the committed results in results/compositing/):
+
 ```bash
 ./venv/bin/python scripts/make_figures.py
 ./venv/bin/python scripts/make_tables.py

@@ -55,7 +55,7 @@ it:
 - Faces → CodeFormer (detect → align to a 512 template → restore → paste back
   with a parsing mask). A *fidelity* slider trades generative quality against
   faithfulness to the original.
-- Low-res / soft / noisy → Real-ESRGAN x2/x4 with tiled, seam-free inference.
+- Low-res / soft / noisy → Real-ESRGAN x2/x4 with tiled inference.
 - When both apply, the background is upscaled first and the restored faces are
   pasted in at the final resolution.
 
@@ -79,8 +79,8 @@ JPEG), restore it, and score against the original with full-reference metrics
 (PSNR-Y / SSIM-Y on BT.601 luma, LPIPS), next to a naive bicubic baseline.
 
 > This surfaces the perception–distortion tradeoff: GAN-based restorers improve
-> LPIPS (how good it looks to a person), often while giving up a little
-> PSNR-Y/SSIM-Y. LPIPS tracks human judgement more closely than PSNR or SSIM.
+> LPIPS (how good it looks to a person), sometimes while giving up a little
+> PSNR-Y. LPIPS tracks human judgement more closely than PSNR or SSIM.
 
 ---
 
@@ -112,7 +112,7 @@ Summarise it:
 ./venv/bin/python scripts/summarise_compositing.py --dir results/compositing_repro
 ```
 
-Make the figures and tables:
+Make the figures and tables (from the committed results in results/compositing/):
 
 ```bash
 ./venv/bin/python scripts/make_figures.py
@@ -216,8 +216,8 @@ are cached as singletons and reused.
 ## Tech & credits
 
 LaMa · CodeFormer · Real-ESRGAN · facexlib · spandrel · pyiqa · PyTorch · Gradio.
-Restoration models are used under their respective licenses (CodeFormer and
-GFPGAN are research / non-commercial).
+Restoration models are used under their respective licenses (CodeFormer is
+research / non-commercial).
 
 Brush Repair's paste-back approach is an established technique. IOPaint
 (https://github.com/Sanster/IOPaint, formerly Lama Cleaner) offers similar Resize
