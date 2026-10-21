@@ -34,11 +34,11 @@ takes the opposite approach:
             └──────┬──────┘
                    ▼
             ┌─────────────┐  native-resolution feathered compositing — only the
-            │  COMPOSITE  │  damaged region changes; everything else stays exact
+            │  COMPOSITE  │  damaged region + feathered edge change; rest stays exact
             └──────┬──────┘
                    ▼
             ┌─────────────┐  no-reference IQA live (MUSIQ / CLIP-IQA / NIQE)
-            │    SCORE    │  full-reference in the benchmark (PSNR / SSIM / LPIPS)
+            │    SCORE    │  full-reference in the benchmark (PSNR-Y/SSIM-Y/LPIPS)
             └─────────────┘
 ```
 
@@ -66,18 +66,19 @@ perceptual quality of the input vs the result.
 For a localized scratch, tear, spot, or an object to remove: brush over it and
 **LaMa** fills only that region by *continuing surrounding structure* (Fast
 Fourier Convolutions) rather than inventing new content. The fill is composited
-back with a feathered mask at full resolution, so every untouched pixel stays
-byte-for-byte identical.
+back with a feathered mask at full resolution, so the brushed area is exactly
+LaMa's output and every pixel beyond the feathered edge (about 19 px out at the
+default feather of 3, wider at higher settings) stays byte-for-byte identical.
 
 ### 3. Benchmark
 The honest part. Restoration has no ground truth on a real photo, so this tab
 makes one: take a **clean** image, apply known degradations (downscale, blur,
 noise, JPEG), restore it, and score against the original with **full-reference**
-metrics (PSNR / SSIM / LPIPS), next to a naive bicubic baseline.
+metrics (PSNR-Y / SSIM-Y on BT.601 luma, LPIPS), next to a naive bicubic baseline.
 
 > This surfaces the **perception–distortion tradeoff**: GAN-based restorers
 > improve LPIPS (how good it looks to a person) substantially, often while
-> giving up a little PSNR/SSIM. LPIPS is the metric that matches human judgement.
+> giving up a little PSNR-Y/SSIM-Y. LPIPS is the metric that matches human judgement.
 
 ---
 
@@ -87,11 +88,11 @@ metrics (PSNR / SSIM / LPIPS), next to a naive bicubic baseline.
 app.py            Gradio UI — three tabs, handlers, scorecards
 diagnose.py       image analysis + explainable routing (Diagnosis, recommend)
 pipeline.py       route → restore orchestration (face + upscale)
-compositing.py    native-resolution feathered blend (only masked region changes)
+compositing.py    native-resolution feathered blend (only mask + feathered edge change)
 masking.py        brush-stroke → mask; classical auto-suggest (hint only)
 degradations.py   synthetic damage for the benchmark
 benchmark.py      clean → degrade → restore → full-reference scoring
-metrics.py        IQA: no-reference (MUSIQ/CLIP-IQA/NIQE) + full-reference (PSNR/SSIM/LPIPS)
+metrics.py        IQA: no-reference (MUSIQ/CLIP-IQA/NIQE) + full-reference (PSNR-Y/SSIM-Y/LPIPS)
 restorers/
   inpaint.py      LaMa backend (simple-lama-inpainting)
   face.py         CodeFormer via spandrel + facexlib (detect/align/paste-back)
@@ -150,7 +151,8 @@ curl -L -o weights/codeformer.pth \
 ```
 
 The first restoration is slow (one-time model downloads + load); afterwards each
-runs in a few seconds on CPU. Models are cached as singletons and reused.
+runs in a few seconds to a minute or more on CPU, depending on image size. Models
+are cached as singletons and reused.
 
 ---
 

@@ -375,7 +375,7 @@ with gr.Blocks(title="AI Photo Restoration Studio") as app:
                 "Brush over a localized defect (scratch, tear, spot, or an object "
                 "to remove). LaMa fills only the brushed region by continuing the "
                 "surrounding structure; the result is composited back at full "
-                "resolution so nothing else changes."
+                "resolution so nothing beyond the feathered edge changes."
             )
             with gr.Row(equal_height=False):
                 with gr.Column(scale=1):
