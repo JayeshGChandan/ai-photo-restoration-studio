@@ -1,0 +1,696 @@
+{
+  "generated_by": "scripts/make_figures.py",
+  "code": {
+    "git_head": "47e263d9975af561097542fb37219e1244fbe6f3",
+    "make_figures_py_modified_vs_head": false
+  },
+  "inputs": {
+    "raw_csv_sha256": "0da006854bbd6e38ab65d59b4d6530a025dcfb431f868361dd4d2908a160be4b",
+    "summary_csv_sha256": "4b9d5ac5dc12dc0c00983ffa9eca910099e30038e039dba5faf1ac65138cf490",
+    "data_manifest_sha256": "6e1907224bb34e2859ca518273b9b7bd47fac5742aa24096383f1e8ec530d1a9",
+    "seed": 0,
+    "lama_devices": [
+      "cpu",
+      "cpu"
+    ]
+  },
+  "rules": {
+    "seed": "taken from raw.csv (every row must share it)",
+    "representative_image": {
+      "candidates": "split == professional, size_class == above_cap, coverage_target == 5",
+      "statistic": "N1 u_pct_changed",
+      "median_over": "every above_cap pair at coverage 5 (both splits): the size-class median",
+      "select": "candidate with the smallest |N1 u_pct_changed - median|",
+      "tie_break": "filename ascending",
+      "used_for": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    "verify": {
+      "conditions": [
+        "C_0",
+        "C_3",
+        "C_15",
+        "C_3_legacy",
+        "C_15_legacy",
+        "C_3_N2fill",
+        "N1",
+        "N2"
+      ],
+      "fields": [
+        "u_pct_changed",
+        "m_psnr_y",
+        "coverage_actual"
+      ],
+      "comparison": "exact float equality with the raw.csv row"
+    },
+    "A": {
+      "panels": [
+        "N1",
+        "C_3"
+      ],
+      "value": "per-pixel max over RGB of |X - I|",
+      "clip_levels": 10,
+      "colour_scale": "11 discrete levels 0..10: 0 = surface, 1..10 = blue ramp 100..700",
+      "outline": "pixels of M with a 4-neighbour outside M, 1 px",
+      "display_long_edge": 1600,
+      "display_resample": "clipped values box-averaged to the display panel size, then the same scale (linear between levels); outline = 4-boundary of pixels whose box-averaged M is > 0"
+    },
+    "B": {
+      "panels": [
+        "I",
+        "N1",
+        "N2",
+        "C_3"
+      ],
+      "window": 128,
+      "inside": "U (fixed alpha == 0 at r=15), every pixel of the window",
+      "energy": "sum over the window of gx^2 + gy^2, np.gradient of BT.601 luma Y (0-255) of I over the full image",
+      "percentile": 90,
+      "percentile_method": "inverted_cdf",
+      "percentile_over": "every window lying entirely inside U",
+      "select": "window whose energy is closest to the percentile; tie: smallest (y, x)",
+      "upscale": 4,
+      "upscale_method": "nearest"
+    },
+    "C": {
+      "panels": [
+        "D",
+        "C_3_legacy",
+        "C_3"
+      ],
+      "crop": 96,
+      "boundary_points": "pixels of M with a 4-neighbour outside M, whose 96x96 crop centred on them lies inside the image",
+      "score": "sum over a 9x9 window centred on the point of sum over RGB of |C_3_legacy - C_3|",
+      "score_window": 9,
+      "percentile": 90,
+      "percentile_method": "inverted_cdf",
+      "percentile_over": "every boundary point",
+      "select": "point whose score is closest to the percentile; tie: smallest (y, x)",
+      "crop_box": "rows y-48..y+47, columns x-48..x+47",
+      "upscale": 4,
+      "upscale_method": "nearest",
+      "alpha_line": {
+        "radius": 3,
+        "direction": "of the 4-neighbour steps from the point to a pixel outside M, the one best aligned with the outward normal -grad(G_2 * M) (Gaussian sigma 2); ties in listed order (0,1),(0,-1),(1,0),(-1,0) as (dy,dx)",
+        "samples": "pixels p + j*d for j = -23..24; x = j - 0.5 px from the mask edge (negative = towards M)",
+        "values": "alpha / 255 of feather_mask (fixed) and legacy_feather_mask (legacy)"
+      }
+    },
+    "D": {
+      "panels": [
+        "C_0",
+        "C_3",
+        "I"
+      ],
+      "location": "same crop as C",
+      "upscale": 4,
+      "upscale_method": "nearest"
+    },
+    "E": {
+      "panels": [
+        "C_3",
+        "C_3_N2fill",
+        "I"
+      ],
+      "location": "same crop as C",
+      "upscale": 4,
+      "upscale_method": "nearest"
+    },
+    "F": {
+      "form": "SVG schematic: boxes, arrows, short labels"
+    }
+  },
+  "outcomes": {
+    "representative_image": {
+      "split": "professional",
+      "filename": "jeremy-cai-1174.png",
+      "image_index": 78,
+      "coverage_target": "5",
+      "width": 1936,
+      "height": 1220,
+      "n1_u_pct_changed": 79.88590610757066,
+      "class_median_n1_u_pct_changed": 79.32028976027863,
+      "n_class_pairs": 92,
+      "n_candidates": 33,
+      "distance_to_median": 0.5656163472920355,
+      "runner_up": {
+        "filename": "nomao-saeki-33553.png",
+        "distance_to_median": 0.9243256526726213
+      },
+      "alternative_if_professional_only_median": {
+        "median": 78.395964107606,
+        "filename": "nomao-saeki-33553.png"
+      }
+    },
+    "verification": [
+      {
+        "condition": "C_0",
+        "field": "u_pct_changed",
+        "recomputed": 0.0,
+        "raw_csv": 0.0,
+        "equal": true
+      },
+      {
+        "condition": "C_0",
+        "field": "m_psnr_y",
+        "recomputed": 10.888201980474332,
+        "raw_csv": 10.888201980474332,
+        "equal": true
+      },
+      {
+        "condition": "C_0",
+        "field": "coverage_actual",
+        "recomputed": 4.993225850155805,
+        "raw_csv": 4.993225850155805,
+        "equal": true
+      },
+      {
+        "condition": "C_3",
+        "field": "u_pct_changed",
+        "recomputed": 0.0,
+        "raw_csv": 0.0,
+        "equal": true
+      },
+      {
+        "condition": "C_3",
+        "field": "m_psnr_y",
+        "recomputed": 10.888201980474332,
+        "raw_csv": 10.888201980474332,
+        "equal": true
+      },
+      {
+        "condition": "C_3",
+        "field": "coverage_actual",
+        "recomputed": 4.993225850155805,
+        "raw_csv": 4.993225850155805,
+        "equal": true
+      },
+      {
+        "condition": "C_15",
+        "field": "u_pct_changed",
+        "recomputed": 0.0,
+        "raw_csv": 0.0,
+        "equal": true
+      },
+      {
+        "condition": "C_15",
+        "field": "m_psnr_y",
+        "recomputed": 10.888201980474332,
+        "raw_csv": 10.888201980474332,
+        "equal": true
+      },
+      {
+        "condition": "C_15",
+        "field": "coverage_actual",
+        "recomputed": 4.993225850155805,
+        "raw_csv": 4.993225850155805,
+        "equal": true
+      },
+      {
+        "condition": "C_3_legacy",
+        "field": "u_pct_changed",
+        "recomputed": 0.0,
+        "raw_csv": 0.0,
+        "equal": true
+      },
+      {
+        "condition": "C_3_legacy",
+        "field": "m_psnr_y",
+        "recomputed": 10.314316540886104,
+        "raw_csv": 10.314316540886104,
+        "equal": true
+      },
+      {
+        "condition": "C_3_legacy",
+        "field": "coverage_actual",
+        "recomputed": 4.993225850155805,
+        "raw_csv": 4.993225850155805,
+        "equal": true
+      },
+      {
+        "condition": "C_15_legacy",
+        "field": "u_pct_changed",
+        "recomputed": 0.0,
+        "raw_csv": 0.0,
+        "equal": true
+      },
+      {
+        "condition": "C_15_legacy",
+        "field": "m_psnr_y",
+        "recomputed": 9.401527473658183,
+        "raw_csv": 9.401527473658183,
+        "equal": true
+      },
+      {
+        "condition": "C_15_legacy",
+        "field": "coverage_actual",
+        "recomputed": 4.993225850155805,
+        "raw_csv": 4.993225850155805,
+        "equal": true
+      },
+      {
+        "condition": "C_3_N2fill",
+        "field": "u_pct_changed",
+        "recomputed": 0.0,
+        "raw_csv": 0.0,
+        "equal": true
+      },
+      {
+        "condition": "C_3_N2fill",
+        "field": "m_psnr_y",
+        "recomputed": 12.635663102234691,
+        "raw_csv": 12.635663102234691,
+        "equal": true
+      },
+      {
+        "condition": "C_3_N2fill",
+        "field": "coverage_actual",
+        "recomputed": 4.993225850155805,
+        "raw_csv": 4.993225850155805,
+        "equal": true
+      },
+      {
+        "condition": "N1",
+        "field": "u_pct_changed",
+        "recomputed": 79.88590610757066,
+        "raw_csv": 79.88590610757066,
+        "equal": true
+      },
+      {
+        "condition": "N1",
+        "field": "m_psnr_y",
+        "recomputed": 10.888201980474332,
+        "raw_csv": 10.888201980474332,
+        "equal": true
+      },
+      {
+        "condition": "N1",
+        "field": "coverage_actual",
+        "recomputed": 4.993225850155805,
+        "raw_csv": 4.993225850155805,
+        "equal": true
+      },
+      {
+        "condition": "N2",
+        "field": "u_pct_changed",
+        "recomputed": 94.73566117297848,
+        "raw_csv": 94.73566117297848,
+        "equal": true
+      },
+      {
+        "condition": "N2",
+        "field": "m_psnr_y",
+        "recomputed": 12.635663102234691,
+        "raw_csv": 12.635663102234691,
+        "equal": true
+      },
+      {
+        "condition": "N2",
+        "field": "coverage_actual",
+        "recomputed": 4.993225850155805,
+        "raw_csv": 4.993225850155805,
+        "equal": true
+      }
+    ],
+    "figures": {
+      "A": {
+        "files": [
+          "fig_a_change_maps_full.png",
+          "fig_a_change_maps.png"
+        ],
+        "source": "professional/jeremy-cai-1174.png",
+        "location": "full image",
+        "outcome": {
+          "panel_size_full": [
+            1936,
+            1220
+          ],
+          "panel_size_display": [
+            710,
+            447
+          ],
+          "full_size": [
+            4353,
+            1378
+          ],
+          "display_size": [
+            1600,
+            506
+          ],
+          "max_clipped_value": {
+            "N1": 10,
+            "C_3": 10
+          },
+          "pixels_at_or_above_clip": {
+            "N1": 135844,
+            "C_3": 125053
+          }
+        }
+      },
+      "B": {
+        "files": [
+          "fig_b_detail_crops.png"
+        ],
+        "source": "professional/jeremy-cai-1174.png",
+        "location": {
+          "crop_box_xywh": [
+            956,
+            577,
+            128,
+            128
+          ]
+        },
+        "outcome": {
+          "crop_box_xywh": [
+            956,
+            577,
+            128,
+            128
+          ],
+          "energy": 5999038.325436406,
+          "percentile_value": 5999038.325436406,
+          "n_valid_windows": 107542,
+          "pixels_changed_in_crop": {
+            "I": 0,
+            "N1": 15272,
+            "N2": 16344,
+            "C_3": 0
+          }
+        }
+      },
+      "C": {
+        "files": [
+          "fig_c_feather_defect.png",
+          "fig_c_alpha_profile.png",
+          "fig_c_alpha_profile.svg"
+        ],
+        "source": "professional/jeremy-cai-1174.png",
+        "location": {
+          "crop_box_xywh": [
+            376,
+            1000,
+            96,
+            96
+          ],
+          "boundary_point_yx": [
+            1048,
+            424
+          ]
+        },
+        "outcome": {
+          "point_yx": [
+            1048,
+            424
+          ],
+          "score": 5318.0,
+          "percentile_value": 5318.0,
+          "n_boundary_points": 13891,
+          "crop_box_xywh": [
+            376,
+            1000,
+            96,
+            96
+          ],
+          "alpha_line": {
+            "direction_dydx": [
+              0,
+              -1
+            ],
+            "normal_dydx": [
+              0.04961950620090333,
+              -0.18225827314233825
+            ],
+            "x_px": [
+              -23.5,
+              -22.5,
+              -21.5,
+              -20.5,
+              -19.5,
+              -18.5,
+              -17.5,
+              -16.5,
+              -15.5,
+              -14.5,
+              -13.5,
+              -12.5,
+              -11.5,
+              -10.5,
+              -9.5,
+              -8.5,
+              -7.5,
+              -6.5,
+              -5.5,
+              -4.5,
+              -3.5,
+              -2.5,
+              -1.5,
+              -0.5,
+              0.5,
+              1.5,
+              2.5,
+              3.5,
+              4.5,
+              5.5,
+              6.5,
+              7.5,
+              8.5,
+              9.5,
+              10.5,
+              11.5,
+              12.5,
+              13.5,
+              14.5,
+              15.5,
+              16.5,
+              17.5,
+              18.5,
+              19.5,
+              20.5,
+              21.5,
+              22.5,
+              23.5
+            ],
+            "in_M": [
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false
+            ],
+            "alpha_fixed": [
+              0.043137254901960784,
+              0.08235294117647059,
+              0.1411764705882353,
+              0.2235294117647059,
+              0.3254901960784314,
+              0.4392156862745098,
+              0.5607843137254902,
+              0.6745098039215687,
+              0.7764705882352941,
+              0.8588235294117647,
+              0.9176470588235294,
+              0.9568627450980393,
+              0.9803921568627451,
+              0.996078431372549,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              0.996078431372549,
+              0.984313725490196,
+              0.9686274509803922,
+              0.9333333333333333,
+              0.8784313725490196,
+              0.803921568627451,
+              0.7058823529411765,
+              0.592156862745098,
+              0.47058823529411764,
+              0.35294117647058826,
+              0.24705882352941178,
+              0.1568627450980392,
+              0.09019607843137255,
+              0.050980392156862744,
+              0.0196078431372549,
+              0.00784313725490196,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "alpha_legacy": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.00392156862745098,
+              0.011764705882352941,
+              0.027450980392156862,
+              0.058823529411764705,
+              0.10588235294117647,
+              0.1803921568627451,
+              0.27450980392156865,
+              0.3843137254901961,
+              0.5019607843137255,
+              0.6078431372549019,
+              0.6941176470588235,
+              0.7450980392156863,
+              0.7529411764705882,
+              0.7137254901960784,
+              0.6352941176470588,
+              0.5333333333333333,
+              0.4196078431372549,
+              0.3058823529411765,
+              0.20784313725490197,
+              0.12549019607843137,
+              0.07058823529411765,
+              0.03529411764705882,
+              0.01568627450980392,
+              0.00392156862745098,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "D": {
+        "files": [
+          "fig_d_seams.png"
+        ],
+        "source": "professional/jeremy-cai-1174.png",
+        "location": {
+          "crop_box_xywh": [
+            376,
+            1000,
+            96,
+            96
+          ],
+          "boundary_point_yx": [
+            1048,
+            424
+          ]
+        },
+        "outcome": "same crop as C"
+      },
+      "E": {
+        "files": [
+          "fig_e_n2fill.png"
+        ],
+        "source": "professional/jeremy-cai-1174.png",
+        "location": {
+          "crop_box_xywh": [
+            376,
+            1000,
+            96,
+            96
+          ],
+          "boundary_point_yx": [
+            1048,
+            424
+          ]
+        },
+        "outcome": "same crop as C"
+      },
+      "F": {
+        "files": [
+          "fig_f_schematic.svg"
+        ],
+        "source": null,
+        "location": null,
+        "outcome": "schematic"
+      }
+    }
+  },
+  "images_used": [
+    {
+      "split": "professional",
+      "filename": "jeremy-cai-1174.png"
+    }
+  ],
+  "files": {
+    "fig_a_change_maps.png": "08d4639e9562309428e3ebb1cbfaee7bd546f2c048f303e83222656b373fb98c",
+    "fig_a_change_maps_full.png": "46bd3dd70e447054bb18950e32d0e7ddaf74bccc59a2d828a83f8c9c231ef1ff",
+    "fig_b_detail_crops.png": "7a72faa555e4406ea3fce2324c4b2a737078c235920cd633695a949710f48a90",
+    "fig_c_alpha_profile.png": "fb29c5efe28eaa994d76db416c036584137ec8a3ced4c03ed383ad6cd2587857",
+    "fig_c_alpha_profile.svg": "f040d3e0fedce153f8104ea91e9da5e08df14ecd958d0e3bf057cb335cc04aa9",
+    "fig_c_feather_defect.png": "8208c07d7651145f94a98c56693d2ea3be844074c898649f03a514677a25fa2c",
+    "fig_d_seams.png": "c9c349a2723363e86d4ec6049de9c4d6f354e38a6d9e5b82ffaf4bb6205b7934",
+    "fig_e_n2fill.png": "5a8a8c718edc23cabdea4d5360d69b1384c40bf16667c3e0525433a493f282b2",
+    "fig_f_schematic.svg": "43f607c856fa0e3fd0b4b9db8f74d17c76f3db7dd2252f60bc32f6cb52697634"
+  }
+}
