@@ -143,16 +143,15 @@ DEFAULT_RULES = {
     "C": {
         "panels": ["D", "C_3_legacy", "C_3"],
         "crop": 96,
-        "boundary_points": "pixels of M with a 4-neighbour outside M, whose 96x96 crop "
-                           "centred on them lies inside the image",
-        "score": "sum over a 9x9 window centred on the point of sum over RGB of "
-                 "|C_3_legacy - C_3|",
+        "boundary_points": "every pixel of M with a 4-neighbour outside M",
+        "score": "sum over a 9x9 window centred on the point (zero beyond the image edge) "
+                 "of sum over RGB of |C_3_legacy - C_3|",
         "score_window": 9,
         "percentile": 90,
         "percentile_method": "inverted_cdf",
         "percentile_over": "every boundary point",
         "select": "point whose score is closest to the percentile; tie: smallest (y, x)",
-        "crop_box": "rows y-48..y+47, columns x-48..x+47",
+        "crop_box": "rows y-48..y+47, columns x-48..x+47; stop if it leaves the image",
         "upscale": 4,
         "upscale_method": "nearest",
         "alpha_line": {
@@ -530,18 +529,18 @@ def select_boundary_point(ex, rule):
     diff = np.abs(ex["out"]["C_3_legacy"].astype(np.int32)
                   - ex["out"]["C_3"].astype(np.int32)).sum(-1).astype(np.float64)
     sw = rule["score_window"]
-    sums = window_sums(diff, sw)                  # top-left indexed
     r = sw // 2
+    sums = window_sums(np.pad(diff, r), sw)       # sums[y, x] = window centred on (y, x)
     pts = np.argwhere(inner_boundary(M))
-    ok = ((pts[:, 0] >= half) & (pts[:, 0] <= h - half) & (pts[:, 1] >= half)
-          & (pts[:, 1] <= w - half))
-    pts = pts[ok]
     if pts.size == 0:
-        raise SystemExit("no boundary point admits a full crop")
-    scores = sums[pts[:, 0] - r, pts[:, 1] - r]
+        raise SystemExit("M has no boundary points")
+    scores = sums[pts[:, 0], pts[:, 1]]
     pct = float(np.percentile(scores, rule["percentile"], method=rule["percentile_method"]))
     order = np.lexsort((pts[:, 1], pts[:, 0], np.abs(scores - pct)))
     y, x = (int(v) for v in pts[order[0]])
+    if not (half <= y <= h - half and half <= x <= w - half):
+        raise SystemExit(f"selected boundary point {(y, x)}: its {rule['crop']}x{rule['crop']} "
+                         "crop leaves the image")
     return {"point_yx": [y, x], "score": float(scores[order[0]]), "percentile_value": pct,
             "n_boundary_points": int(len(pts)),
             "crop_box_xywh": [x - half, y - half, rule["crop"], rule["crop"]]}
