@@ -2,67 +2,85 @@
 layout: default
 ---
 
-<!-- WRITE: page title and one-line summary -->
+# What a LaMa repair changes outside the mask
 
-## The problem
+## Summary
 
-<!-- WRITE: the problem -->
+On the 92 test photos larger than my app's 1536 px inpainting size, raw LaMa output changed on average 77.20 to 78.01% of the pixels far from any repair. Pasting only the fill back into the original, with a soft edge, changed none of them. Moving that soft edge outside the mask raised repair PSNR-Y on all 92 images, by a mean of 1.106 to 1.246 dB, at a measurable cost just beyond the mask. A separate fix to how Real-ESRGAN makes 2x output improved its mean PSNR-Y, SSIM-Y and LPIPS on 10 test crops.
 
-## What already exists, and what is mine
+## Motivation
 
-<!-- WRITE: prior work and what is mine; IOPaint must be cited by name -->
+My app's Brush Repair tab runs LaMa on a copy of the photo whose long edge is at most 1536 px. Larger photos are shrunk to that size, and the result is enlarged back. Every pixel goes through that round trip, including pixels the user never touched.
 
-## The pipeline
+A user who brushes over one scratch expects the rest of the photo to stay as it was. Resampling breaks that expectation in a way that is hard to see but easy to measure.
+
+The usual answer is to paste only the repaired region back into the full-resolution original. I wanted to measure how well that works in my implementation, and what its soft edge costs.
+
+## Related work and what this project adds
+
+The models come from other authors. LaMa, by Suvorov et al. [1], fills large masks using fast Fourier convolutions. Real-ESRGAN, by Wang et al. [2], restores and upscales degraded photos, and CodeFormer, by Zhou et al. [3], restores faces. I run LaMa through simple-lama-inpainting [4] and load the other two with spandrel [5].
+
+Pasting an inpainted region back at full resolution is an established technique. [IOPaint](https://github.com/Sanster/IOPaint) [6], formerly Lama Cleaner, offers it as its **Resize** strategy, the same idea my compositing follows. Resize shrinks the image for inpainting and enlarges the result back, so the area outside the mask keeps its quality. Its **Crop** strategy instead inpaints a crop of the masked area, with a margin, at the original resolution.
+
+What this project adds is measurement. I test the paste-back on 306 image and mask pairs with synthetic damage and report what changes in each region. The measurements exposed a defect in my own feathering, which I fixed. They also exposed a dependence on the damage colour above the resize cap, which is still open.
+
+## Pipeline overview
+
+Auto Restore routes faces to CodeFormer and blur, noise or low resolution to Real-ESRGAN. Brush Repair sends a user-drawn mask to LaMa, and Benchmark scores restorations of synthetically degraded images.
+
+This write-up is mostly about Brush Repair, whose two paths Figure F shows. The raw path returns LaMa's output after the round trip through 1536 px. The composite path blends that output into the damaged input with a soft mask, so only the mask and a thin band around it can change.
 
 ![Schematic with two paths. Raw LaMa round trip: damaged image D plus mask M, downscale to 1536 px, LaMa fills M, upscale to full size, N1. Composite: LaMa output L composited into D with the feather outside M, C_3.](figures/fig_f_schematic.svg)
 
-<!-- WRITE: caption for Figure F -->
+*Figure F. The two Brush Repair paths compared in this write-up. N1 is LaMa's output after the round trip; C_3 is that output composited into the damaged image with the feather outside the mask.*
 
-## Compositing, and the bug I found in it
+## How the evaluation works
 
-![Three panels at 4x: damaged input D, legacy composite, fixed composite C_3.](figures/fig_c_feather_defect.png)
+I use the validation set of CLIC 2020 [7]: 102 photos, 61 from its Mobile split and 41 from its Professional split. Their long edges run from 512 to 2048 px. Of these, 92 are larger than the 1536 px cap and 10 are not, so I report the two groups separately.
 
-<!-- WRITE: caption for Figure C -->
+For each image I draw seeded masks at 1%, 5% and 15% coverage, which gives 306 pairs. Each mask mixes thin strokes with filled blobs. Inside the mask I overwrite the pixels with a bright fill of 235 plus Gaussian noise with a standard deviation of 10, giving the damaged image D.
 
-![Line chart of alpha against pixels from the mask edge, legacy feather vs fixed feather, with the mask region shaded.](figures/fig_c_alpha_profile.png)
+From each pair I build eight outputs. N1 is raw LaMa at the 1536 px cap, and N2 is raw LaMa with the cap lowered to 512 px.
 
-<!-- WRITE: caption for the alpha profile -->
+C_0, C_3 and C_15 composite N1's fill into D with my current feather, at blur radius 0, 3 and 15. C_3_legacy and C_15_legacy use my earlier feather, which was centred on the mask edge. C_3_N2fill composites the 512 px fill with the current radius 3 feather.
 
-![Three panels at 4x: hard edge C_0, feathered C_3, original I.](figures/fig_d_seams.png)
+I score three regions against the clean original I. M is the mask itself, and H is the halo: the pixels outside M that a given feather reaches. The untouched region **U** is every pixel beyond the widest feather I test, radius 15, so a correct composite must leave it unchanged.
 
-<!-- WRITE: caption for Figure D -->
+At 15% coverage U becomes small, and for two of the 10 smaller images it is empty. I leave those two pairs out of the U averages.
 
-![Line chart of the maximum reach of changes beyond the mask against feather radius 0, 3 and 15, legacy feather vs fixed feather.](figures/chart_4_halo_reach.png)
+In U I count the share of pixels where any colour channel changed, and the share that changed by more than one level. In M I report PSNR-Y on BT.601 luma [9] and LPIPS [10], with LPIPS from pyiqa [11]. M LPIPS compares I with an image that holds the output inside M and I everywhere else. Off-repair LPIPS does the reverse, so it scores only what an output did to the rest of the photo.
 
-<!-- WRITE: caption for chart 4 -->
+Every mean comes with a 95% percentile bootstrap interval from 10,000 resamples of images, with seed 0. For comparisons between two outputs I bootstrap the per-image differences and count the images that got better, stayed equal or got worse.
 
-## How I measured it
+## Observations
 
-<!-- WRITE: how I measured it -->
+### What compositing guarantees: untouched pixels
 
-## Results
+Above the cap, raw LaMa changed on average 78.01%, 77.20% and 77.34% of U at 1%, 5% and 15% coverage. Many of these changes are a single level. Only 34.90 to 36.68% of U pixels moved by more than one level, and the mean absolute change per channel was 1.458 to 1.618 levels.
+
+Lowering the cap to 512 px made this worse. N2 changed 92.97 to 93.31% of U, with 69.09 to 70.25% of U moving by more than one level. Every composite left every U pixel unchanged in all 306 pairs, apart from the two pairs with an empty U.
+
+Below the cap there is no round trip, and raw LaMa also left U unchanged in all 10 images. That points to the resampling, not to LaMa itself, as the source of the changes outside the mask.
+
+The figures use one Professional photo above the cap, chosen by a fixed rule. Of those photos, its raw LaMa U change at 5% coverage, 79.89%, is the closest to the median of all 92 images, 79.32%.
 
 ![Two change maps of the full image with the mask outlined: Raw LaMa, absolute difference N1 vs I; Composite, absolute difference C_3 vs I; shared colour scale clipped at 10 levels.](figures/fig_a_change_maps.png)
 
 [Full-resolution change maps](figures/fig_a_change_maps_full.png)
 
-<!-- WRITE: caption for Figure A -->
+*Figure A. Absolute change from the original at 5% coverage, with the mask outlined. Raw LaMa changes pixels across the whole frame, most strongly in textured areas; the composite changes only the mask and a narrow band around it.*
+
+Figure B takes a 128 px window from U at the 90th percentile of image detail. At 4x the raw LaMa crop is hard to tell from the original, while the 512 px crop is visibly blurred.
 
 ![Four 128 px crops at 4x from a region outside the repair: original I, raw LaMa N1, 512 px LaMa N2, composite C_3.](figures/fig_b_detail_crops.png)
 
-<!-- WRITE: caption for Figure B -->
+*Figure B. A 128 px crop from U at 4x: original, raw LaMa, 512 px LaMa and composite. Of its 16,384 pixels, raw LaMa changed 15,272, 512 px LaMa changed 16,344 and the composite changed none.*
 
 ![Grouped bar chart of untouched pixels changed, in percent, for 512 px LaMa N2, raw LaMa N1 and composite C_3 at 1, 5 and 15 percent coverage, above the cap, with 95% CIs.](figures/chart_1_u_changed.png)
 
-<!-- WRITE: caption for chart 1 -->
+*Chart 1. Share of U pixels changed by each output above the cap, with 95% intervals. The composite's bars sit at zero for every coverage.*
 
-![Two scatter panels, above the cap and at or below the cap: M PSNR-Y of the legacy composite against the fixed composite C_3, per image and coverage, with the y = x line.](figures/chart_2_m_psnr_legacy_vs_fixed.png)
-
-<!-- WRITE: caption for chart 2 -->
-
-![Scatter of off-repair LPIPS against M LPIPS at 5 percent coverage above the cap for C_3, C_3_legacy, C_3_N2fill, N1 and N2, with 95% CIs on both axes.](figures/chart_3_lpips_tradeoff.png)
-
-<!-- WRITE: caption for chart 3 -->
+The headline table collects these numbers for both size classes. Below the cap N2 still changes 85.20 to 96.67% of U, because a 512 px cap resamples all but one of those images.
 
 <!-- BEGIN headline -->
 
@@ -86,7 +104,65 @@ layout: default
 
 <!-- END headline -->
 
-<!-- WRITE: note on the headline table -->
+### Refining the feathered edge
+
+My first compositing code blurred the mask with a Gaussian centred on the mask edge. That puts part of the soft ramp inside the mask, so pixels near the inner edge keep part of the damaged fill. The current code first dilates the mask by the blur's reach, then blurs it. Alpha is then exactly 1 on every mask pixel, and the whole ramp lies outside M.
+
+Pillow's Gaussian blur is an extended box filter [8] with a finite footprint. I measure its effective reach as 8 px at radius 3 and 40 px at radius 15.
+
+Above the cap, the legacy radius 3 feather gave the damaged pixels a mean weight inside M of 0.2236, 0.1758 and 0.1466. The legacy radius 15 feather gave them 0.6034, 0.4391 and 0.3467. Every composite with the current feather gives them a weight of 0.
+
+![Three panels at 4x: damaged input D, legacy composite, fixed composite C_3.](figures/fig_c_feather_defect.png)
+
+*Figure C. A mask edge at 4x: damaged input, legacy composite and current composite. The legacy result keeps a pale, see-through trace of the fill; the current one shows LaMa's own fill, which is crisper but still a visible pale streak here.*
+
+![Line chart of alpha against pixels from the mask edge, legacy feather vs fixed feather, with the mask region shaded.](figures/fig_c_alpha_profile.png)
+
+*Figure C, alpha profile. Alpha along a line across the Figure C edge. The legacy alpha peaks at 0.663 inside the mask and drops to 0.376 at its inner edge, while the current alpha is 1 across the mask and falls to 0 by 17.5 px outside it.*
+
+Inside M the fix raised PSNR-Y in all 306 pairs. Above the cap the mean gain was 1.183, 1.106 and 1.246 dB, with all 92 images better at each coverage. Below the cap the gain was 10.319, 8.175 and 6.297 dB.
+
+Two measured differences fit the larger gain below the cap. The legacy feather gave the damaged pixels more weight there, 0.3509, 0.2624 and 0.2138. The fill was also closer to the original: below the cap C_3 scores 20.76 to 22.94 dB inside M, against 11.37 to 13.35 dB above it.
+
+![Two scatter panels, above the cap and at or below the cap: M PSNR-Y of the legacy composite against the fixed composite C_3, per image and coverage, with the y = x line.](figures/chart_2_m_psnr_legacy_vs_fixed.png)
+
+*Chart 2. M PSNR-Y of the legacy composite against the current one, per image and coverage, above and below the cap. All 306 points lie above the y = x line.*
+
+The fix moves the soft edge onto pixels that the old feather left alone. On the test images, the current radius 3 feather reaches 19.42 px beyond the mask, against 8.49 px for the legacy one. Above the cap those pixels take part of LaMa's round-tripped output, so off-repair LPIPS rose by 0.0096, 0.0348 and 0.0744. It was worse for all 92 images at each coverage.
+
+Below the cap, no halo pixel changed under either feather, and off-repair LPIPS stayed at 0.
+
+Figure D compares a hard edge with the radius 3 feather at the Figure C location. I see no clear seam in either, so at this edge the feather adds little visible benefit. One edge is not a general test of seams.
+
+![Three panels at 4x: hard edge C_0, feathered C_3, original I.](figures/fig_d_seams.png)
+
+*Figure D. The Figure C edge with a hard composite (radius 0), the radius 3 feather and the original. At this location the two composites look almost the same.*
+
+![Line chart of the maximum reach of changes beyond the mask against feather radius 0, 3 and 15, legacy feather vs fixed feather.](figures/chart_4_halo_reach.png)
+
+*Chart 4. Furthest distance from the mask at which any pixel changes, for feather radius 0, 3 and 15, measured on the two synthetic test images. The current feather reaches 19.42 and 97.45 px at radius 3 and 15, the legacy feather 8.49 and 41.01 px.*
+
+### Exploring a lower-resolution fill
+
+Above the cap, N2 scored higher than N1 inside the mask, so I tried compositing the 512 px fill with the current feather (C_3_N2fill). It raised M PSNR-Y over C_3 by 1.202, 0.714 and 1.210 dB. That held for 77, 72 and 90 of the 92 images, and M LPIPS improved for 86, 86 and 83 of them.
+
+Outside the mask, the feather blends the blurrier 512 px fill into the halo. Off-repair LPIPS rose by 0.0110, 0.0403 and 0.0825 compared with C_3, and it was worse for all 92 images.
+
+At 5% and 15% coverage, its off-repair LPIPS is even higher than raw N1's: 0.0882 against 0.0833, and 0.1908 against 0.1361. A strong change in a narrow band can cost more on this metric than a faint change everywhere.
+
+Below the cap the 512 px fill was worse inside the mask, by 8.214, 7.151 and 5.179 dB, for 9 of the 10 images. The tenth is small enough that both caps give the same output.
+
+![Three panels at 4x: 1536 px fill C_3, 512 px fill C_3_N2fill, original I.](figures/fig_e_n2fill.png)
+
+*Figure E. The Figure C edge with the 1536 px fill, the 512 px fill and the original. The 512 px fill is softer and blurrier, but the pale streak is still visible.*
+
+Chart 3 places five outputs on both measures at 5% coverage. C_3_legacy has the lowest off-repair LPIPS, 0.0131, and the highest M LPIPS, 0.1470. Among the composites, C_3_N2fill has the lowest M LPIPS, 0.1164, and the highest off-repair LPIPS, 0.0882.
+
+![Scatter of off-repair LPIPS against M LPIPS at 5 percent coverage above the cap for C_3, C_3_legacy, C_3_N2fill, N1 and N2, with 95% CIs on both axes.](figures/chart_3_lpips_tradeoff.png)
+
+*Chart 3. Off-repair LPIPS against M LPIPS at 5% coverage above the cap, with 95% intervals on both axes and a log x axis. Lower is better on both.*
+
+The paired table lists every per-image comparison behind the three sections above, with intervals and counts.
 
 <!-- BEGIN paired -->
 
@@ -185,15 +261,11 @@ layout: default
 
 <!-- END paired -->
 
-<!-- WRITE: note on the paired table -->
+### Upscaler input handling
 
-## A fix that only half worked
+Auto Restore and the Benchmark tab can ask Real-ESRGAN for 2x output, but the network I use always upscales by 4x. The old code first shrank the input to half size, so that 4x would land on 2x. That discarded detail before the network saw it.
 
-![Three panels at 4x: 1536 px fill C_3, 512 px fill C_3_N2fill, original I.](figures/fig_e_n2fill.png)
-
-<!-- WRITE: caption for Figure E -->
-
-## The upscaler bug
+The current code runs the 4x network on the full input, in 256 px tiles with 16 px of context. It then resamples the result to the target size with Lanczos. I compared both paths on 10 Mobile crops of 512 by 512 px. Each crop was downscaled by 2x, blurred, given noise and saved as JPEG at quality 60, then restored.
 
 <!-- BEGIN upscaler -->
 
@@ -205,11 +277,49 @@ layout: default
 
 <!-- END upscaler -->
 
-<!-- WRITE: the upscaler bug -->
+Mean PSNR-Y rose from 28.88 to 30.28 dB and mean SSIM-Y [12] from 0.7940 to 0.8320. Mean LPIPS fell from 0.2099 to 0.1843. The current path beat the old one on PSNR-Y and SSIM-Y for all 10 crops, and on LPIPS for 9.
 
-## Limitations and what I would do next
+Against bicubic interpolation the current path won on LPIPS for all 10 crops but on PSNR-Y for only 5. Its mean PSNR-Y of 30.28 dB is close to bicubic's 29.97 dB.
 
-<!-- WRITE: limitations and what I would do next -->
+The fix costs time. With a 512 px input, the median time on the CPU rose from 13.59 s to 52.80 s. On Apple's MPS backend it rose from 1.57 s to 7.81 s.
+
+## What works well
+
+The compositing guarantee is exact. No composite changed a single U pixel in any pair. The test suite checks the same property at zero tolerance on two image sizes and at radius 0, 3 and 15.
+
+The current feather gives LaMa's fill full weight across the mask, and it raised M PSNR-Y in every pair.
+
+Below the cap, raw LaMa changed no pixel in U, and its off-repair LPIPS was 0. On the one image tested, the fill check below also found that its output did not depend on the damage colour there.
+
+Masks and fills are seeded, and the raw per-pair results are in the repository. Each figure's image and crop come from a recorded rule, not from a choice by eye.
+
+## Areas for improvement and next steps
+
+### Fill colour above the cap
+
+C_3's M PSNR-Y is much lower above the cap than below it. That gap made me check whether LaMa sees the damage fill. I ran LaMa twice on the representative image at 5% coverage, once with the experiment's fill and once with black.
+
+Above the cap, 117,931 of the 117,936 mask pixels (99.996%) differed between the two outputs, by up to 255 levels. Differences also reached 83,870 pixels outside the mask, by up to 181 levels and up to 8.49 px from it. All of them fell inside the radius 3 feather, and none fell in U.
+
+On the largest Professional image at or below the cap, 1500 by 844 px, the two outputs were identical. On that image, LaMa ignored the masked pixels when it saw the image at full size.
+
+Above the cap, two effects could let the fill through, and I have not yet separated them. The Lanczos downscale mixes fill colour into neighbouring unmasked pixels. Nearest-neighbour downscaling of the mask can also drop parts of thin strokes.
+
+This check uses one image per size class. It shows that the dependence exists, but it does not measure its average size. The two size classes also contain different images, so the PSNR-Y gap between them is not a clean measure of the effect.
+
+### Next experiment: mask-aware downscaling
+
+Exclude masked pixels when downscaling the image, for example with normalised convolution. Mark a low-resolution pixel as masked when any of its source pixels is masked. I would count this a success if the fill check above the cap then reports identical outputs. I would then rerun the full experiment to see how M PSNR-Y changes.
+
+### Next experiment: full-resolution crops
+
+IOPaint's Crop strategy suggests a second route. Cut a margin around each mask region and inpaint that crop at native resolution whenever it fits under the cap. Small repairs would then avoid resampling altogether. I would compare this with the current path on the same 306 pairs, using M PSNR-Y, M LPIPS, off-repair LPIPS and runtime.
+
+### Other limits
+
+The damage is synthetic, a bright noisy fill in strokes and blobs, not real scratches or tears. Only 10 images are at or below the cap, so that class has wide intervals. For example, C_3's M PSNR-Y at 1% has an interval of 19.97 to 26.04 dB. At 15% coverage U covers on average 8.88% of an above-cap image, so U figures there rest on fewer pixels.
+
+M PSNR-Y compares the fill with the original, so a plausible fill that differs from the original counts as error. The upscaler comparison uses 10 crops and one degradation setting, and all timings come from one machine.
 
 ## Reproducing this
 
@@ -239,6 +349,21 @@ Make the figures and tables (from the committed results in results/compositing/)
 ./venv/bin/python scripts/make_figures.py
 ./venv/bin/python scripts/make_tables.py
 ```
+
+## References
+
+1. R. Suvorov, E. Logacheva, A. Mashikhin, A. Remizova, A. Ashukha, A. Silvestrov, N. Kong, H. Goka, K. Park and V. Lempitsky. "Resolution-robust Large Mask Inpainting with Fourier Convolutions." IEEE/CVF Winter Conference on Applications of Computer Vision (WACV), 2022, pp. 2149–2159. <https://openaccess.thecvf.com/content/WACV2022/html/Suvorov_Resolution-Robust_Large_Mask_Inpainting_With_Fourier_Convolutions_WACV_2022_paper.html>
+2. X. Wang, L. Xie, C. Dong and Y. Shan. "Real-ESRGAN: Training Real-World Blind Super-Resolution with Pure Synthetic Data." IEEE/CVF International Conference on Computer Vision Workshops (ICCVW), 2021, pp. 1905–1914. <https://openaccess.thecvf.com/content/ICCV2021W/AIM/html/Wang_Real-ESRGAN_Training_Real-World_Blind_Super-Resolution_With_Pure_Synthetic_Data_ICCVW_2021_paper.html>
+3. S. Zhou, K. C. K. Chan, C. Li and C. C. Loy. "Towards Robust Blind Face Restoration with Codebook Lookup Transformer." Advances in Neural Information Processing Systems (NeurIPS), 2022. <https://arxiv.org/abs/2206.11253>
+4. simple-lama-inpainting, a pip package for LaMa inpainting. <https://github.com/enesmsahin/simple-lama-inpainting>
+5. spandrel, a library for loading and running pre-trained PyTorch models, from the chaiNNer project. <https://github.com/chaiNNer-org/spandrel>
+6. IOPaint, by Sanster, renamed from lama-cleaner. Its Original, Resize and Crop strategies are defined in `iopaint/schema.py`. <https://github.com/Sanster/IOPaint>; rename announcement: <https://github.com/Sanster/IOPaint/discussions/420>
+7. G. Toderici, W. Shi, R. Timofte, L. Theis, J. Ballé, E. Agustsson, N. Johnston and F. Mentzer. "Workshop and Challenge on Learned Image Compression (CLIC2020)." CVPR, 2020. <https://www.compression.cc>
+8. P. Gwosdek, S. Grewenig, A. Bruhn and J. Weickert. "Theoretical Foundations of Gaussian Convolution by Extended Box Filtering." Scale Space and Variational Methods in Computer Vision (SSVM), 2011. Title and authors verified; proceedings volume and pages not verified. <https://www.mia.uni-saarland.de/Publications/gwosdek-ssvm11.pdf>
+9. ITU-R Recommendation BT.601-7. "Studio encoding parameters of digital television for standard 4:3 and wide screen 16:9 aspect ratios." International Telecommunication Union, 2011. <https://www.itu.int/rec/R-REC-BT.601>
+10. R. Zhang, P. Isola, A. A. Efros, E. Shechtman and O. Wang. "The Unreasonable Effectiveness of Deep Features as a Perceptual Metric." IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2018, pp. 586–595. <https://openaccess.thecvf.com/content_cvpr_2018/html/Zhang_The_Unreasonable_Effectiveness_CVPR_2018_paper.html>
+11. C. Chen and J. Mo. "IQA-PyTorch: PyTorch Toolbox for Image Quality Assessment" (pyiqa), 2022. <https://github.com/chaofengc/IQA-PyTorch>
+12. Z. Wang, A. C. Bovik, H. R. Sheikh and E. P. Simoncelli. "Image Quality Assessment: From Error Visibility to Structural Similarity." IEEE Transactions on Image Processing, 13(4), pp. 600–612, 2004. <https://doi.org/10.1109/TIP.2003.819861>
 
 ## Credits
 
