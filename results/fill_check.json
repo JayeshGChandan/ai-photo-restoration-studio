@@ -1,0 +1,69 @@
+{
+  "description": "LaMa output with two damage fills on the same mask; differences between the two outputs",
+  "fills": {
+    "experiment": "synthetic_damage.damage_fill: 235 + N(0, 10), rounded, clipped, seed 0",
+    "black": "(0, 0, 0) on every masked pixel"
+  },
+  "mask": "synthetic_damage.synthesize_mask, coverage 5%, seed 0",
+  "lama": {
+    "device": "cpu",
+    "max_dimension": 1536
+  },
+  "regions": {
+    "U": "feather_mask(M, r=15) == 0 (the experiment's U)",
+    "r3_feather": "feather_mask(M, r=3) > 0"
+  },
+  "selection": {
+    "above_cap": "representative image in docs/figures/manifest.json",
+    "at_or_below_cap": "Professional image with the largest long edge <= 1536 px, ties by filename"
+  },
+  "results": [
+    {
+      "size_class": "above_cap",
+      "image": "professional/jeremy-cai-1174.png",
+      "image_index": 78,
+      "width": 1936,
+      "height": 1220,
+      "lama_input_long_edge": 1536,
+      "coverage_target": 5.0,
+      "coverage_actual": 4.993225850155805,
+      "outputs_identical": false,
+      "mask_pixels": 117936,
+      "mask_pixels_differing": 117931,
+      "mask_pct_differing": 99.99576041242707,
+      "mask_max_abs_diff": 255,
+      "outside_pixels_differing": 83870,
+      "outside_max_abs_diff": 181,
+      "outside_max_reach_px": 8.48528137423857,
+      "differing_pixels_in_U": 0,
+      "differing_outside_pixels_beyond_r3_feather": 0
+    },
+    {
+      "size_class": "at_or_below_cap",
+      "image": "professional/daniel-robert-405.png",
+      "image_index": 71,
+      "width": 1500,
+      "height": 844,
+      "lama_input_long_edge": 1500,
+      "coverage_target": 5.0,
+      "coverage_actual": 4.945102685624013,
+      "outputs_identical": true,
+      "mask_pixels": 62605,
+      "mask_pixels_differing": 0,
+      "mask_pct_differing": 0.0,
+      "mask_max_abs_diff": 0,
+      "outside_pixels_differing": 0,
+      "outside_max_abs_diff": 0,
+      "outside_max_reach_px": 0.0,
+      "differing_pixels_in_U": 0,
+      "differing_outside_pixels_beyond_r3_feather": 0
+    }
+  ],
+  "provenance": {
+    "git_head": "41444df3da79791b20c24d54af24e67879e019ff",
+    "git_dirty_tracked": false,
+    "torch": "2.12.1",
+    "python": "3.11.15",
+    "data_manifest_sha256": "6e1907224bb34e2859ca518273b9b7bd47fac5742aa24096383f1e8ec530d1a9"
+  }
+}
