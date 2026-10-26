@@ -3,8 +3,9 @@
 A photo-restoration workbench built around a simple principle: **diagnose the
 damage, route it to the right model, restore it, then measure the result.**
 Different kinds of damage need different tools, so instead of one model for
-everything, the app picks the right specialist and checks the outcome with
-image-quality metrics.
+everything, the app recommends a model for faces and for blur, noise or low
+resolution, the user marks localized damage with the brush, and the outcome is
+checked with image-quality metrics.
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue.svg)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.x-orange.svg)
@@ -22,12 +23,12 @@ takes the opposite approach:
 
 ```
             ┌─────────────┐
-  image ──▶ │  DIAGNOSE   │  faces?  blur / noise / low-res?  localized defect?
-            └──────┬──────┘
+  image ──▶ │  DIAGNOSE   │  faces?  blur / noise / low-res?
+            └──────┬──────┘  (localized damage is marked by the user with the brush)
                    ▼
-            ┌─────────────┐   faces        → CodeFormer        (face restoration)
-            │    ROUTE    │   global decay → Real-ESRGAN       (upscale / denoise)
-            └──────┬──────┘   localized    → LaMa (brush)      (structure-aware fill)
+            ┌─────────────┐   faces              → CodeFormer     (face restoration)
+            │    ROUTE    │   blur/noise/low-res → Real-ESRGAN    (upscale / denoise)
+            └──────┬──────┘   brushed by user    → LaMa (brush)   (structure-aware fill)
                    ▼
             ┌─────────────┐
             │   RESTORE   │  run the chosen specialist(s)
@@ -49,8 +50,8 @@ takes the opposite approach:
 ### 1. Auto Restore
 Click **Diagnose** and the app analyses the photo (face count and coverage,
 sharpness as the variance of the Laplacian, noise as an Immerkaer estimate, and
-resolution), then recommends a pipeline with the reasons shown. **Restore** runs
-it:
+resolution), then recommends a pipeline with the reasons shown. It does not
+measure JPEG compression or localized damage. **Restore** runs it:
 
 - Faces → CodeFormer (detect → align to a 512 template → restore → paste back
   with a parsing mask). A *fidelity* slider trades generative quality against
