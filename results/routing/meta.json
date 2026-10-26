@@ -1,0 +1,181 @@
+{
+  "evaluation": "routing",
+  "description": "Diagnose + recommend on six synthetic versions of each CLIC 2020 manifest image, against the route the design intends",
+  "started": "2026-10-27T00:03:46+05:30",
+  "expected_mapping": {
+    "clean": {
+      "route": "no upscale",
+      "flag": null,
+      "why": "a sharp, low-noise 1024 px photo is above the 900 px low-res edge and should trip no flag, so recommend() returns no upscale ('no automatic restoration needed' when no face is found)"
+    },
+    "blur": {
+      "route": "Real-ESRGAN x2",
+      "flag": "is_blurry",
+      "why": "Gaussian blur lowers the variance of the Laplacian below 120 -> softness -> Real-ESRGAN; 1024 px is not low-res, so x2"
+    },
+    "noise": {
+      "route": "Real-ESRGAN x2",
+      "flag": "is_noisy",
+      "why": "sigma 15 noise raises the Immerkaer estimate above 6.0 -> noise -> Real-ESRGAN x2"
+    },
+    "lowres": {
+      "route": "Real-ESRGAN x4",
+      "flag": "is_low_res",
+      "why": "long edge 256 px < 900 -> low resolution, and < 500 -> x4"
+    },
+    "soft": {
+      "route": "Real-ESRGAN x2",
+      "flag": "is_blurry",
+      "why": "4x down and bicubic up removes fine detail at 1024 px -> softness -> Real-ESRGAN x2"
+    },
+    "jpeg20": {
+      "route": "Real-ESRGAN x2",
+      "flag": null,
+      "why": "README routes global decay to Real-ESRGAN and restorers/upscale.py lists JPEG-compressed images among its targets, so the design intent is Real-ESRGAN x2. diagnose.py has no compression measure: this route is taken only if JPEG artefacts move the sharpness or noise estimate past a threshold"
+    }
+  },
+  "expected_mapping_written": "before any image was diagnosed (this file is first written with it, then completed after the run)",
+  "route_compared": "upscale decision of recommend(): 'no upscale', 'Real-ESRGAN x2' or 'Real-ESRGAN x4'; faces reported separately",
+  "code_readme_disagreements": [
+    "README diagram: Diagnose asks 'localized defect?' and routes 'localized -> LaMa (brush)'. diagnose.py measures no localized defect; when no flag and no face is found, recommend() only adds a reason suggesting the Brush Repair tab.",
+    "README routes 'global decay' to Real-ESRGAN, and restorers/upscale.py lists JPEG-compressed images among its targets, but diagnose.py has no compression or blocking measure; its only signals are sharpness, noise, resolution and faces.",
+    "diagnose.py says its thresholds are 'tuned for typical consumer / scanned old photos'; neither the code nor the README records what they were tuned on."
+  ],
+  "parameters": {
+    "base": "PIL LANCZOS resize to a 1024 px long edge (images smaller than that are enlarged; flagged enlarged_to_1024)",
+    "blur": "degradations.gaussian_blur(sigma=2.0) (cv2.GaussianBlur, kernel from sigma)",
+    "noise": "degradations.add_gaussian_noise(sigma=15.0, seed=0)",
+    "lowres": "degradations.downscale(factor=4) (cv2 INTER_AREA), kept small",
+    "soft": "degradations.downscale(factor=4), then PIL BICUBIC back to the base size",
+    "jpeg20": "degradations.jpeg_compress(quality=20) (cv2.imencode)",
+    "diagnose_thresholds": {
+      "_BLUR_THRESHOLD": 120.0,
+      "_NOISE_THRESHOLD": 6.0,
+      "_LOWRES_MAX_EDGE": 900
+    },
+    "face_detector": "diagnose._FaceDetector: facexlib retinaface_resnet50, conf 0.9, full image, no resize",
+    "recommend": "diagnose.recommend(diagnose(image)), app defaults"
+  },
+  "finished": "2026-10-27T00:12:59+05:30",
+  "device": {
+    "face_detector": "cpu"
+  },
+  "images": {
+    "manifest_rows": 102,
+    "processed": 102
+  },
+  "provenance": {
+    "git_head": "16bec6ba9d3235ac75d4ee87d418618fca9c4e0c",
+    "git_branch": "writeup",
+    "git_dirty_tracked_paths": [
+      "docs/index.md",
+      "scripts/make_figures.py",
+      "scripts/make_tables.py"
+    ],
+    "scripts_sha256": {
+      "scripts/eval_routing.py": "0ffd7526d6bc8c83d268580fffa2a5fca428de2cefea8ff08c86d4f00efa77d8",
+      "scripts/eval_common.py": "19ad15151d726498019bf9f5a93f7db76eba3f65eecd0733dbf8654623590486"
+    },
+    "scripts_committed": "in the same commit as these results",
+    "restore_device_env": "cpu",
+    "python": "3.11.15",
+    "platform": "macOS-26.4.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "torch": "2.12.1",
+    "torch_threads": 4,
+    "pyiqa": "0.1.15.post2",
+    "spandrel": "0.4.2",
+    "opencv": "4.11.0",
+    "facexlib": "0.3.0",
+    "pillow": "9.5.0",
+    "numpy": "1.26.4",
+    "data_manifest_sha256": "6e1907224bb34e2859ca518273b9b7bd47fac5742aa24096383f1e8ec530d1a9",
+    "pip_freeze": [
+      "annotated-doc==0.0.4",
+      "annotated-types==0.7.0",
+      "anyio==4.14.0",
+      "brotli==1.2.0",
+      "certifi==2026.6.17",
+      "charset-normalizer==3.4.7",
+      "click==8.4.1",
+      "contourpy==1.3.3",
+      "cycler==0.12.1",
+      "einops==0.8.2",
+      "facexlib==0.3.0",
+      "fastapi==0.137.2",
+      "filelock==3.29.4",
+      "filterpy==1.4.5",
+      "fire==0.5.0",
+      "fonttools==4.63.0",
+      "fsspec==2026.6.0",
+      "ftfy==6.3.1",
+      "gradio==6.19.0",
+      "gradio_client==2.5.0",
+      "groovy==0.1.2",
+      "h11==0.16.0",
+      "hf-gradio==0.4.1",
+      "hf-xet==1.5.1",
+      "httpcore==1.0.9",
+      "httpx==0.28.1",
+      "huggingface_hub==1.20.1",
+      "idna==3.18",
+      "iniconfig==2.3.1",
+      "Jinja2==3.1.6",
+      "kiwisolver==1.5.0",
+      "llvmlite==0.47.0",
+      "markdown-it-py==4.2.0",
+      "MarkupSafe==3.0.3",
+      "matplotlib==3.11.0",
+      "mdurl==0.1.2",
+      "mpmath==1.3.0",
+      "networkx==3.6.1",
+      "numba==0.65.1",
+      "numpy==1.26.4",
+      "openai-clip==1.0.1",
+      "opencv-python==4.11.0.86",
+      "orjson==3.11.9",
+      "packaging==26.2",
+      "pandas==3.0.3",
+      "Pillow==9.5.0",
+      "pluggy==1.6.0",
+      "pydantic==2.13.4",
+      "pydantic_core==2.46.4",
+      "pydub==0.25.1",
+      "Pygments==2.20.0",
+      "pyiqa==0.1.15.post2",
+      "pyparsing==3.3.2",
+      "pytest==9.1.1",
+      "python-dateutil==2.9.0.post0",
+      "python-multipart==0.0.32",
+      "pytz==2026.2",
+      "PyYAML==6.0.3",
+      "regex==2026.5.9",
+      "requests==2.34.2",
+      "rich==15.0.0",
+      "safehttpx==0.1.7",
+      "safetensors==0.8.0",
+      "scipy==1.17.1",
+      "semantic-version==2.10.0",
+      "shellingham==1.5.4",
+      "simple-lama-inpainting==0.1.2",
+      "six==1.17.0",
+      "spandrel==0.4.2",
+      "spandrel_extra_arches==0.2.0",
+      "starlette==1.3.1",
+      "sympy==1.14.0",
+      "termcolor==3.3.0",
+      "timm==1.0.27",
+      "tomlkit==0.14.0",
+      "torch==2.12.1",
+      "torchvision==0.27.1",
+      "tqdm==4.68.3",
+      "typer==0.25.1",
+      "typing-inspection==0.4.2",
+      "typing_extensions==4.15.0",
+      "urllib3==2.7.0",
+      "uvicorn==0.49.0",
+      "wcwidth==0.8.1"
+    ],
+    "git_dirty_tracked_paths_note": "corrected after the run: eval_common.provenance() sliced the first 'git status --porcelain' line after git() had stripped its leading space, recording 'ocs/index.md'. The path is docs/index.md (an uncommitted text edit, not read by this evaluation). Fixed in eval_common.py in a later commit."
+  }
+}

@@ -1,0 +1,613 @@
+image,split,image_index,orig_width,orig_height,enlarged_to_1024,condition,width,height,sharpness,noise_sigma,num_faces,face_area_pct,is_low_res,is_blurry,is_noisy,do_face,do_upscale,outscale,fidelity,summary,route,expected_route,as_expected,seconds
+0067.png,mobile,0,1512,2016,false,clean,768,1024,616.899861353857,2.1698552932970103,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,3.59
+0067.png,mobile,0,1512,2016,false,blur,768,1024,7.831343324310086,0.2801892118630044,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.06
+0067.png,mobile,0,1512,2016,false,noise,768,1024,2605.3261146591553,10.565168640073232,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.01
+0067.png,mobile,0,1512,2016,false,lowres,192,256,2124.350457008928,5.020640697342745,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+0067.png,mobile,0,1512,2016,false,soft,768,1024,15.233145369008222,0.2514904166558418,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.97
+0067.png,mobile,0,1512,2016,false,jpeg20,768,1024,409.32669344169307,0.9240912797233924,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.04
+20151208_222739.png,mobile,1,2048,1152,false,clean,1024,576,1064.4552510357955,3.212536337753659,2,0.2168669882747862,false,false,false,true,false,1,0.7,face restoration,no upscale,no upscale,true,0.70
+20151208_222739.png,mobile,1,2048,1152,false,blur,1024,576,9.04876873593628,0.29322041849614294,3,0.38185280023349655,false,true,false,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.69
+20151208_222739.png,mobile,1,2048,1152,false,noise,1024,576,2816.7189631277643,10.376985618172343,2,0.21157593776782355,false,false,true,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.75
+20151208_222739.png,mobile,1,2048,1152,false,lowres,256,144,2437.845582078268,5.701326056979737,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+20151208_222739.png,mobile,1,2048,1152,false,soft,1024,576,18.25378050903478,0.27847413454542613,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.73
+20151208_222739.png,mobile,1,2048,1152,false,jpeg20,1024,576,637.6425085185688,1.2863703400605524,2,0.20769088425570065,false,false,false,true,false,1,0.7,face restoration,no upscale,Real-ESRGAN x2,false,0.70
+2017-07-27 16.21.36.png,mobile,2,2048,1152,false,clean,1024,576,907.26136716018,2.7823937191029446,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.73
+2017-07-27 16.21.36.png,mobile,2,2048,1152,false,blur,1024,576,5.166054414766322,0.23173026959127146,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.74
+2017-07-27 16.21.36.png,mobile,2,2048,1152,false,noise,1024,576,2899.420927842998,10.808144841287339,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.74
+2017-07-27 16.21.36.png,mobile,2,2048,1152,false,lowres,256,144,1151.6899419684469,2.9781673908384785,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.06
+2017-07-27 16.21.36.png,mobile,2,2048,1152,false,soft,1024,576,9.799607925530937,0.20489262389147841,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.72
+2017-07-27 16.21.36.png,mobile,2,2048,1152,false,jpeg20,1024,576,525.1078455477125,0.8165359935537916,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.91
+2017-08-28 10.51.27.png,mobile,3,2048,1152,false,clean,1024,576,611.9822610969434,2.004142942850414,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.56
+2017-08-28 10.51.27.png,mobile,3,2048,1152,false,blur,1024,576,9.759416367122789,0.2533737964397592,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.48
+2017-08-28 10.51.27.png,mobile,3,2048,1152,false,noise,1024,576,2544.893929757407,10.341650512249917,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.67
+2017-08-28 10.51.27.png,mobile,3,2048,1152,false,lowres,256,144,2913.68763356665,5.400773441225582,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.05
+2017-08-28 10.51.27.png,mobile,3,2048,1152,false,soft,1024,576,20.213221231265635,0.23269025755474024,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.71
+2017-08-28 10.51.27.png,mobile,3,2048,1152,false,jpeg20,1024,576,483.8078390272237,0.9185340025151069,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.60
+2017-09-25 10.37.24.png,mobile,4,2048,1152,false,clean,1024,576,236.40053299326954,1.242920202354946,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.63
+2017-09-25 10.37.24.png,mobile,4,2048,1152,false,blur,1024,576,3.0835503269400872,0.20309371469583884,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.53
+2017-09-25 10.37.24.png,mobile,4,2048,1152,false,noise,1024,576,2242.768564847506,10.260815680076734,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.68
+2017-09-25 10.37.24.png,mobile,4,2048,1152,false,lowres,256,144,528.1696304480234,1.5655191321142319,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.06
+2017-09-25 10.37.24.png,mobile,4,2048,1152,false,soft,1024,576,5.039077753957109,0.1474849163816995,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.71
+2017-09-25 10.37.24.png,mobile,4,2048,1152,false,jpeg20,1024,576,145.48640091197257,0.3039964258175286,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.77
+2017-09-26 11.52.39.png,mobile,5,2048,1152,false,clean,1024,576,427.0883042513867,1.8003719666165494,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.81
+2017-09-26 11.52.39.png,mobile,5,2048,1152,false,blur,1024,576,4.068669558787303,0.23432394627002023,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.73
+2017-09-26 11.52.39.png,mobile,5,2048,1152,false,noise,1024,576,2007.836843361799,9.271983923954826,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.77
+2017-09-26 11.52.39.png,mobile,5,2048,1152,false,lowres,256,144,851.3690837548102,2.6833425101117023,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.06
+2017-09-26 11.52.39.png,mobile,5,2048,1152,false,soft,1024,576,7.314931232574177,0.18939038502739203,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.75
+2017-09-26 11.52.39.png,mobile,5,2048,1152,false,jpeg20,1024,576,221.51210655745442,0.5503216459453946,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.76
+2017-09-26 18.05.49.png,mobile,6,2048,1152,false,clean,1024,576,57.46518299362716,0.6673547186194344,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,no upscale,false,0.77
+2017-09-26 18.05.49.png,mobile,6,2048,1152,false,blur,1024,576,2.0099130757814154,0.20520170013490976,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.82
+2017-09-26 18.05.49.png,mobile,6,2048,1152,false,noise,1024,576,1786.1207387220966,9.30340430151287,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.05
+2017-09-26 18.05.49.png,mobile,6,2048,1152,false,lowres,256,144,198.64126212214248,0.9155457224855743,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.06
+2017-09-26 18.05.49.png,mobile,6,2048,1152,false,soft,1024,576,2.7402564061339945,0.1416673038642095,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.83
+2017-09-26 18.05.49.png,mobile,6,2048,1152,false,jpeg20,1024,576,38.021491093722005,0.11949856104906136,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.82
+20170719_152434.png,mobile,7,1512,2016,false,clean,768,1024,667.95782399012,2.491978963997808,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.21
+20170719_152434.png,mobile,7,1512,2016,false,blur,768,1024,8.829531350270068,0.3029217656626011,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.06
+20170719_152434.png,mobile,7,1512,2016,false,noise,768,1024,2657.786201394163,10.59913779307477,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.99
+20170719_152434.png,mobile,7,1512,2016,false,lowres,192,256,2300.3211620234783,5.533605258593165,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.09
+20170719_152434.png,mobile,7,1512,2016,false,soft,768,1024,16.823637625239726,0.29163073384674437,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.00
+20170719_152434.png,mobile,7,1512,2016,false,jpeg20,768,1024,438.3224307994421,1.0742780658319233,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.00
+20170930_131716.png,mobile,8,2016,980,false,clean,1024,498,1700.6590595652322,3.5754066377270552,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.77
+20170930_131716.png,mobile,8,2016,980,false,blur,1024,498,6.364822500411645,0.22927845004075142,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.84
+20170930_131716.png,mobile,8,2016,980,false,noise,1024,498,3704.5776683910512,11.204635112662226,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.73
+20170930_131716.png,mobile,8,2016,980,false,lowres,256,124,1431.9120101124886,4.003004248589299,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+20170930_131716.png,mobile,8,2016,980,false,soft,1024,498,11.97552122133947,0.20121244365357394,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.88
+20170930_131716.png,mobile,8,2016,980,false,jpeg20,1024,498,1056.1608262919635,1.4553235337411423,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.77
+20171109_082958.png,mobile,9,2016,980,false,clean,1024,498,1621.030956332694,3.0447213910248068,2,0.5746371056660112,false,false,false,true,false,1,0.7,face restoration,no upscale,no upscale,true,0.74
+20171109_082958.png,mobile,9,2016,980,false,blur,1024,498,11.280965659324629,0.21340697487581686,1,0.23453901091732654,false,true,false,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.65
+20171109_082958.png,mobile,9,2016,980,false,noise,1024,498,3244.4008473496715,10.070174077847541,1,0.24869731631144942,false,false,true,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.67
+20171109_082958.png,mobile,9,2016,980,false,lowres,256,124,2927.6696540086255,4.013061607851351,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.06
+20171109_082958.png,mobile,9,2016,980,false,soft,1024,498,22.091128162983086,0.18262951593423943,1,0.27305816550810175,false,true,false,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.91
+20171109_082958.png,mobile,9,2016,980,false,jpeg20,1024,498,1126.0971556563939,1.2986621511006988,2,0.5564607051481684,false,false,false,true,false,1,0.7,face restoration,no upscale,Real-ESRGAN x2,false,1.07
+IMG_0029.png,mobile,10,1434,1123,false,clean,1024,802,2205.213062373167,5.53498637090839,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.81
+IMG_0029.png,mobile,10,1434,1123,false,blur,1024,802,11.491834329783773,0.2890299882473223,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.03
+IMG_0029.png,mobile,10,1434,1123,false,noise,1024,802,4043.436513512083,11.737707937564824,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.94
+IMG_0029.png,mobile,10,1434,1123,false,lowres,256,200,3163.6912627426145,7.434714022374562,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.18
+IMG_0029.png,mobile,10,1434,1123,false,soft,1024,802,23.00380391644781,0.276056643788185,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.62
+IMG_0029.png,mobile,10,1434,1123,false,jpeg20,1024,802,1204.6593114837929,2.109797072736094,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.75
+IMG_0318.png,mobile,11,996,756,true,clean,1024,777,684.7912091772959,2.3229185786344657,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.97
+IMG_0318.png,mobile,11,996,756,true,blur,1024,777,9.914315324138398,0.30988398412213775,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.96
+IMG_0318.png,mobile,11,996,756,true,noise,1024,777,2607.2606549232905,10.267689105679562,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.95
+IMG_0318.png,mobile,11,996,756,true,lowres,256,194,2200.6733908550377,4.787687588695488,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+IMG_0318.png,mobile,11,996,756,true,soft,1024,777,18.12927643878469,0.29167198970544284,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.00
+IMG_0318.png,mobile,11,996,756,true,jpeg20,1024,777,548.0161004268984,1.1032002120666768,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.02
+IMG_0426.png,mobile,12,1632,1224,false,clean,1024,768,137.40563250511417,1.5275744634863708,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.98
+IMG_0426.png,mobile,12,1632,1224,false,blur,1024,768,4.378668462998273,0.25129590010905667,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.02
+IMG_0426.png,mobile,12,1632,1224,false,noise,1024,768,2080.332278753473,10.031086505399031,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.02
+IMG_0426.png,mobile,12,1632,1224,false,lowres,256,192,786.907185751531,1.9217353588636952,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+IMG_0426.png,mobile,12,1632,1224,false,soft,1024,768,7.153574625489356,0.21046503583573997,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.00
+IMG_0426.png,mobile,12,1632,1224,false,jpeg20,1024,768,87.80802101268715,0.31836782034065003,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.95
+IMG_0470_1.png,mobile,13,1632,1224,false,clean,1024,768,2022.2780665646558,4.684681012853021,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.03
+IMG_0470_1.png,mobile,13,1632,1224,false,blur,1024,768,9.177303011061872,0.28876154807502896,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.44
+IMG_0470_1.png,mobile,13,1632,1224,false,noise,1024,768,3957.060724505993,11.604130345709216,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.12
+IMG_0470_1.png,mobile,13,1632,1224,false,lowres,256,192,2566.6927167173058,6.73152097194299,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.10
+IMG_0470_1.png,mobile,13,1632,1224,false,soft,1024,768,19.230618354185328,0.28142835430919116,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.18
+IMG_0470_1.png,mobile,13,1632,1224,false,jpeg20,1024,768,1209.2133915208522,1.9542735917532432,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.13
+IMG_1115.png,mobile,14,1632,1224,false,clean,1024,768,2758.9109791267874,5.296143911085349,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.30
+IMG_1115.png,mobile,14,1632,1224,false,blur,1024,768,12.059939000593856,0.28067723760246943,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.75
+IMG_1115.png,mobile,14,1632,1224,false,noise,1024,768,4542.149570424203,11.867987638785355,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.69
+IMG_1115.png,mobile,14,1632,1224,false,lowres,256,192,3446.197730371936,6.705486006699335,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.22
+IMG_1115.png,mobile,14,1632,1224,false,soft,1024,768,25.574820160747766,0.2672545285681402,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.97
+IMG_1115.png,mobile,14,1632,1224,false,jpeg20,1024,768,1606.8054414665069,2.212402385867888,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.68
+IMG_1134.png,mobile,15,1632,1224,false,clean,1024,768,3142.9225046665492,5.333245607652398,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.19
+IMG_1134.png,mobile,15,1632,1224,false,blur,1024,768,20.63222102947475,0.33151409708078255,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,2.08
+IMG_1134.png,mobile,15,1632,1224,false,noise,1024,768,5061.011024163448,11.984966528007545,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.93
+IMG_1134.png,mobile,15,1632,1224,false,lowres,256,192,6788.714782343556,12.4897540927556,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.19
+IMG_1134.png,mobile,15,1632,1224,false,soft,1024,768,46.519295799621936,0.3412215133888619,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.94
+IMG_1134.png,mobile,15,1632,1224,false,jpeg20,1024,768,2433.0680853172853,3.3643517893586923,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.02
+IMG_1170.png,mobile,16,1632,1224,false,clean,1024,768,1658.9816047008824,2.992260580042992,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.81
+IMG_1170.png,mobile,16,1632,1224,false,blur,1024,768,9.341100013478561,0.21984505598071186,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.99
+IMG_1170.png,mobile,16,1632,1224,false,noise,1024,768,3640.3911984644715,11.081551636775757,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.00
+IMG_1170.png,mobile,16,1632,1224,false,lowres,256,192,2389.8554011479846,4.058602201934437,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+IMG_1170.png,mobile,16,1632,1224,false,soft,1024,768,18.821023265402687,0.19097575861525612,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.98
+IMG_1170.png,mobile,16,1632,1224,false,jpeg20,1024,768,1159.4653140447315,1.3433712960789337,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.01
+IMG_1502.png,mobile,17,1512,2016,false,clean,768,1024,400.57193004323767,1.2006564535364164,2,0.6579452194273472,false,false,false,true,false,1,0.7,face restoration,no upscale,no upscale,true,1.07
+IMG_1502.png,mobile,17,1512,2016,false,blur,768,1024,5.43564056015263,0.228475293551656,1,0.30229783927400905,false,true,false,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.08
+IMG_1502.png,mobile,17,1512,2016,false,noise,768,1024,2375.4069215899385,10.159531464646529,1,0.28589700038234395,false,false,true,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.00
+IMG_1502.png,mobile,17,1512,2016,false,lowres,192,256,1206.771917699112,2.5627408747006166,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+IMG_1502.png,mobile,17,1512,2016,false,soft,768,1024,10.257563179979721,0.18102739794264047,1,0.2762805049618085,false,true,false,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.94
+IMG_1502.png,mobile,17,1512,2016,false,jpeg20,768,1024,350.46264743864435,0.5631582226072261,1,0.2912338202198346,false,false,false,true,false,1,0.7,face restoration,no upscale,Real-ESRGAN x2,false,0.98
+IMG_1696.png,mobile,18,1224,1632,false,clean,768,1024,559.3971837007495,2.1211004813009526,1,0.15079889756937823,false,false,false,true,false,1,0.7,face restoration,no upscale,no upscale,true,1.00
+IMG_1696.png,mobile,18,1224,1632,false,blur,768,1024,7.988371523470657,0.2838252571072307,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.00
+IMG_1696.png,mobile,18,1224,1632,false,noise,768,1024,2478.7757121747495,10.278015255547551,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.00
+IMG_1696.png,mobile,18,1224,1632,false,lowres,192,256,1959.9439459538296,4.388283204873542,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+IMG_1696.png,mobile,18,1224,1632,false,soft,768,1024,15.499937692099289,0.2552548054652309,1,0.14694312897821268,false,true,false,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.95
+IMG_1696.png,mobile,18,1224,1632,false,jpeg20,768,1024,396.1826882957378,0.9075160151331423,1,0.1504743006080389,false,false,false,true,false,1,0.7,face restoration,no upscale,Real-ESRGAN x2,false,0.98
+IMG_20131106_201941.png,mobile,19,1632,1224,false,clean,1024,768,708.7469327116014,1.6813028382443926,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.02
+IMG_20131106_201941.png,mobile,19,1632,1224,false,blur,1024,768,9.82869969416384,0.2558338190544267,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.98
+IMG_20131106_201941.png,mobile,19,1632,1224,false,noise,1024,768,2612.531619446037,10.165642859691204,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.00
+IMG_20131106_201941.png,mobile,19,1632,1224,false,lowres,256,192,2650.148723717779,4.394013927065162,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.09
+IMG_20131106_201941.png,mobile,19,1632,1224,false,soft,1024,768,19.561850168417248,0.21281497716295075,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.96
+IMG_20131106_201941.png,mobile,19,1632,1224,false,jpeg20,1024,768,596.5272358984934,0.8613203364707146,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.03
+IMG_20131224_110518010_HDR.png,mobile,20,2048,1153,false,clean,1024,576,2571.48964202841,4.589442159871957,1,0.06861842444373502,false,false,false,true,false,1,0.7,face restoration,no upscale,no upscale,true,0.75
+IMG_20131224_110518010_HDR.png,mobile,20,2048,1153,false,blur,1024,576,10.888064892019756,0.3041587976689165,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.73
+IMG_20131224_110518010_HDR.png,mobile,20,2048,1153,false,noise,1024,576,4508.294813887526,11.841254973988379,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.73
+IMG_20131224_110518010_HDR.png,mobile,20,2048,1153,false,lowres,256,144,2774.6885100470645,4.954629793263864,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+IMG_20131224_110518010_HDR.png,mobile,20,2048,1153,false,soft,1024,576,21.96804978760293,0.28566656662039125,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.71
+IMG_20131224_110518010_HDR.png,mobile,20,2048,1153,false,jpeg20,1024,576,1628.5831916625411,1.9509163105138732,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.72
+IMG_20150916_152101367.png,mobile,21,1616,1212,false,clean,1024,768,102.0477916465203,1.0586919272210045,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,no upscale,false,1.32
+IMG_20150916_152101367.png,mobile,21,1616,1212,false,blur,1024,768,3.075209299139615,0.2101403079380205,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,2.46
+IMG_20150916_152101367.png,mobile,21,1616,1212,false,noise,1024,768,1946.911492475384,9.6678822207846,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.88
+IMG_20150916_152101367.png,mobile,21,1616,1212,false,lowres,256,192,543.1186535552971,1.669410448831424,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.16
+IMG_20150916_152101367.png,mobile,21,1616,1212,false,soft,1024,768,4.891323087140336,0.1561789096903605,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.04
+IMG_20150916_152101367.png,mobile,21,1616,1212,false,jpeg20,1024,768,85.87655378473887,0.2483973634180733,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.96
+IMG_20151008_204135138.png,mobile,22,1153,2048,false,clean,576,1024,179.26070423955156,1.903701353543521,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.61
+IMG_20151008_204135138.png,mobile,22,1153,2048,false,blur,576,1024,3.179753325232824,0.26061073834240744,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.64
+IMG_20151008_204135138.png,mobile,22,1153,2048,false,noise,576,1024,2132.247903752448,10.147518584299101,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.09
+IMG_20151008_204135138.png,mobile,22,1153,2048,false,lowres,144,256,454.04253617922467,1.748105888644239,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.14
+IMG_20151008_204135138.png,mobile,22,1153,2048,false,soft,576,1024,4.750861088423358,0.19761010392528275,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.14
+IMG_20151008_204135138.png,mobile,22,1153,2048,false,jpeg20,576,1024,81.03032035075915,0.2769397917655348,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.24
+IMG_20151019_091406246.png,mobile,23,2048,1153,false,clean,1024,576,649.6563849857445,2.324412161668879,2,0.04800743061221308,false,false,false,true,false,1,0.7,face restoration,no upscale,no upscale,true,2.27
+IMG_20151019_091406246.png,mobile,23,2048,1153,false,blur,1024,576,6.868577743570006,0.2458057014191489,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.92
+IMG_20151019_091406246.png,mobile,23,2048,1153,false,noise,1024,576,2616.013839958163,10.432001901660364,1,0.024287539741231337,false,false,true,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.89
+IMG_20151019_091406246.png,mobile,23,2048,1153,false,lowres,256,144,1520.5694043893875,2.5423672562831294,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+IMG_20151019_091406246.png,mobile,23,2048,1153,false,soft,1024,576,12.886537295038936,0.1932659447434136,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+IMG_20151019_091406246.png,mobile,23,2048,1153,false,jpeg20,1024,576,436.0743898276071,0.6602513061998354,1,0.028652208857238293,false,false,false,true,false,1,0.7,face restoration,no upscale,Real-ESRGAN x2,false,0.82
+IMG_20160312_095817.png,mobile,24,1512,2016,false,clean,768,1024,553.2416138177747,2.783731103919706,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.32
+IMG_20160312_095817.png,mobile,24,1512,2016,false,blur,768,1024,5.3079490605337485,0.28843708700384824,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.11
+IMG_20160312_095817.png,mobile,24,1512,2016,false,noise,768,1024,2472.132915350335,10.454207222954057,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.15
+IMG_20160312_095817.png,mobile,24,1512,2016,false,lowres,192,256,1295.4362381829158,4.525647403871485,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.09
+IMG_20160312_095817.png,mobile,24,1512,2016,false,soft,768,1024,9.871500636754925,0.24668273607974514,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.06
+IMG_20160312_095817.png,mobile,24,1512,2016,false,jpeg20,768,1024,257.4762673956897,0.8376160004168086,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.23
+IMG_20160518_132304.png,mobile,25,2016,1512,false,clean,1024,768,2148.692732457185,5.355493604457535,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.17
+IMG_20160518_132304.png,mobile,25,2016,1512,false,blur,1024,768,8.415632855106706,0.2829455300088074,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.05
+IMG_20160518_132304.png,mobile,25,2016,1512,false,noise,1024,768,4108.150237562127,12.129635608120232,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.08
+IMG_20160518_132304.png,mobile,25,2016,1512,false,lowres,256,192,2233.4322257137133,5.632139919236857,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.10
+IMG_20160518_132304.png,mobile,25,2016,1512,false,soft,1024,768,17.276114145874285,0.26016548108530435,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.28
+IMG_20160518_132304.png,mobile,25,2016,1512,false,jpeg20,1024,768,1052.8869501705951,1.7593477330575935,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.38
+IMG_20160522_165515.png,mobile,26,1520,2048,false,clean,760,1024,1561.6684710239622,4.189413315993703,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.19
+IMG_20160522_165515.png,mobile,26,1520,2048,false,blur,760,1024,9.214771791647015,0.31999221313900084,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.05
+IMG_20160522_165515.png,mobile,26,1520,2048,false,noise,760,1024,3518.6159917896885,11.43966492735211,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.98
+IMG_20160522_165515.png,mobile,26,1520,2048,false,lowres,190,256,2569.740822357854,7.510011834252354,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.09
+IMG_20160522_165515.png,mobile,26,1520,2048,false,soft,760,1024,19.101735964374527,0.31456808159105076,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.96
+IMG_20160522_165515.png,mobile,26,1520,2048,false,jpeg20,760,1024,898.7591577805557,1.7803703342634996,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.35
+IMG_20160528_214150.png,mobile,27,1496,2000,false,clean,766,1024,51.406312301926725,1.3481421322407146,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,no upscale,false,2.13
+IMG_20160528_214150.png,mobile,27,1496,2000,false,blur,766,1024,1.6979119912257077,0.2338345395083917,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.42
+IMG_20160528_214150.png,mobile,27,1496,2000,false,noise,766,1024,1559.5508035731648,8.723197996632374,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.63
+IMG_20160528_214150.png,mobile,27,1496,2000,false,lowres,191,256,57.5231518857178,0.8664148151902021,0,0.0,true,true,false,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.18
+IMG_20160528_214150.png,mobile,27,1496,2000,false,soft,766,1024,1.7893034271955663,0.16540002974198545,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.22
+IMG_20160528_214150.png,mobile,27,1496,2000,false,jpeg20,766,1024,11.198073872516153,0.09214525384823619,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.21
+IMG_20160612_183029.png,mobile,28,2000,1496,false,clean,1024,766,77.06395925789244,1.2950119272998668,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,no upscale,false,1.14
+IMG_20160612_183029.png,mobile,28,2000,1496,false,blur,1024,766,1.7876346175352016,0.2135309943053408,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.16
+IMG_20160612_183029.png,mobile,28,2000,1496,false,noise,1024,766,2086.0999018023144,10.173237740441724,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.13
+IMG_20160612_183029.png,mobile,28,2000,1496,false,lowres,256,191,131.94068283884545,1.193832668828565,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+IMG_20160612_183029.png,mobile,28,2000,1496,false,soft,1024,766,2.178078593741878,0.15255508258701556,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.11
+IMG_20160612_183029.png,mobile,28,2000,1496,false,jpeg20,1024,766,27.147763056677018,0.1262985702474547,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.17
+IMG_20160723_191653.png,mobile,29,1512,2016,false,clean,768,1024,363.53215954072294,1.8704951282743103,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.25
+IMG_20160723_191653.png,mobile,29,1512,2016,false,blur,768,1024,3.446141538358965,0.22913302096979776,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.17
+IMG_20160723_191653.png,mobile,29,1512,2016,false,noise,768,1024,2172.6219669961283,9.929664670695033,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.23
+IMG_20160723_191653.png,mobile,29,1512,2016,false,lowres,192,256,636.6780091507567,2.372951821333404,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.09
+IMG_20160723_191653.png,mobile,29,1512,2016,false,soft,768,1024,5.842421136238651,0.17913346317023873,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.97
+IMG_20160723_191653.png,mobile,29,1512,2016,false,jpeg20,768,1024,154.31104611318088,0.44669270764568847,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.98
+IMG_20161023_122645.png,mobile,30,2000,1496,false,clean,1024,766,3349.203597857796,5.314616013408984,1,0.13233451245659014,false,false,false,true,false,1,0.7,face restoration,no upscale,no upscale,true,0.96
+IMG_20161023_122645.png,mobile,30,2000,1496,false,blur,1024,766,11.226012937503599,0.282011518378213,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.98
+IMG_20161023_122645.png,mobile,30,2000,1496,false,noise,1024,766,5039.200888318576,11.72739876393218,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.98
+IMG_20161023_122645.png,mobile,30,2000,1496,false,lowres,256,191,2857.539991895396,5.909272858974267,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+IMG_20161023_122645.png,mobile,30,2000,1496,false,soft,1024,766,21.885250033508814,0.2703479617892519,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.41
+IMG_20161023_122645.png,mobile,30,2000,1496,false,jpeg20,1024,766,2173.6715982590404,2.40463890197447,1,0.12395012316442346,false,false,false,true,false,1,0.7,face restoration,no upscale,Real-ESRGAN x2,false,1.04
+IMG_20161117_134517.png,mobile,31,1512,2016,false,clean,768,1024,166.43606014045108,1.3443211985570616,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.13
+IMG_20161117_134517.png,mobile,31,1512,2016,false,blur,768,1024,3.2123476191433533,0.26905747549081116,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.01
+IMG_20161117_134517.png,mobile,31,1512,2016,false,noise,768,1024,1937.2914007644479,9.577397072252932,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.00
+IMG_20161117_134517.png,mobile,31,1512,2016,false,lowres,192,256,485.8295339109997,2.1644123989827313,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+IMG_20161117_134517.png,mobile,31,1512,2016,false,soft,768,1024,4.900564616453873,0.2160307706085672,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.96
+IMG_20161117_134517.png,mobile,31,1512,2016,false,jpeg20,768,1024,90.03082174481177,0.35261927582023866,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.95
+IMG_20161119_134358.png,mobile,32,2016,1512,false,clean,1024,768,416.27677907049,1.977940838918256,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.89
+IMG_20161119_134358.png,mobile,32,2016,1512,false,blur,1024,768,4.74619165728897,0.24009852440831864,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.42
+IMG_20161119_134358.png,mobile,32,2016,1512,false,noise,1024,768,2402.859211929395,10.362633422144086,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.03
+IMG_20161119_134358.png,mobile,32,2016,1512,false,lowres,256,192,940.2846223447058,1.972476488963673,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.23
+IMG_20161119_134358.png,mobile,32,2016,1512,false,soft,1024,768,8.24419019891098,0.1736261634094087,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.21
+IMG_20161119_134358.png,mobile,32,2016,1512,false,jpeg20,1024,768,217.0113067409384,0.4088145458507315,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.97
+IMG_20161218_170159.png,mobile,33,2016,1512,false,clean,1024,768,2160.9270972698946,4.6792532274007534,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.27
+IMG_20161218_170159.png,mobile,33,2016,1512,false,blur,1024,768,11.305479609328252,0.25932657844731744,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.00
+IMG_20161218_170159.png,mobile,33,2016,1512,false,noise,1024,768,4020.8460010599397,11.58110428271694,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.81
+IMG_20161218_170159.png,mobile,33,2016,1512,false,lowres,256,192,3182.7270199354316,5.742387067985176,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+IMG_20161218_170159.png,mobile,33,2016,1512,false,soft,1024,768,23.408789208351283,0.23063311977093084,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.02
+IMG_20161218_170159.png,mobile,33,2016,1512,false,jpeg20,1024,768,1245.3370420199865,1.7041543966802943,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.02
+IMG_20170114_204239.png,mobile,34,1518,2024,false,clean,768,1024,309.98895233775755,2.198423076673622,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.00
+IMG_20170114_204239.png,mobile,34,1518,2024,false,blur,768,1024,5.500175465202319,0.27249179987170474,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.04
+IMG_20170114_204239.png,mobile,34,1518,2024,false,noise,768,1024,2097.404314316706,9.776900073395154,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.97
+IMG_20170114_204239.png,mobile,34,1518,2024,false,lowres,192,256,1194.4494136952692,3.447289098661351,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+IMG_20170114_204239.png,mobile,34,1518,2024,false,soft,768,1024,10.036535868497195,0.23537596149809917,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.96
+IMG_20170114_204239.png,mobile,34,1518,2024,false,jpeg20,768,1024,187.88339987635197,0.5257189904685952,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.98
+IMG_20170114_204505.png,mobile,35,2024,1518,false,clean,1024,768,400.8274675463569,1.7797706363373382,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.98
+IMG_20170114_204505.png,mobile,35,2024,1518,false,blur,1024,768,5.125572203807271,0.22646155366333312,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.95
+IMG_20170114_204505.png,mobile,35,2024,1518,false,noise,1024,768,1898.6205168901918,8.918342992560254,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.00
+IMG_20170114_204505.png,mobile,35,2024,1518,false,lowres,256,192,1231.3962934017181,3.3278745257424487,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+IMG_20170114_204505.png,mobile,35,2024,1518,false,soft,1024,768,9.714945475253952,0.18665797156439606,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.98
+IMG_20170114_204505.png,mobile,35,2024,1518,false,jpeg20,1024,768,259.9597904498417,0.5852709383571908,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.96
+IMG_20170114_210112.png,mobile,36,1518,2024,false,clean,768,1024,385.22568998692776,2.286779483078745,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.26
+IMG_20170114_210112.png,mobile,36,1518,2024,false,blur,768,1024,4.796544379218376,0.2766796423981693,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.58
+IMG_20170114_210112.png,mobile,36,1518,2024,false,noise,768,1024,2198.402333126714,9.925204398272452,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.62
+IMG_20170114_210112.png,mobile,36,1518,2024,false,lowres,192,256,1001.9849202032718,3.0596516228024564,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.12
+IMG_20170114_210112.png,mobile,36,1518,2024,false,soft,768,1024,8.542125653512715,0.23400767500713324,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.76
+IMG_20170114_210112.png,mobile,36,1518,2024,false,jpeg20,768,1024,215.07479602057052,0.5752817532241388,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,2.26
+IMG_20170114_213505.png,mobile,37,2024,1518,false,clean,1024,768,398.67962262239934,1.9412620624152048,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.91
+IMG_20170114_213505.png,mobile,37,2024,1518,false,blur,1024,768,4.277832030318677,0.2290158841192646,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,2.05
+IMG_20170114_213505.png,mobile,37,2024,1518,false,noise,1024,768,1935.9790589310385,9.064324859243836,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,2.90
+IMG_20170114_213505.png,mobile,37,2024,1518,false,lowres,256,192,906.7420806619857,2.572449341374186,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.22
+IMG_20170114_213505.png,mobile,37,2024,1518,false,soft,1024,768,7.557182287150584,0.18671694022947083,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,2.33
+IMG_20170114_213505.png,mobile,37,2024,1518,false,jpeg20,1024,768,201.28255040592921,0.4956708534547214,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,2.13
+IMG_20170116_125356.png,mobile,38,1512,2016,false,clean,768,1024,1500.805523253817,2.6342153865562565,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.86
+IMG_20170116_125356.png,mobile,38,1512,2016,false,blur,768,1024,12.698324838561044,0.28774814088066697,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.86
+IMG_20170116_125356.png,mobile,38,1512,2016,false,noise,768,1024,3362.009758108991,10.482963652693602,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,2.05
+IMG_20170116_125356.png,mobile,38,1512,2016,false,lowres,192,256,3379.494648853524,5.163458604770781,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.27
+IMG_20170116_125356.png,mobile,38,1512,2016,false,soft,768,1024,25.520245760653385,0.23821766413631815,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,2.18
+IMG_20170116_125356.png,mobile,38,1512,2016,false,jpeg20,768,1024,1195.784476630038,1.338459819979244,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,2.03
+IMG_20170207_160612.png,mobile,39,1512,2016,false,clean,768,1024,685.6144514598273,2.544178506609772,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,2.00
+IMG_20170207_160612.png,mobile,39,1512,2016,false,blur,768,1024,5.224109648479498,0.2746819121021744,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.96
+IMG_20170207_160612.png,mobile,39,1512,2016,false,noise,768,1024,2524.520252148616,10.214689846747245,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,2.55
+IMG_20170207_160612.png,mobile,39,1512,2016,false,lowres,192,256,1215.2272525363499,4.37331147673093,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.39
+IMG_20170207_160612.png,mobile,39,1512,2016,false,soft,768,1024,9.913172403913146,0.24919597524870143,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,2.70
+IMG_20170207_160612.png,mobile,39,1512,2016,false,jpeg20,768,1024,411.5952867233282,0.9889829603064516,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.61
+IMG_20170223_204015.png,mobile,40,2016,1512,false,clean,1024,768,361.25051196268583,1.7910435239485567,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.15
+IMG_20170223_204015.png,mobile,40,2016,1512,false,blur,1024,768,4.259216293065236,0.24211920178665033,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.12
+IMG_20170223_204015.png,mobile,40,2016,1512,false,noise,1024,768,2226.500574809496,10.019380291488803,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.97
+IMG_20170223_204015.png,mobile,40,2016,1512,false,lowres,256,192,852.7955271138086,2.60325413732416,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+IMG_20170223_204015.png,mobile,40,2016,1512,false,soft,1024,768,7.540603582954247,0.1936173413493752,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.98
+IMG_20170223_204015.png,mobile,40,2016,1512,false,jpeg20,1024,768,222.9377925552334,0.4633232053294701,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.01
+IMG_20170315_171546.png,mobile,41,2016,1512,false,clean,1024,768,1090.651220272203,2.7748639243823074,1,0.3859877586364746,false,false,false,true,false,1,0.7,face restoration,no upscale,no upscale,true,1.04
+IMG_20170315_171546.png,mobile,41,2016,1512,false,blur,1024,768,6.202346763411902,0.3015649527128036,1,0.35428615907828015,false,true,false,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.99
+IMG_20170315_171546.png,mobile,41,2016,1512,false,noise,1024,768,3058.575042723963,10.692967879096834,1,0.3996242458621661,false,false,true,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.03
+IMG_20170315_171546.png,mobile,41,2016,1512,false,lowres,256,192,1339.2332966919573,3.7200481019463725,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+IMG_20170315_171546.png,mobile,41,2016,1512,false,soft,1024,768,11.611577349792546,0.27381285806530303,1,0.36358004435896873,false,true,false,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.98
+IMG_20170315_171546.png,mobile,41,2016,1512,false,jpeg20,1024,768,756.7572362557572,1.1235958818248486,1,0.35356876129905385,false,false,false,true,false,1,0.7,face restoration,no upscale,Real-ESRGAN x2,false,1.07
+IMG_20170325_150351.png,mobile,42,2016,1512,false,clean,1024,768,1652.0798912333364,2.96255211321301,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.22
+IMG_20170325_150351.png,mobile,42,2016,1512,false,blur,1024,768,12.973041259470241,0.2863310251331006,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.27
+IMG_20170325_150351.png,mobile,42,2016,1512,false,noise,1024,768,3588.131950553274,10.888579481997201,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.97
+IMG_20170325_150351.png,mobile,42,2016,1512,false,lowres,256,192,3388.6432257079414,5.422544381920357,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.09
+IMG_20170325_150351.png,mobile,42,2016,1512,false,soft,1024,768,26.25404406065839,0.27392839395660346,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.06
+IMG_20170325_150351.png,mobile,42,2016,1512,false,jpeg20,1024,768,1195.5319769820128,1.549861950619249,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.30
+IMG_20170403_193339.png,mobile,43,1518,2024,false,clean,768,1024,143.16341833374463,1.5805208535804358,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.76
+IMG_20170403_193339.png,mobile,43,1518,2024,false,blur,768,1024,4.375706699883771,0.31294163584761514,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.07
+IMG_20170403_193339.png,mobile,43,1518,2024,false,noise,768,1024,2129.28142396867,10.152583301576179,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.06
+IMG_20170403_193339.png,mobile,43,1518,2024,false,lowres,192,256,731.0135590235392,3.0523843399023574,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.04
+IMG_20170403_193339.png,mobile,43,1518,2024,false,soft,768,1024,7.0056732479068975,0.287544018578485,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.84
+IMG_20170403_193339.png,mobile,43,1518,2024,false,jpeg20,768,1024,90.4625090908424,0.4523200793489784,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.98
+IMG_20170404_160604.png,mobile,44,2024,1518,false,clean,1024,768,656.0540008490533,2.3565129980348676,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.13
+IMG_20170404_160604.png,mobile,44,2024,1518,false,blur,1024,768,7.077121699679992,0.25447220322693076,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.46
+IMG_20170404_160604.png,mobile,44,2024,1518,false,noise,1024,768,2452.3666578787324,9.959544973816001,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.42
+IMG_20170404_160604.png,mobile,44,2024,1518,false,lowres,256,192,1569.0068399405316,3.2812626320252547,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.09
+IMG_20170404_160604.png,mobile,44,2024,1518,false,soft,1024,768,13.467699652220787,0.21906832392626532,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.60
+IMG_20170404_160604.png,mobile,44,2024,1518,false,jpeg20,1024,768,460.17744942464793,0.7679190406965019,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.01
+IMG_20170408_080227.png,mobile,45,1518,2024,false,clean,768,1024,220.84315183877092,1.967631728765183,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.99
+IMG_20170408_080227.png,mobile,45,1518,2024,false,blur,768,1024,3.0515187146504292,0.24133233032372942,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.98
+IMG_20170408_080227.png,mobile,45,1518,2024,false,noise,768,1024,1979.2674093639698,9.658153725179956,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.99
+IMG_20170408_080227.png,mobile,45,1518,2024,false,lowres,192,256,429.3596905006302,1.6504869462470086,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+IMG_20170408_080227.png,mobile,45,1518,2024,false,soft,768,1024,4.62327185734789,0.1887589637309065,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.99
+IMG_20170408_080227.png,mobile,45,1518,2024,false,jpeg20,768,1024,96.27365865138641,0.3132081955598763,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.04
+IMG_20170421_143137.png,mobile,46,2024,1518,false,clean,1024,768,357.34577922955077,1.858500741702177,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.41
+IMG_20170421_143137.png,mobile,46,2024,1518,false,blur,1024,768,7.48590168073457,0.30310427501514026,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.02
+IMG_20170421_143137.png,mobile,46,2024,1518,false,noise,1024,768,2319.725928723812,10.243307526686614,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.00
+IMG_20170421_143137.png,mobile,46,2024,1518,false,lowres,256,192,1700.141793646746,3.8120512974940257,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+IMG_20170421_143137.png,mobile,46,2024,1518,false,soft,1024,768,13.617336989529157,0.27804846254221277,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.96
+IMG_20170421_143137.png,mobile,46,2024,1518,false,jpeg20,1024,768,211.69982480855182,0.6909241083134788,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.16
+IMG_20170504_183130.png,mobile,47,2016,1512,false,clean,1024,768,234.6267304544114,0.9585391195355377,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.04
+IMG_20170504_183130.png,mobile,47,2016,1512,false,blur,1024,768,6.246356964070905,0.25754898004583243,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.36
+IMG_20170504_183130.png,mobile,47,2016,1512,false,noise,1024,768,2190.925255481638,10.03381453993172,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.18
+IMG_20170504_183130.png,mobile,47,2016,1512,false,lowres,256,192,1448.8833460770547,2.9022991495742216,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.15
+IMG_20170504_183130.png,mobile,47,2016,1512,false,soft,1024,768,11.621349331998829,0.21617592424567436,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,2.03
+IMG_20170504_183130.png,mobile,47,2016,1512,false,jpeg20,1024,768,216.38632273129284,0.47945980708993324,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,2.33
+IMG_20170621_062134.png,mobile,48,2024,1518,false,clean,1024,768,4374.831546070927,7.302590362796677,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,no upscale,false,1.57
+IMG_20170621_062134.png,mobile,48,2024,1518,false,blur,1024,768,9.643836967174954,0.27844763504425746,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.02
+IMG_20170621_062134.png,mobile,48,2024,1518,false,noise,1024,768,6258.117125399312,13.608851497020662,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.97
+IMG_20170621_062134.png,mobile,48,2024,1518,false,lowres,256,192,2881.854312767171,6.989654514287311,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.12
+IMG_20170621_062134.png,mobile,48,2024,1518,false,soft,1024,768,21.063276918525734,0.2616471688552602,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.91
+IMG_20170621_062134.png,mobile,48,2024,1518,false,jpeg20,1024,768,2890.3840323146014,3.3723496480326807,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.77
+IMG_20170717_093530.png,mobile,49,2016,1512,false,clean,1024,768,2994.1748483352108,5.224441216272884,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.01
+IMG_20170717_093530.png,mobile,49,2016,1512,false,blur,1024,768,14.178184454536266,0.24686444495266788,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.19
+IMG_20170717_093530.png,mobile,49,2016,1512,false,noise,1024,768,4846.881344105059,11.869356992582478,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.30
+IMG_20170717_093530.png,mobile,49,2016,1512,false,lowres,256,192,3933.0635530348445,6.055810825794576,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.10
+IMG_20170717_093530.png,mobile,49,2016,1512,false,soft,1024,768,30.292661028235063,0.22862498323992275,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.24
+IMG_20170717_093530.png,mobile,49,2016,1512,false,jpeg20,1024,768,1953.4443764597333,2.1535898143183068,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.12
+IMG_20170721_103913.png,mobile,50,1512,2016,false,clean,768,1024,2094.6961191944047,5.6710079817922585,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.15
+IMG_20170721_103913.png,mobile,50,1512,2016,false,blur,768,1024,9.7142804456574,0.2884877840462202,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.97
+IMG_20170721_103913.png,mobile,50,1512,2016,false,noise,768,1024,3846.4878634592555,11.695604887046754,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.00
+IMG_20170721_103913.png,mobile,50,1512,2016,false,lowres,192,256,2763.5362541526556,6.630051696763105,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.14
+IMG_20170721_103913.png,mobile,50,1512,2016,false,soft,768,1024,20.004552197927186,0.2616218203340742,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.01
+IMG_20170721_103913.png,mobile,50,1512,2016,false,jpeg20,768,1024,975.321027041697,1.7906088635168516,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.97
+IMG_20170725_123034.png,mobile,51,2024,1518,false,clean,1024,768,7041.250427270497,12.064779682293372,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,no upscale,false,1.01
+IMG_20170725_123034.png,mobile,51,2024,1518,false,blur,1024,768,14.381908374836906,0.3282417364089405,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.00
+IMG_20170725_123034.png,mobile,51,2024,1518,false,noise,1024,768,8811.244254369378,16.13881962265357,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.98
+IMG_20170725_123034.png,mobile,51,2024,1518,false,lowres,256,192,4439.770680261983,10.905378212033376,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+IMG_20170725_123034.png,mobile,51,2024,1518,false,soft,1024,768,32.10838031106527,0.3354924807742891,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.97
+IMG_20170725_123034.png,mobile,51,2024,1518,false,jpeg20,1024,768,3773.112170010157,4.819708049159636,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.98
+IMG_20170730_133144.png,mobile,52,2024,1518,false,clean,1024,768,2811.15159636474,6.496558086124535,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,no upscale,false,0.97
+IMG_20170730_133144.png,mobile,52,2024,1518,false,blur,1024,768,9.488616529380026,0.270051137521302,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.98
+IMG_20170730_133144.png,mobile,52,2024,1518,false,noise,1024,768,4735.173664050058,12.681268525210536,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.03
+IMG_20170730_133144.png,mobile,52,2024,1518,false,lowres,256,192,2721.9384345606795,6.863518029311319,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+IMG_20170730_133144.png,mobile,52,2024,1518,false,soft,1024,768,20.477224865254055,0.2656597063457332,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.99
+IMG_20170730_133144.png,mobile,52,2024,1518,false,jpeg20,1024,768,1430.4132082574695,2.2523815398293556,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.00
+IMG_20170913_115628.png,mobile,53,1518,2024,false,clean,768,1024,637.9862845614296,1.7477698627125267,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.00
+IMG_20170913_115628.png,mobile,53,1518,2024,false,blur,768,1024,8.579053224834047,0.23430732121020553,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.23
+IMG_20170913_115628.png,mobile,53,1518,2024,false,noise,768,1024,2550.9792756299335,10.11336513690337,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.84
+IMG_20170913_115628.png,mobile,53,1518,2024,false,lowres,192,256,1871.4664907703798,2.6049508466135216,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.05
+IMG_20170913_115628.png,mobile,53,1518,2024,false,soft,768,1024,15.719090770768355,0.19514892568208664,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.91
+IMG_20170913_115628.png,mobile,53,1518,2024,false,jpeg20,768,1024,528.2145690439635,0.6670156499573909,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.93
+IMG_20170913_185055.png,mobile,54,1518,2024,false,clean,768,1024,214.81749342862975,1.3531576930424978,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.01
+IMG_20170913_185055.png,mobile,54,1518,2024,false,blur,768,1024,3.6396052023952095,0.23622393623840526,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.79
+IMG_20170913_185055.png,mobile,54,1518,2024,false,noise,768,1024,1995.2835985814825,9.532966184318127,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.13
+IMG_20170913_185055.png,mobile,54,1518,2024,false,lowres,192,256,685.6009201589558,2.2248057273359683,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+IMG_20170913_185055.png,mobile,54,1518,2024,false,soft,768,1024,6.1711171461631436,0.18809029642467393,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.33
+IMG_20170913_185055.png,mobile,54,1518,2024,false,jpeg20,768,1024,158.7152619264461,0.4205869327425833,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.15
+IMG_20170916_004924.png,mobile,55,2024,1518,false,clean,1024,768,465.4617276924093,1.977480829965365,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.06
+IMG_20170916_004924.png,mobile,55,2024,1518,false,blur,1024,768,4.645771025600776,0.2427374388770497,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.96
+IMG_20170916_004924.png,mobile,55,2024,1518,false,noise,1024,768,2287.408895959919,9.906527607862616,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.97
+IMG_20170916_004924.png,mobile,55,2024,1518,false,lowres,256,192,928.9176573120058,2.5814782586640055,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.09
+IMG_20170916_004924.png,mobile,55,2024,1518,false,soft,1024,768,8.24798456407249,0.19024838947048758,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.11
+IMG_20170916_004924.png,mobile,55,2024,1518,false,jpeg20,1024,768,310.53566563002653,0.645934218779888,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.18
+IMG_2072.png,mobile,56,1632,1224,false,clean,1024,768,1646.3762226289812,4.628281353693808,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.96
+IMG_2072.png,mobile,56,1632,1224,false,blur,1024,768,10.594548414713548,0.31575318708694977,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.04
+IMG_2072.png,mobile,56,1632,1224,false,noise,1024,768,3631.3341951294683,11.37637788525117,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.95
+IMG_2072.png,mobile,56,1632,1224,false,lowres,256,192,2755.8273238076104,6.575172673600296,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+IMG_2072.png,mobile,56,1632,1224,false,soft,1024,768,22.06739163305448,0.3124842951601121,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.97
+IMG_2072.png,mobile,56,1632,1224,false,jpeg20,1024,768,994.3485612816467,1.7193410959626296,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.00
+IMG_2940.png,mobile,57,1224,1632,false,clean,768,1024,763.7092063469851,2.7616765563552,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.97
+IMG_2940.png,mobile,57,1224,1632,false,blur,768,1024,5.856315570359584,0.301064386126015,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.00
+IMG_2940.png,mobile,57,1224,1632,false,noise,768,1024,2700.5904814790674,10.600243522251558,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.14
+IMG_2940.png,mobile,57,1224,1632,false,lowres,192,256,1425.3724051167567,5.114331945499711,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.09
+IMG_2940.png,mobile,57,1224,1632,false,soft,768,1024,11.371228493536668,0.27784594119926365,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.31
+IMG_2940.png,mobile,57,1224,1632,false,jpeg20,768,1024,445.7786494956412,1.0583183700666845,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.08
+IMG_3491.png,mobile,58,1632,1224,false,clean,1024,768,329.21475847468844,1.4058540666697075,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.03
+IMG_3491.png,mobile,58,1632,1224,false,blur,1024,768,7.649283081136269,0.2911512465565209,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.98
+IMG_3491.png,mobile,58,1632,1224,false,noise,1024,768,2237.41107139858,9.942073172055382,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.98
+IMG_3491.png,mobile,58,1632,1224,false,lowres,256,192,1942.0431700510283,5.142613319215762,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+IMG_3491.png,mobile,58,1632,1224,false,soft,1024,768,15.37668863350215,0.26370253368363583,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.01
+IMG_3491.png,mobile,58,1632,1224,false,jpeg20,1024,768,324.72547024447033,0.8669018140093311,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.96
+IMG_5377.png,mobile,59,1632,1224,false,clean,1024,768,580.0639647205826,2.1195712984070907,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.81
+IMG_5377.png,mobile,59,1632,1224,false,blur,1024,768,3.910589850648345,0.21508487052852157,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.10
+IMG_5377.png,mobile,59,1632,1224,false,noise,1024,768,2225.960543892498,9.378932559999717,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.15
+IMG_5377.png,mobile,59,1632,1224,false,lowres,256,192,826.9027849766943,2.801574348878445,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.11
+IMG_5377.png,mobile,59,1632,1224,false,soft,1024,768,7.4471588064334355,0.1890972997821048,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.89
+IMG_5377.png,mobile,59,1632,1224,false,jpeg20,1024,768,323.16918638097627,0.6954532219830685,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.87
+IMG_5382.png,mobile,60,1224,1632,false,clean,768,1024,1594.9048299183657,4.521550738173846,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.55
+IMG_5382.png,mobile,60,1224,1632,false,blur,768,1024,8.326754239594772,0.3039629228169984,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.02
+IMG_5382.png,mobile,60,1224,1632,false,noise,768,1024,3302.095588929847,10.865332486630797,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.01
+IMG_5382.png,mobile,60,1224,1632,false,lowres,192,256,2500.164521971925,7.961509684869786,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+IMG_5382.png,mobile,60,1224,1632,false,soft,768,1024,18.413968357406286,0.298305399714824,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.97
+IMG_5382.png,mobile,60,1224,1632,false,jpeg20,768,1024,933.8074771658409,1.9003356742409976,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.98
+alberto-montalesi-176097.png,professional,61,2048,1363,false,clean,1024,682,140.66832212281844,1.3076741312490108,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.80
+alberto-montalesi-176097.png,professional,61,2048,1363,false,blur,1024,682,4.719853483713355,0.28498697590926503,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.86
+alberto-montalesi-176097.png,professional,61,2048,1363,false,noise,1024,682,2071.6385158478674,9.992411373541444,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.81
+alberto-montalesi-176097.png,professional,61,2048,1363,false,lowres,256,170,922.4573598340307,2.7111866547168493,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+alberto-montalesi-176097.png,professional,61,2048,1363,false,soft,1024,682,7.557669541143193,0.24085395271799384,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.84
+alberto-montalesi-176097.png,professional,61,2048,1363,false,jpeg20,1024,682,117.00851379593699,0.4058055979075606,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.81
+alejandro-escamilla-6.png,professional,62,2048,1339,false,clean,1024,670,1061.5720050661694,1.749365328833707,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.80
+alejandro-escamilla-6.png,professional,62,2048,1339,false,blur,1024,670,11.319165789847863,0.22631995984376158,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.80
+alejandro-escamilla-6.png,professional,62,2048,1339,false,noise,1024,670,2879.8174788588776,9.96175846132948,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.80
+alejandro-escamilla-6.png,professional,62,2048,1339,false,lowres,256,167,2568.963988964006,2.4508058045048027,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+alejandro-escamilla-6.png,professional,62,2048,1339,false,soft,1024,670,21.853347489358484,0.18492473587107305,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.84
+alejandro-escamilla-6.png,professional,62,2048,1339,false,jpeg20,1024,670,859.8309212323237,0.7792442622590083,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.85
+ales-krivec-15949.png,professional,63,2048,1188,false,clean,1024,594,182.496367887236,1.0457424765195233,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.76
+ales-krivec-15949.png,professional,63,2048,1188,false,blur,1024,594,7.384910165306086,0.3143967437279661,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.74
+ales-krivec-15949.png,professional,63,2048,1188,false,noise,1024,594,2150.7513664054973,10.077702908215159,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+ales-krivec-15949.png,professional,63,2048,1188,false,lowres,256,148,1641.9157270225319,3.7039526655827673,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+ales-krivec-15949.png,professional,63,2048,1188,false,soft,1024,594,12.53699262830416,0.2930387702804634,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.72
+ales-krivec-15949.png,professional,63,2048,1188,false,jpeg20,1024,594,189.79251272581683,0.6178320846725633,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.72
+alexander-shustov-73.png,professional,64,2048,1361,false,clean,1024,680,3725.654541380058,6.349910806001715,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,no upscale,false,0.86
+alexander-shustov-73.png,professional,64,2048,1361,false,blur,1024,680,13.556959325137017,0.31883498244865793,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.81
+alexander-shustov-73.png,professional,64,2048,1361,false,noise,1024,680,5521.1908591741585,12.164264214647877,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.83
+alexander-shustov-73.png,professional,64,2048,1361,false,lowres,256,170,3604.9178202360476,7.310915916850672,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+alexander-shustov-73.png,professional,64,2048,1361,false,soft,1024,680,28.54471625555552,0.31956149837818143,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.40
+alexander-shustov-73.png,professional,64,2048,1361,false,jpeg20,1024,680,2517.3806573086954,2.7937148124183717,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.97
+allef-vinicius-109434.png,professional,65,2048,1365,false,clean,1024,682,172.58213153905564,1.882502324874658,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.80
+allef-vinicius-109434.png,professional,65,2048,1365,false,blur,1024,682,3.5076969367856354,0.2798634213678333,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.81
+allef-vinicius-109434.png,professional,65,2048,1365,false,noise,1024,682,2159.3622057534403,10.235570715402508,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.72
+allef-vinicius-109434.png,professional,65,2048,1365,false,lowres,256,170,519.8687096909256,2.009144330643141,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.06
+allef-vinicius-109434.png,professional,65,2048,1365,false,soft,1024,682,5.087595026821604,0.23582056985099778,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.67
+allef-vinicius-109434.png,professional,65,2048,1365,false,jpeg20,1024,682,86.26425359938875,0.3488131922250264,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.64
+amy-zhang-15940.png,professional,66,1632,915,false,clean,1024,574,1129.0804946767025,3.552274481398603,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.79
+amy-zhang-15940.png,professional,66,1632,915,false,blur,1024,574,6.408675946454007,0.25226156494513197,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.77
+amy-zhang-15940.png,professional,66,1632,915,false,noise,1024,574,3024.010545696711,10.913383255346154,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.72
+amy-zhang-15940.png,professional,66,1632,915,false,lowres,256,143,1500.3058009722442,4.133083386839449,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.06
+amy-zhang-15940.png,professional,66,1632,915,false,soft,1024,574,11.58439768085909,0.22448358159264836,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.73
+amy-zhang-15940.png,professional,66,1632,915,false,jpeg20,1024,574,568.9719242943942,1.084738128901003,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.72
+andrew-ruiz-376.png,professional,67,2048,1361,false,clean,1024,680,1400.6175175249189,2.6759345218869313,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.92
+andrew-ruiz-376.png,professional,67,2048,1361,false,blur,1024,680,13.61673940044786,0.29729755337443425,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.97
+andrew-ruiz-376.png,professional,67,2048,1361,false,noise,1024,680,3274.077821617371,10.534097522380655,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.88
+andrew-ruiz-376.png,professional,67,2048,1361,false,lowres,256,170,3884.397837040251,7.218382963400811,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+andrew-ruiz-376.png,professional,67,2048,1361,false,soft,1024,680,28.315850345220124,0.28530883470172835,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.84
+andrew-ruiz-376.png,professional,67,2048,1361,false,jpeg20,1024,680,1156.7173554017797,1.7575647272864285,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.92
+benjamin-sloth-lindgreen-705.png,professional,68,2048,1365,false,clean,1024,682,1336.5101146179156,3.9937906267053433,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.01
+benjamin-sloth-lindgreen-705.png,professional,68,2048,1365,false,blur,1024,682,5.765271112234256,0.29545350273325494,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.19
+benjamin-sloth-lindgreen-705.png,professional,68,2048,1365,false,noise,1024,682,3191.041462829188,11.076053679082921,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.91
+benjamin-sloth-lindgreen-705.png,professional,68,2048,1365,false,lowres,256,170,1282.2933899004977,3.878488173661323,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+benjamin-sloth-lindgreen-705.png,professional,68,2048,1365,false,soft,1024,682,10.180337186492466,0.24355760008982166,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.92
+benjamin-sloth-lindgreen-705.png,professional,68,2048,1365,false,jpeg20,1024,682,658.1510433986767,1.1829267293955552,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.83
+casey-fyfe-999.png,professional,69,2048,1360,false,clean,1024,680,247.04101489238673,2.3704921521706432,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.84
+casey-fyfe-999.png,professional,69,2048,1360,false,blur,1024,680,2.1399902176692005,0.2370341121265792,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.93
+casey-fyfe-999.png,professional,69,2048,1360,false,noise,1024,680,2098.3487505625367,9.999802634864457,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.84
+casey-fyfe-999.png,professional,69,2048,1360,false,lowres,256,170,220.6706798888738,1.9111826597740393,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.06
+casey-fyfe-999.png,professional,69,2048,1360,false,soft,1024,680,2.983392680466793,0.1859030665505025,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.85
+casey-fyfe-999.png,professional,69,2048,1360,false,jpeg20,1024,680,76.11192266668004,0.2847876122776013,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.17
+clem-onojeghuo-33741.png,professional,70,2048,1365,false,clean,1024,682,1512.2127423876823,3.075697203410445,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.88
+clem-onojeghuo-33741.png,professional,70,2048,1365,false,blur,1024,682,8.155399445564516,0.30918544646080665,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.86
+clem-onojeghuo-33741.png,professional,70,2048,1365,false,noise,1024,682,3483.400791640814,10.941993647266003,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.83
+clem-onojeghuo-33741.png,professional,70,2048,1365,false,lowres,256,170,1936.1966531187275,4.910125603735805,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.10
+clem-onojeghuo-33741.png,professional,70,2048,1365,false,soft,1024,682,15.389951989908274,0.2954592136059692,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.81
+clem-onojeghuo-33741.png,professional,70,2048,1365,false,jpeg20,1024,682,1057.642570918438,1.5348529483943472,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.85
+daniel-robert-405.png,professional,71,1500,844,false,clean,1024,576,1564.4171271118119,3.964940435109932,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.56
+daniel-robert-405.png,professional,71,1500,844,false,blur,1024,576,9.662423024756007,0.2811002143787281,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.80
+daniel-robert-405.png,professional,71,1500,844,false,noise,1024,576,3428.674619496961,10.87465249404727,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.74
+daniel-robert-405.png,professional,71,1500,844,false,lowres,256,144,2394.8014204119454,5.153809027906551,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+daniel-robert-405.png,professional,71,1500,844,false,soft,1024,576,19.03665833505169,0.2624541573657301,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.69
+daniel-robert-405.png,professional,71,1500,844,false,jpeg20,1024,576,1017.5319405044688,1.4864206507787325,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.97
+davide-ragusa-716.png,professional,72,1945,1292,false,clean,1024,680,536.9289149923804,1.63556732831594,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.83
+davide-ragusa-716.png,professional,72,1945,1292,false,blur,1024,680,3.4284667899369365,0.21502851739320616,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.77
+davide-ragusa-716.png,professional,72,1945,1292,false,noise,1024,680,2406.831881887369,10.014405303588987,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.84
+davide-ragusa-716.png,professional,72,1945,1292,false,lowres,256,170,602.408169814905,1.9558508711812224,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.11
+davide-ragusa-716.png,professional,72,1945,1292,false,soft,1024,680,5.8988711357446695,0.19088859370505026,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.87
+davide-ragusa-716.png,professional,72,1945,1292,false,jpeg20,1024,680,366.4508389551312,0.5839502918163352,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.84
+dogancan-ozturan-395.png,professional,73,2040,1360,false,clean,1024,683,1315.969636395813,2.1606220904389017,5,1.4625764346925616,false,false,false,true,false,1,0.7,face restoration,no upscale,no upscale,true,0.80
+dogancan-ozturan-395.png,professional,73,2040,1360,false,blur,1024,683,13.47738446715426,0.26742351635848555,4,1.2011975529951373,false,true,false,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.86
+dogancan-ozturan-395.png,professional,73,2040,1360,false,noise,1024,683,2842.824670662825,9.399430444279576,4,1.3196806781986623,false,false,true,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.87
+dogancan-ozturan-395.png,professional,73,2040,1360,false,lowres,256,170,3545.282086599278,5.166141763362729,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+dogancan-ozturan-395.png,professional,73,2040,1360,false,soft,1024,683,26.216730550790516,0.24416607440004517,4,1.2110615108233072,false,true,false,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.84
+dogancan-ozturan-395.png,professional,73,2040,1360,false,jpeg20,1024,683,1042.346876998629,1.33990879896879,4,1.2357431309813112,false,false,false,true,false,1,0.7,face restoration,no upscale,Real-ESRGAN x2,false,0.82
+felix-russell-saw-140699.png,professional,74,1750,1166,false,clean,1024,682,486.6063315826138,2.133563410566515,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.79
+felix-russell-saw-140699.png,professional,74,1750,1166,false,blur,1024,682,3.5536421136768084,0.2460568583329288,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.89
+felix-russell-saw-140699.png,professional,74,1750,1166,false,noise,1024,682,2109.225093257641,9.584603363316916,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.80
+felix-russell-saw-140699.png,professional,74,1750,1166,false,lowres,256,170,649.0834385638914,2.5138094544813385,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+felix-russell-saw-140699.png,professional,74,1750,1166,false,soft,1024,682,5.786751335467117,0.21499271648985943,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.85
+felix-russell-saw-140699.png,professional,74,1750,1166,false,jpeg20,1024,682,273.82928625626215,0.553058947983401,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.84
+gian-reto-tarnutzer-45212.png,professional,75,2048,1370,false,clean,1024,685,1194.2087073760679,3.929020700225559,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.84
+gian-reto-tarnutzer-45212.png,professional,75,2048,1370,false,blur,1024,685,7.38546690394586,0.3117161644525247,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.82
+gian-reto-tarnutzer-45212.png,professional,75,2048,1370,false,noise,1024,685,3182.6730941448714,11.065214461154476,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.79
+gian-reto-tarnutzer-45212.png,professional,75,2048,1370,false,lowres,256,171,1753.742735419471,6.131013479899349,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+gian-reto-tarnutzer-45212.png,professional,75,2048,1370,false,soft,1024,685,14.026171687169503,0.3050994030687121,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.81
+gian-reto-tarnutzer-45212.png,professional,75,2048,1370,false,jpeg20,1024,685,710.7832856363675,1.5662937437906586,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.86
+jared-erondu-21325.png,professional,76,2048,1365,false,clean,1024,682,433.10748384372675,1.846854456247778,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.83
+jared-erondu-21325.png,professional,76,2048,1365,false,blur,1024,682,3.6728358077008103,0.2814462348264265,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.87
+jared-erondu-21325.png,professional,76,2048,1365,false,noise,1024,682,2388.526929782105,10.31438316343722,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.93
+jared-erondu-21325.png,professional,76,2048,1365,false,lowres,256,170,610.6955368173989,2.428942300380918,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+jared-erondu-21325.png,professional,76,2048,1365,false,soft,1024,682,5.807764588045257,0.2213994139585099,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.83
+jared-erondu-21325.png,professional,76,2048,1365,false,jpeg20,1024,682,270.58490960773975,0.5614166599145901,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.85
+jason-briscoe-149782.png,professional,77,2048,1365,false,clean,1024,682,669.597614990859,0.9459696958744207,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.83
+jason-briscoe-149782.png,professional,77,2048,1365,false,blur,1024,682,6.729285800497288,0.2088475168770723,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,2.02
+jason-briscoe-149782.png,professional,77,2048,1365,false,noise,1024,682,2495.975525755944,9.83716220052115,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.33
+jason-briscoe-149782.png,professional,77,2048,1365,false,lowres,256,170,1399.348032057079,1.6589357629179131,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.05
+jason-briscoe-149782.png,professional,77,2048,1365,false,soft,1024,682,11.772387761732457,0.15259512006940631,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.56
+jason-briscoe-149782.png,professional,77,2048,1365,false,jpeg20,1024,682,573.6751726872399,0.4894278030566688,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.84
+jeremy-cai-1174.png,professional,78,1936,1220,false,clean,1024,645,861.9187852915666,1.9809461107894435,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.74
+jeremy-cai-1174.png,professional,78,1936,1220,false,blur,1024,645,18.07169127832732,0.3132684572754874,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.71
+jeremy-cai-1174.png,professional,78,1936,1220,false,noise,1024,645,2814.4293213306332,10.46349896293696,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.65
+jeremy-cai-1174.png,professional,78,1936,1220,false,lowres,256,161,5041.9498047019815,7.790682109145688,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.06
+jeremy-cai-1174.png,professional,78,1936,1220,false,soft,1024,645,34.75814089516107,0.2895516895117069,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.54
+jeremy-cai-1174.png,professional,78,1936,1220,false,jpeg20,1024,645,729.372299028826,1.283064357726634,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.74
+juskteez-vu-1041.png,professional,79,1145,1725,false,clean,680,1024,1712.6600784666068,6.317783728972179,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,no upscale,false,0.86
+juskteez-vu-1041.png,professional,79,1145,1725,false,blur,680,1024,3.462011701293469,0.26686346948191253,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.86
+juskteez-vu-1041.png,professional,79,1145,1725,false,noise,680,1024,3275.736129937873,11.276740296786256,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.86
+juskteez-vu-1041.png,professional,79,1145,1725,false,lowres,170,256,648.1723490884644,4.157256974013791,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+juskteez-vu-1041.png,professional,79,1145,1725,false,soft,680,1024,6.258771824679983,0.25177394464693315,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.84
+juskteez-vu-1041.png,professional,79,1145,1725,false,jpeg20,680,1024,437.39110662195515,1.3123054220394592,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.80
+kazuend-28556.png,professional,80,2048,1365,false,clean,1024,682,118.0540329342665,0.8314567790694075,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,no upscale,false,0.80
+kazuend-28556.png,professional,80,2048,1365,false,blur,1024,682,2.4123942719074547,0.2564894204928813,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.81
+kazuend-28556.png,professional,80,2048,1365,false,noise,1024,682,2128.153429437654,10.164508222213287,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.81
+kazuend-28556.png,professional,80,2048,1365,false,lowres,256,170,195.00595710252807,0.8009438630622817,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+kazuend-28556.png,professional,80,2048,1365,false,soft,1024,682,2.947866998576808,0.1760505760235985,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+kazuend-28556.png,professional,80,2048,1365,false,jpeg20,1024,682,74.55296473885463,0.1857422275919384,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.83
+lobostudio-hamburg-75377.png,professional,81,2048,1365,false,clean,1024,682,374.7508711958755,2.3768192361192257,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.80
+lobostudio-hamburg-75377.png,professional,81,2048,1365,false,blur,1024,682,2.5978280640143807,0.2213928013690513,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+lobostudio-hamburg-75377.png,professional,81,2048,1365,false,noise,1024,682,1900.2585338828028,9.201141705190006,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.80
+lobostudio-hamburg-75377.png,professional,81,2048,1365,false,lowres,256,170,411.19048141954676,2.058345447668193,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+lobostudio-hamburg-75377.png,professional,81,2048,1365,false,soft,1024,682,3.857562135730906,0.16818760601281285,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.77
+lobostudio-hamburg-75377.png,professional,81,2048,1365,false,jpeg20,1024,682,123.34193856389881,0.38827622439727705,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.79
+martin-wessely-211.png,professional,82,960,640,true,clean,1024,683,1737.917825476664,4.814475666149607,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.79
+martin-wessely-211.png,professional,82,960,640,true,blur,1024,683,9.827724518289818,0.3211841599604996,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.80
+martin-wessely-211.png,professional,82,960,640,true,noise,1024,683,3757.0326238318326,11.432914393120447,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.80
+martin-wessely-211.png,professional,82,960,640,true,lowres,256,170,2338.1126098585296,6.541408684326136,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+martin-wessely-211.png,professional,82,960,640,true,soft,1024,683,18.662146361214262,0.3162578117096596,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.85
+martin-wessely-211.png,professional,82,960,640,true,jpeg20,1024,683,1128.7021157218176,2.1809388500431486,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.27
+martyn-seddon-220.png,professional,83,2048,1365,false,clean,1024,682,762.7472593243917,2.4369820778749163,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,1.10
+martyn-seddon-220.png,professional,83,2048,1365,false,blur,1024,682,7.643198091414345,0.3042055654539757,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.99
+martyn-seddon-220.png,professional,83,2048,1365,false,noise,1024,682,2768.66242514917,10.660697698563636,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.19
+martyn-seddon-220.png,professional,83,2048,1365,false,lowres,256,170,2031.3657121255737,4.578122085678885,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+martyn-seddon-220.png,professional,83,2048,1365,false,soft,1024,682,15.551869402228576,0.27401969571990925,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.82
+martyn-seddon-220.png,professional,83,2048,1365,false,jpeg20,1024,682,534.3334434791323,0.9184279602070545,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.79
+michael-durana-82941.png,professional,84,2048,1365,false,clean,1024,682,997.9846417287662,2.632860202817914,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.73
+michael-durana-82941.png,professional,84,2048,1365,false,blur,1024,682,4.663844637116623,0.20764462674010117,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.65
+michael-durana-82941.png,professional,84,2048,1365,false,noise,1024,682,2762.6669744346764,10.332929673435139,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.60
+michael-durana-82941.png,professional,84,2048,1365,false,lowres,256,170,1077.7188242031216,3.059936468798314,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.05
+michael-durana-82941.png,professional,84,2048,1365,false,soft,1024,682,8.466998444584325,0.17436015770017885,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.07
+michael-durana-82941.png,professional,84,2048,1365,false,jpeg20,1024,682,529.0510229549853,0.894055157751604,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.68
+mullermarc-184.png,professional,85,1158,772,false,clean,1024,683,560.4844819546106,2.049552055719464,1,0.10814814232453421,false,false,false,true,false,1,0.7,face restoration,no upscale,no upscale,true,1.03
+mullermarc-184.png,professional,85,1158,772,false,blur,1024,683,11.08822520111328,0.27231294851118654,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.60
+mullermarc-184.png,professional,85,1158,772,false,noise,1024,683,2467.238190295848,10.059780205433931,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.72
+mullermarc-184.png,professional,85,1158,772,false,lowres,256,170,2702.3532368295,4.240117118067423,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+mullermarc-184.png,professional,85,1158,772,false,soft,1024,683,21.024424031123687,0.23478368298603833,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.85
+mullermarc-184.png,professional,85,1158,772,false,jpeg20,1024,683,487.23371975329826,0.9421075283024188,1,0.11663246643490882,false,false,false,true,false,1,0.7,face restoration,no upscale,Real-ESRGAN x2,false,0.80
+nomao-saeki-33553.png,professional,86,2048,1366,false,clean,1024,683,224.20443612113593,1.24260636793904,1,5.612037401771825,false,false,false,true,false,1,0.7,face restoration,no upscale,no upscale,true,0.80
+nomao-saeki-33553.png,professional,86,2048,1366,false,blur,1024,683,2.8727437167628067,0.25751079368096985,1,6.3383161061679285,false,true,false,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.76
+nomao-saeki-33553.png,professional,86,2048,1366,false,noise,1024,683,2214.7579057177227,10.262455586834548,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.79
+nomao-saeki-33553.png,professional,86,2048,1366,false,lowres,256,170,387.99082732203925,1.861633987350641,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+nomao-saeki-33553.png,professional,86,2048,1366,false,soft,1024,683,4.104779454241344,0.20292629081561012,1,5.311321967866375,false,true,false,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.77
+nomao-saeki-33553.png,professional,86,2048,1366,false,jpeg20,1024,683,126.53365489752608,0.3879707838497504,1,5.370987072521562,false,false,false,true,false,1,0.7,face restoration,no upscale,Real-ESRGAN x2,false,0.84
+paul-itkin-46101.png,professional,87,960,604,true,clean,1024,644,3010.8846447761834,4.820176315604229,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.75
+paul-itkin-46101.png,professional,87,960,604,true,blur,1024,644,20.2875898037123,0.25147567220367595,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.71
+paul-itkin-46101.png,professional,87,960,604,true,noise,1024,644,4852.249090808964,11.916880770832927,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+paul-itkin-46101.png,professional,87,960,604,true,lowres,256,161,6505.847644034021,8.812301021650674,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.06
+paul-itkin-46101.png,professional,87,960,604,true,soft,1024,644,44.18825475059677,0.2265452923098088,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.73
+paul-itkin-46101.png,professional,87,960,604,true,jpeg20,1024,644,2124.669892823453,2.6733184334491344,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.72
+philipp-reiner-207.png,professional,88,1440,900,false,clean,1024,640,2274.281382750623,5.444627814405494,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.79
+philipp-reiner-207.png,professional,88,1440,900,false,blur,1024,640,6.579162594294173,0.26380485622436123,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.79
+philipp-reiner-207.png,professional,88,1440,900,false,noise,1024,640,4073.4469776188953,11.804565248993784,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.76
+philipp-reiner-207.png,professional,88,1440,900,false,lowres,256,160,1605.3640202468637,4.633226377546094,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.06
+philipp-reiner-207.png,professional,88,1440,900,false,soft,1024,640,12.973989832364023,0.23765650283181702,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.77
+philipp-reiner-207.png,professional,88,1440,900,false,jpeg20,1024,640,1119.9529580286685,1.704117746925987,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.74
+philippe-wuyts-45997.png,professional,89,1922,1281,false,clean,1024,682,1128.272729632124,4.170815056812846,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.78
+philippe-wuyts-45997.png,professional,89,1922,1281,false,blur,1024,682,5.927352043543672,0.32073553623926454,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.79
+philippe-wuyts-45997.png,professional,89,1922,1281,false,noise,1024,682,3000.043141961828,11.010135780492503,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.77
+philippe-wuyts-45997.png,professional,89,1922,1281,false,lowres,256,170,1242.180060883096,5.052451986931843,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+philippe-wuyts-45997.png,professional,89,1922,1281,false,soft,1024,682,10.564450228628749,0.30072012966479106,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+philippe-wuyts-45997.png,professional,89,1922,1281,false,jpeg20,1024,682,491.6581255703912,1.3108280358485203,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.80
+roberto-nickson-48063.png,professional,90,2048,1365,false,clean,1024,682,163.81948441468614,1.0064583579470718,1,0.4160387425129015,false,false,false,true,false,1,0.7,face restoration,no upscale,no upscale,true,0.79
+roberto-nickson-48063.png,professional,90,2048,1365,false,blur,1024,682,3.850435584998074,0.2203654454249815,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+roberto-nickson-48063.png,professional,90,2048,1365,false,noise,1024,682,1984.8753579649817,9.734263695955692,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.81
+roberto-nickson-48063.png,professional,90,2048,1365,false,lowres,256,170,732.22233907363,1.93394998593895,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+roberto-nickson-48063.png,professional,90,2048,1365,false,soft,1024,682,6.412768048795019,0.18498358323768677,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+roberto-nickson-48063.png,professional,90,2048,1365,false,jpeg20,1024,682,114.50588793118182,0.3179230817136177,1,0.4106248229130272,false,true,false,true,true,2,0.5,face restoration + x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.82
+schicka-307.png,professional,91,512,384,true,clean,1024,768,22.41933694968208,0.29861358436713786,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,no upscale,false,2.09
+schicka-307.png,professional,91,512,384,true,blur,1024,768,2.5561765029156565,0.2259273669326557,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.80
+schicka-307.png,professional,91,512,384,true,noise,1024,768,1769.7289586949994,9.353482644728983,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.98
+schicka-307.png,professional,91,512,384,true,lowres,256,192,361.65264862403274,1.663987038781499,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+schicka-307.png,professional,91,512,384,true,soft,1024,768,3.8185106913103177,0.17651536117153407,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.80
+schicka-307.png,professional,91,512,384,true,jpeg20,1024,768,40.280548091331106,0.18732290329908544,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.75
+sergey-zolkin-1045.png,professional,92,2048,1365,false,clean,1024,682,743.3524513662722,2.216080712131539,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.74
+sergey-zolkin-1045.png,professional,92,2048,1365,false,blur,1024,682,4.849688107435041,0.2830242391290498,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+sergey-zolkin-1045.png,professional,92,2048,1365,false,noise,1024,682,2750.4602400327603,10.719505260052559,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+sergey-zolkin-1045.png,professional,92,2048,1365,false,lowres,256,170,969.0461185859231,3.1680359879769253,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.06
+sergey-zolkin-1045.png,professional,92,2048,1365,false,soft,1024,682,8.247731849712794,0.2550803377937008,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.79
+sergey-zolkin-1045.png,professional,92,2048,1365,false,jpeg20,1024,682,433.37662766071657,0.8532669025373979,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.78
+sergey-zolkin-21232.png,professional,93,1542,1028,false,clean,1024,683,144.71894692561287,0.997041983772901,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.78
+sergey-zolkin-21232.png,professional,93,1542,1028,false,blur,1024,683,2.849931072103376,0.22175290060473465,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+sergey-zolkin-21232.png,professional,93,1542,1028,false,noise,1024,683,2156.4792462335026,10.209600137964138,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.79
+sergey-zolkin-21232.png,professional,93,1542,1028,false,lowres,256,170,386.3873499337695,1.2000255730000373,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.06
+sergey-zolkin-21232.png,professional,93,1542,1028,false,soft,1024,683,4.063110467680453,0.1718219270210414,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+sergey-zolkin-21232.png,professional,93,1542,1028,false,jpeg20,1024,683,93.10447783504998,0.24636363269739198,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+stefan-kunze-26931.png,professional,94,2048,1367,false,clean,1024,684,1017.089512374046,3.396715358655747,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.75
+stefan-kunze-26931.png,professional,94,2048,1367,false,blur,1024,684,5.1434875837853395,0.25581607078594265,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.79
+stefan-kunze-26931.png,professional,94,2048,1367,false,noise,1024,684,2949.300378592175,10.978166863295982,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+stefan-kunze-26931.png,professional,94,2048,1367,false,lowres,256,171,1197.642039756035,4.124380446284013,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+stefan-kunze-26931.png,professional,94,2048,1367,false,soft,1024,684,9.680314265873653,0.2153991694992348,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.79
+stefan-kunze-26931.png,professional,94,2048,1367,false,jpeg20,1024,684,474.84862705757666,1.0607750826985063,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.76
+thong-vo-428.png,professional,95,1264,790,false,clean,1024,640,1994.2778788213604,3.585681778523061,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.80
+thong-vo-428.png,professional,95,1264,790,false,blur,1024,640,11.672077628297265,0.2958769703993113,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+thong-vo-428.png,professional,95,1264,790,false,noise,1024,640,3751.5355054640772,10.693619993120299,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.75
+thong-vo-428.png,professional,95,1264,790,false,lowres,256,160,3141.482551140189,6.085495129569506,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+thong-vo-428.png,professional,95,1264,790,false,soft,1024,640,23.946900629752783,0.2775867062518937,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.75
+thong-vo-428.png,professional,95,1264,790,false,jpeg20,1024,640,1431.8777053480758,1.740954562529563,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.77
+todd-quackenbush-222.png,professional,96,720,439,true,clean,1024,624,510.6486932785567,1.4910784991968495,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.73
+todd-quackenbush-222.png,professional,96,720,439,true,blur,1024,624,7.313296193199415,0.303696285888054,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.91
+todd-quackenbush-222.png,professional,96,720,439,true,noise,1024,624,2368.681452122343,9.861557270451188,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.03
+todd-quackenbush-222.png,professional,96,720,439,true,lowres,256,156,1562.2137620688895,4.153688412247672,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.08
+todd-quackenbush-222.png,professional,96,720,439,true,soft,1024,624,13.742752380798924,0.2876668548782055,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+todd-quackenbush-222.png,professional,96,720,439,true,jpeg20,1024,624,483.1938418172263,0.964705186565844,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.75
+todd-quackenbush-27493.png,professional,97,2048,1033,false,clean,1024,516,406.93453423160673,1.2418751060588675,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.69
+todd-quackenbush-27493.png,professional,97,2048,1033,false,blur,1024,516,4.05156849379236,0.2380926574602437,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,1.17
+todd-quackenbush-27493.png,professional,97,2048,1033,false,noise,1024,516,2334.168679867128,10.175243170580725,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.54
+todd-quackenbush-27493.png,professional,97,2048,1033,false,lowres,256,129,716.074786309833,1.6610679653716915,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.04
+todd-quackenbush-27493.png,professional,97,2048,1033,false,soft,1024,516,6.949593287993993,0.1672014413316954,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.40
+todd-quackenbush-27493.png,professional,97,2048,1033,false,jpeg20,1024,516,265.1887710444179,0.476264048475909,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.41
+veeterzy-82537.png,professional,98,2048,1366,false,clean,1024,683,991.0345354217457,2.8955489727133514,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.86
+veeterzy-82537.png,professional,98,2048,1366,false,blur,1024,683,12.70654784532375,0.33182500015090294,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.69
+veeterzy-82537.png,professional,98,2048,1366,false,noise,1024,683,2828.32450286141,10.474194320524605,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.60
+veeterzy-82537.png,professional,98,2048,1366,false,lowres,256,170,3568.3067187162087,8.964941847873638,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.06
+veeterzy-82537.png,professional,98,2048,1366,false,soft,1024,683,25.869377860148692,0.33135829663377997,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.54
+veeterzy-82537.png,professional,98,2048,1366,false,jpeg20,1024,683,693.1353195020434,1.5174044001298266,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,1.61
+vita-vilcina-3055.png,professional,99,1848,1224,false,clean,1024,678,6134.363854520714,7.31706005811902,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,no upscale,false,0.85
+vita-vilcina-3055.png,professional,99,1848,1224,false,blur,1024,678,17.98975153800914,0.24102708944704626,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.80
+vita-vilcina-3055.png,professional,99,1848,1224,false,noise,1024,678,7410.710653159342,12.805798889674708,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.76
+vita-vilcina-3055.png,professional,99,1848,1224,false,lowres,256,169,6053.336025373337,10.375366677985422,0,0.0,true,false,true,false,true,4,0.5,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+vita-vilcina-3055.png,professional,99,1848,1224,false,soft,1024,678,40.343903714794486,0.2355971717507511,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.80
+vita-vilcina-3055.png,professional,99,1848,1224,false,jpeg20,1024,678,4363.203813396959,4.860144601436823,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.87
+wojciech-szaturski-3611.png,professional,100,1988,1325,false,clean,1024,682,1763.2872974141876,4.412322153026002,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.78
+wojciech-szaturski-3611.png,professional,100,1988,1325,false,blur,1024,682,5.549155846584519,0.23911424054588268,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.78
+wojciech-szaturski-3611.png,professional,100,1988,1325,false,noise,1024,682,3720.3932721632577,11.72404656820113,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.77
+wojciech-szaturski-3611.png,professional,100,1988,1325,false,lowres,256,170,1429.6333515840417,4.386785496169562,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.07
+wojciech-szaturski-3611.png,professional,100,1988,1325,false,soft,1024,682,10.896942462063759,0.18201272713728137,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.82
+wojciech-szaturski-3611.png,professional,100,1988,1325,false,jpeg20,1024,682,917.5872605732916,1.4762491748896485,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.77
+zugr-108.png,professional,101,2048,1365,false,clean,1024,682,290.6986033770078,1.1392238250913418,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,no upscale,true,0.76
+zugr-108.png,professional,101,2048,1365,false,blur,1024,682,6.634192842953351,0.2620713477126941,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.80
+zugr-108.png,professional,101,2048,1365,false,noise,1024,682,2276.908917467142,10.230991196630171,0,0.0,false,false,true,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.81
+zugr-108.png,professional,101,2048,1365,false,lowres,256,170,1563.2028272661785,3.376079712339148,0,0.0,true,false,false,false,true,4,0.7,x4 enhance,Real-ESRGAN x4,Real-ESRGAN x4,true,0.06
+zugr-108.png,professional,101,2048,1365,false,soft,1024,682,11.848292007332777,0.2365993525458734,0,0.0,false,true,false,false,true,2,0.5,x2 enhance,Real-ESRGAN x2,Real-ESRGAN x2,true,0.77
+zugr-108.png,professional,101,2048,1365,false,jpeg20,1024,682,239.46765597099667,0.5956386137963947,0,0.0,false,false,false,false,false,1,0.7,no automatic restoration needed,no upscale,Real-ESRGAN x2,false,0.80

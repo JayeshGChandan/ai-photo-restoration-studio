@@ -1,0 +1,105 @@
+section,condition,recommendation,n,count,share,mean,ci_low,ci_high,min,max
+confusion_route,clean,no upscale,102,90,0.8823529411764706,,,,,
+confusion_route,clean,Real-ESRGAN x2,102,12,0.11764705882352941,,,,,
+confusion_route,clean,Real-ESRGAN x4,102,0,0.0,,,,,
+confusion_summary,clean,face restoration,102,12,0.11764705882352941,,,,,
+confusion_summary,clean,face restoration + x2 enhance,102,0,0.0,,,,,
+confusion_summary,clean,no automatic restoration needed,102,78,0.7647058823529411,,,,,
+confusion_summary,clean,x2 enhance,102,12,0.11764705882352941,,,,,
+confusion_summary,clean,x4 enhance,102,0,0.0,,,,,
+as_expected,clean,no upscale,102,90,0.8823529411764706,0.8823529411764706,0.8137254901960784,0.9411764705882353,0.0,1.0
+flag_is_low_res,clean,,102,0,0.0,,,,,
+flag_is_blurry,clean,,102,6,0.058823529411764705,,,,,
+flag_is_noisy,clean,,102,6,0.058823529411764705,,,,,
+flag_do_face,clean,,102,12,0.11764705882352941,,,,,
+measure_sharpness,clean,,102,,,1132.7764295637912,913.7651730855217,1378.7948878659947,22.41933694968208,7041.250427270497
+measure_noise_sigma,clean,,102,,,2.905563298222595,2.5652535026583014,3.286419124155501,0.29861358436713786,12.064779682293372
+faces_detected,clean,,102,12,0.11764705882352941,,,,,
+confusion_route,blur,no upscale,102,0,0.0,,,,,
+confusion_route,blur,Real-ESRGAN x2,102,102,1.0,,,,,
+confusion_route,blur,Real-ESRGAN x4,102,0,0.0,,,,,
+confusion_summary,blur,face restoration,102,0,0.0,,,,,
+confusion_summary,blur,face restoration + x2 enhance,102,6,0.058823529411764705,,,,,
+confusion_summary,blur,no automatic restoration needed,102,0,0.0,,,,,
+confusion_summary,blur,x2 enhance,102,96,0.9411764705882353,,,,,
+confusion_summary,blur,x4 enhance,102,0,0.0,,,,,
+as_expected,blur,Real-ESRGAN x2,102,102,1.0,1.0,1.0,1.0,1.0,1.0
+flag_is_low_res,blur,,102,0,0.0,,,,,
+flag_is_blurry,blur,,102,102,1.0,,,,,
+flag_is_noisy,blur,,102,0,0.0,,,,,
+flag_do_face,blur,,102,6,0.058823529411764705,,,,,
+measure_sharpness,blur,,102,,,7.422054559941548,6.64690855161182,8.217531968396495,1.6979119912257077,20.63222102947475
+measure_noise_sigma,blur,,102,,,0.26614282596316063,0.25944393759464957,0.2727231976798559,0.20309371469583884,0.33182500015090294
+faces_detected,blur,,102,6,0.058823529411764705,,,,,
+confusion_route,noise,no upscale,102,0,0.0,,,,,
+confusion_route,noise,Real-ESRGAN x2,102,102,1.0,,,,,
+confusion_route,noise,Real-ESRGAN x4,102,0,0.0,,,,,
+confusion_summary,noise,face restoration,102,0,0.0,,,,,
+confusion_summary,noise,face restoration + x2 enhance,102,6,0.058823529411764705,,,,,
+confusion_summary,noise,no automatic restoration needed,102,0,0.0,,,,,
+confusion_summary,noise,x2 enhance,102,96,0.9411764705882353,,,,,
+confusion_summary,noise,x4 enhance,102,0,0.0,,,,,
+as_expected,noise,Real-ESRGAN x2,102,102,1.0,1.0,1.0,1.0,1.0,1.0
+flag_is_low_res,noise,,102,0,0.0,,,,,
+flag_is_blurry,noise,,102,0,0.0,,,,,
+flag_is_noisy,noise,,102,102,1.0,,,,,
+flag_do_face,noise,,102,6,0.058823529411764705,,,,,
+measure_sharpness,noise,,102,,,2988.669963612214,2771.7639423496494,3229.34350286252,1559.5508035731648,8811.244254369378
+measure_noise_sigma,noise,,102,,,10.5925617175255,10.399227389599593,10.805077201051974,8.723197996632374,16.13881962265357
+faces_detected,noise,,102,6,0.058823529411764705,,,,,
+confusion_route,lowres,no upscale,102,0,0.0,,,,,
+confusion_route,lowres,Real-ESRGAN x2,102,0,0.0,,,,,
+confusion_route,lowres,Real-ESRGAN x4,102,102,1.0,,,,,
+confusion_summary,lowres,face restoration,102,0,0.0,,,,,
+confusion_summary,lowres,face restoration + x2 enhance,102,0,0.0,,,,,
+confusion_summary,lowres,no automatic restoration needed,102,0,0.0,,,,,
+confusion_summary,lowres,x2 enhance,102,0,0.0,,,,,
+confusion_summary,lowres,x4 enhance,102,102,1.0,,,,,
+as_expected,lowres,Real-ESRGAN x4,102,102,1.0,1.0,1.0,1.0,1.0,1.0
+flag_is_low_res,lowres,,102,102,1.0,,,,,
+flag_is_blurry,lowres,,102,1,0.00980392156862745,,,,,
+flag_is_noisy,lowres,,102,21,0.20588235294117646,,,,,
+flag_do_face,lowres,,102,0,0.0,,,,,
+measure_sharpness,lowres,,102,,,1849.7983990821208,1595.7037521039829,2118.937477249053,57.5231518857178,6788.714782343556
+measure_noise_sigma,lowres,,102,,,4.243713744487055,3.8131908007585564,4.6939141114858405,0.8009438630622817,12.4897540927556
+faces_detected,lowres,,102,0,0.0,,,,,
+confusion_route,soft,no upscale,102,0,0.0,,,,,
+confusion_route,soft,Real-ESRGAN x2,102,102,1.0,,,,,
+confusion_route,soft,Real-ESRGAN x4,102,0,0.0,,,,,
+confusion_summary,soft,face restoration,102,0,0.0,,,,,
+confusion_summary,soft,face restoration + x2 enhance,102,6,0.058823529411764705,,,,,
+confusion_summary,soft,no automatic restoration needed,102,0,0.0,,,,,
+confusion_summary,soft,x2 enhance,102,96,0.9411764705882353,,,,,
+confusion_summary,soft,x4 enhance,102,0,0.0,,,,,
+as_expected,soft,Real-ESRGAN x2,102,102,1.0,1.0,1.0,1.0,1.0,1.0
+flag_is_low_res,soft,,102,0,0.0,,,,,
+flag_is_blurry,soft,,102,102,1.0,,,,,
+flag_is_noisy,soft,,102,0,0.0,,,,,
+flag_do_face,soft,,102,6,0.058823529411764705,,,,,
+measure_sharpness,soft,,102,,,14.409571723026534,12.662584105991645,16.230551349200255,1.7893034271955663,46.519295799621936
+measure_noise_sigma,soft,,102,,,0.23407703409389782,0.22434722542134758,0.24357841706363295,0.1416673038642095,0.3412215133888619
+faces_detected,soft,,102,6,0.058823529411764705,,,,,
+confusion_route,jpeg20,no upscale,102,86,0.8431372549019608,,,,,
+confusion_route,jpeg20,Real-ESRGAN x2,102,16,0.1568627450980392,,,,,
+confusion_route,jpeg20,Real-ESRGAN x4,102,0,0.0,,,,,
+confusion_summary,jpeg20,face restoration,102,10,0.09803921568627451,,,,,
+confusion_summary,jpeg20,face restoration + x2 enhance,102,1,0.00980392156862745,,,,,
+confusion_summary,jpeg20,no automatic restoration needed,102,76,0.7450980392156863,,,,,
+confusion_summary,jpeg20,x2 enhance,102,15,0.14705882352941177,,,,,
+confusion_summary,jpeg20,x4 enhance,102,0,0.0,,,,,
+as_expected,jpeg20,Real-ESRGAN x2,102,16,0.1568627450980392,0.1568627450980392,0.08823529411764706,0.22549019607843138,0.0,1.0
+flag_is_low_res,jpeg20,,102,0,0.0,,,,,
+flag_is_blurry,jpeg20,,102,16,0.1568627450980392,,,,,
+flag_is_noisy,jpeg20,,102,0,0.0,,,,,
+flag_do_face,jpeg20,,102,11,0.10784313725490197,,,,,
+measure_sharpness,jpeg20,,102,,,713.69120105676,574.0516614830956,869.0862117767209,11.198073872516153,4363.203813396959
+measure_noise_sigma,jpeg20,,102,,,1.1283923296232925,0.9660875427170432,1.30901135600365,0.09214525384823619,4.860144601436823
+faces_detected,jpeg20,,102,11,0.10784313725490197,,,,,
+false_positive_clean_upscale,clean,Real-ESRGAN recommended,102,12,0.11764705882352941,0.11764705882352941,0.058823529411764705,0.18627450980392157,0.0,1.0
+clean_any_action,clean,face restoration or Real-ESRGAN recommended,102,24,0.23529411764705882,,,,,
+as_expected_excluding_enlarged,clean,no upscale,97,86,0.8865979381443299,,,,,
+as_expected_excluding_enlarged,blur,Real-ESRGAN x2,97,97,1.0,,,,,
+as_expected_excluding_enlarged,noise,Real-ESRGAN x2,97,97,1.0,,,,,
+as_expected_excluding_enlarged,lowres,Real-ESRGAN x4,97,97,1.0,,,,,
+as_expected_excluding_enlarged,soft,Real-ESRGAN x2,97,97,1.0,,,,,
+as_expected_excluding_enlarged,jpeg20,Real-ESRGAN x2,97,15,0.15463917525773196,,,,,

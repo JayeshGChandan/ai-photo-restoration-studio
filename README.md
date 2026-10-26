@@ -112,6 +112,13 @@ Summarise it:
 ./venv/bin/python scripts/summarise_compositing.py --dir results/compositing_repro
 ```
 
+Diagnose routing (results/routing/):
+
+```bash
+./venv/bin/python scripts/eval_routing.py run
+./venv/bin/python scripts/eval_routing.py summarise
+```
+
 Make the figures and tables (from the committed results in results/compositing/):
 
 ```bash
