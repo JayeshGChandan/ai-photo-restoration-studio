@@ -112,6 +112,13 @@ Summarise it:
 ./venv/bin/python scripts/summarise_compositing.py --dir results/compositing_repro
 ```
 
+Upscaling, Real-ESRGAN vs bicubic (results/upscale/):
+
+```bash
+./venv/bin/python scripts/eval_upscale.py run
+./venv/bin/python scripts/eval_upscale.py summarise
+```
+
 Diagnose routing (results/routing/):
 
 ```bash

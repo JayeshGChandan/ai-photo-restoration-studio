@@ -73,8 +73,10 @@ def provenance(script_paths):
 
     freeze = subprocess.run([sys.executable, "-m", "pip", "freeze"], capture_output=True,
                             text=True).stdout.split("\n")
-    dirty = [line[3:] for line in git("status", "--porcelain", "--untracked-files=no")
-             .splitlines()]
+    # Not git(): its strip() would eat the first line's leading status column.
+    status = subprocess.run(["git", "status", "--porcelain", "--untracked-files=no"],
+                            cwd=REPO_ROOT, capture_output=True, text=True, check=True).stdout
+    dirty = [line[3:] for line in status.splitlines() if line]
     return {
         "git_head": git("rev-parse", "HEAD"),
         "git_branch": git("rev-parse", "--abbrev-ref", "HEAD"),
