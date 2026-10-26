@@ -1,8 +1,8 @@
 {
   "generated_by": "scripts/make_figures.py",
   "code": {
-    "git_head": "f7f6ce9885fc856e7a16afcf9514cc0d703a5240",
-    "make_figures_py_sha256": "4690281302dfaa77750344e305d75a29f499d56e83f9ec297d60283655190f18",
+    "git_head": "d8124430d04497246c37c671941d697a695f6b34",
+    "make_figures_py_sha256": "1e036e3d5ea8ede6d2de50c80467171ee8ae9cd9060b6cd409f3f699948b7d67",
     "make_figures_py_modified_vs_head": true
   },
   "inputs": {
@@ -19,6 +19,7 @@
       "results/routing/summary.csv": "93c927633d0053ed7faf4d5e42a892effe682f254aa669c18ca188ab74844ab3",
       "results/routing/meta.json": "b6df52c9c30ced9b08e9450bbfd694c2e16499b884d039077e8e79076dbe286d",
       "results/faces/meta.json": "d6e9fae098ddc8b9b6c19d9588c956fc7c97c9d89520bd5ef1f203ba34404bd5",
+      "results/faces_sweep/summary.csv": "b437214e8469e33bdb485e59ce9d6b9a6774198c48febf05ae5063367524dc4a",
       "results/faces/summary.csv": "077d5a179fb43dbc52da6f27d290d8b18ec9570419db1bd1bb767b078a1937a3"
     }
   },
@@ -248,6 +249,36 @@
         "error_bars": "95% bootstrap CI",
         "skip": "not drawn when results/faces/meta.json records that the evaluation stopped"
       }
+    },
+    "faces_sweep": {
+      "chart": "8",
+      "source": "results/faces_sweep/summary.csv sections metric, reference_clean, identity_reference_different_images and codeformer_ran",
+      "levels": [
+        "mild",
+        "severe"
+      ],
+      "conditions": [
+        "bicubic",
+        "realesrgan",
+        "codeformer_f0.3",
+        "codeformer_f0.7",
+        "codeformer_f1.0"
+      ],
+      "metrics": [
+        "psnr_y",
+        "ssim_y",
+        "lpips",
+        "musiq",
+        "identity_cos"
+      ],
+      "error_bars": "95% bootstrap CI",
+      "colours": "bicubic N2 grey, Real-ESRGAN C_3 blue (as in chart 7); CodeFormer fidelity 0.3 / 0.7 / 1.0 as a one-hue aqua ordinal ramp #1baf7a / #06865c / #035f40 (OKLCH L 0.669 / 0.549 / 0.429 at the palette aqua's hue and chroma), passing validate_palette.js --ordinal on the light surface; fidelity bars carry direct value labels",
+      "reference_lines": {
+        "musiq": "mean MUSIQ of the clean face box",
+        "identity_cos": "mean ArcFace cosine between clean faces of different images"
+      },
+      "reference_line_labels": "outside each panel's right edge, so they never cover a bar",
+      "no_face_images": true
     }
   },
   "outcomes": {
@@ -1268,6 +1299,327 @@
           },
           "n": 6
         }
+      },
+      "8": {
+        "files": [
+          "chart_8_faces_sweep.png",
+          "chart_8_faces_sweep.svg"
+        ],
+        "outcome": {
+          "values": {
+            "mild:bicubic:psnr_y": [
+              35.24737712315151,
+              33.473297119140625,
+              36.9847651890346,
+              7
+            ],
+            "mild:realesrgan:psnr_y": [
+              34.39150047302246,
+              31.823490687779017,
+              37.21538162231445,
+              7
+            ],
+            "mild:codeformer_f0.3:psnr_y": [
+              27.573479788643972,
+              21.952389580862864,
+              32.90758923121861,
+              7
+            ],
+            "mild:codeformer_f0.7:psnr_y": [
+              27.579011917114258,
+              21.505822317940847,
+              33.124495370047434,
+              7
+            ],
+            "mild:codeformer_f1.0:psnr_y": [
+              27.08458355494908,
+              20.922468457903182,
+              32.66254982948303,
+              7
+            ],
+            "severe:bicubic:psnr_y": [
+              29.15240260532924,
+              27.341327667236328,
+              31.16663360595703,
+              7
+            ],
+            "severe:realesrgan:psnr_y": [
+              29.50365584237235,
+              27.41919926234654,
+              31.891299928937638,
+              7
+            ],
+            "severe:codeformer_f0.3:psnr_y": [
+              27.224441255841935,
+              23.053100313459122,
+              31.238317046846657,
+              7
+            ],
+            "severe:codeformer_f0.7:psnr_y": [
+              27.44505419049944,
+              23.302081516810826,
+              31.364672027315407,
+              7
+            ],
+            "severe:codeformer_f1.0:psnr_y": [
+              27.371327808925084,
+              23.000248772757395,
+              31.387299006325854,
+              7
+            ],
+            "mild:bicubic:ssim_y": [
+              0.9032478629556173,
+              0.8807678433561016,
+              0.9220175176171773,
+              7
+            ],
+            "mild:realesrgan:ssim_y": [
+              0.926021940660398,
+              0.8998274954466198,
+              0.9518065463146332,
+              7
+            ],
+            "mild:codeformer_f0.3:ssim_y": [
+              0.8277790048994501,
+              0.7509878453927298,
+              0.9008931859883702,
+              7
+            ],
+            "mild:codeformer_f0.7:ssim_y": [
+              0.8275183351782192,
+              0.7320006252092958,
+              0.9050280925011375,
+              7
+            ],
+            "mild:codeformer_f1.0:ssim_y": [
+              0.8213125578690027,
+              0.719308942498049,
+              0.9025905357882131,
+              7
+            ],
+            "severe:bicubic:ssim_y": [
+              0.8194721488762148,
+              0.7749489676390103,
+              0.8621226659351591,
+              7
+            ],
+            "severe:realesrgan:ssim_y": [
+              0.848067951117099,
+              0.7898771692361236,
+              0.9026058473119265,
+              7
+            ],
+            "severe:codeformer_f0.3:ssim_y": [
+              0.8061614811074892,
+              0.7311767241777828,
+              0.8811462380371954,
+              7
+            ],
+            "severe:codeformer_f0.7:ssim_y": [
+              0.7984297826567122,
+              0.719766499989177,
+              0.8788521721214658,
+              7
+            ],
+            "severe:codeformer_f1.0:ssim_y": [
+              0.789698252177588,
+              0.7030968590375146,
+              0.8764729589187126,
+              7
+            ],
+            "mild:bicubic:lpips": [
+              0.2171580387013299,
+              0.1684818991592952,
+              0.270046734384128,
+              7
+            ],
+            "mild:realesrgan:lpips": [
+              0.1818962118455342,
+              0.16015016394002096,
+              0.20508025799478805,
+              7
+            ],
+            "mild:codeformer_f0.3:lpips": [
+              0.28804224729537964,
+              0.2256344416311809,
+              0.3567187658378056,
+              7
+            ],
+            "mild:codeformer_f0.7:lpips": [
+              0.2796956045286996,
+              0.2027858325413295,
+              0.37399392468588694,
+              7
+            ],
+            "mild:codeformer_f1.0:lpips": [
+              0.27147901483944487,
+              0.19519766313689096,
+              0.36373921590191965,
+              7
+            ],
+            "severe:bicubic:lpips": [
+              0.4700808823108673,
+              0.38974294492176603,
+              0.5538217084748405,
+              7
+            ],
+            "severe:realesrgan:lpips": [
+              0.2766171821526119,
+              0.24206341164452688,
+              0.31287273338862825,
+              7
+            ],
+            "severe:codeformer_f0.3:lpips": [
+              0.32630435483796255,
+              0.28706736649785725,
+              0.36641745482172283,
+              7
+            ],
+            "severe:codeformer_f0.7:lpips": [
+              0.32992367659296307,
+              0.2893696257046291,
+              0.36988147241728647,
+              7
+            ],
+            "severe:codeformer_f1.0:lpips": [
+              0.33657222986221313,
+              0.2908553353377751,
+              0.38210206798144747,
+              7
+            ],
+            "mild:bicubic:musiq": [
+              17.38863754272461,
+              16.196060998099192,
+              19.040630340576172,
+              7
+            ],
+            "mild:realesrgan:musiq": [
+              33.55808585030692,
+              26.23433358328683,
+              40.010440826416016,
+              7
+            ],
+            "mild:codeformer_f0.3:musiq": [
+              46.09405081612723,
+              34.95683397565569,
+              55.177452087402344,
+              7
+            ],
+            "mild:codeformer_f0.7:musiq": [
+              45.53440475463867,
+              34.18484606061663,
+              55.32457111903599,
+              7
+            ],
+            "mild:codeformer_f1.0:musiq": [
+              44.04449054173061,
+              31.911109106881277,
+              55.07436834062849,
+              7
+            ],
+            "severe:bicubic:musiq": [
+              15.880093029567174,
+              15.50350570678711,
+              16.317594936915807,
+              7
+            ],
+            "severe:realesrgan:musiq": [
+              28.229719979422434,
+              22.40151814052037,
+              34.15592411586216,
+              7
+            ],
+            "severe:codeformer_f0.3:musiq": [
+              30.30175835745675,
+              23.009069170270646,
+              38.00439235142299,
+              7
+            ],
+            "severe:codeformer_f0.7:musiq": [
+              31.834210532052175,
+              23.273321424211776,
+              41.53288759504046,
+              7
+            ],
+            "severe:codeformer_f1.0:musiq": [
+              32.03988756452288,
+              23.28951154436384,
+              41.96510314941406,
+              7
+            ],
+            "mild:bicubic:identity_cos": [
+              0.9101127811840602,
+              0.8889437764883041,
+              0.9285280683210917,
+              7
+            ],
+            "mild:realesrgan:identity_cos": [
+              0.9138842565672738,
+              0.8880830066544669,
+              0.9360518674765315,
+              7
+            ],
+            "mild:codeformer_f0.3:identity_cos": [
+              0.7566505329949516,
+              0.6833706157548087,
+              0.8210163701857839,
+              7
+            ],
+            "mild:codeformer_f0.7:identity_cos": [
+              0.8219823241233826,
+              0.7668137663177081,
+              0.8710531166621617,
+              7
+            ],
+            "mild:codeformer_f1.0:identity_cos": [
+              0.8463920269693647,
+              0.7815653341157096,
+              0.8963090332491057,
+              7
+            ],
+            "severe:bicubic:identity_cos": [
+              0.5349019552980151,
+              0.4423832297325134,
+              0.620910474232265,
+              7
+            ],
+            "severe:realesrgan:identity_cos": [
+              0.7408241714750018,
+              0.6239312035696847,
+              0.8306049619402204,
+              7
+            ],
+            "severe:codeformer_f0.3:identity_cos": [
+              0.6798145771026611,
+              0.5759603381156921,
+              0.7716374226978847,
+              7
+            ],
+            "severe:codeformer_f0.7:identity_cos": [
+              0.7002628530774798,
+              0.5936383008956909,
+              0.787500977729048,
+              7
+            ],
+            "severe:codeformer_f1.0:identity_cos": [
+              0.7143452593258449,
+              0.6047883885247367,
+              0.8002560905047825,
+              7
+            ]
+          },
+          "n": 7,
+          "clean_musiq": 27.24399103437151,
+          "identity_different_images": 0.1993879753031901,
+          "codeformer_ran": {
+            "mild:codeformer_f0.3": 6,
+            "mild:codeformer_f0.7": 6,
+            "mild:codeformer_f1.0": 6,
+            "severe:codeformer_f0.3": 3,
+            "severe:codeformer_f0.7": 3,
+            "severe:codeformer_f1.0": 3
+          }
+        }
       }
     }
   },
@@ -1296,6 +1648,8 @@
     "chart_6_routing_confusion.svg": "b38344a9dbe58e1a926de6fbac7aa57e23b3f5eb33ab629de54b9dce4b27b64f",
     "chart_7_faces.png": "bcd2be7114b9876d4c9641fa2c14c7926f24fff8571240382ec9cec121fbc8d5",
     "chart_7_faces.svg": "f8d5f4586d3fd99016d8fa65c2a02acee78718f6ed32f172bdfce9ada16f4298",
+    "chart_8_faces_sweep.png": "b50cbec3b7adfdf732a963c79cfc99482baeddabdb515bd81b2cbf53380d431f",
+    "chart_8_faces_sweep.svg": "5225edf4a336bf0544904cc00ad3de40fcfaa3a1f0be37d0bade55155097df80",
     "fig_a_change_maps.png": "08d4639e9562309428e3ebb1cbfaee7bd546f2c048f303e83222656b373fb98c",
     "fig_a_change_maps_full.png": "46bd3dd70e447054bb18950e32d0e7ddaf74bccc59a2d828a83f8c9c231ef1ff",
     "fig_b_detail_crops.png": "7a72faa555e4406ea3fce2324c4b2a737078c235920cd633695a949710f48a90",

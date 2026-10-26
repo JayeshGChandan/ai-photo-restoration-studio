@@ -25,9 +25,12 @@ Tables and their sources:
             route counts, the expected route and the share routed as expected.
   faces     results/faces/summary.csv and meta.json: mean [95% CI] per method
             on the face box, or the reason the evaluation stopped.
+  faces_sweep  results/faces_sweep/summary.csv: one table per damage level,
+            mean [95% CI] per method and metric on the face box, and each
+            method's better / equal / worse count against Real-ESRGAN only.
 
 headline, paired, upscaler and credits must each have exactly one marker
-pair. upscale, routing and faces are written only when their markers are
+pair. upscale, routing, faces and faces_sweep are written only when their markers are
 present (one pair each); without markers they are skipped. Fails if a value a
 table needs is absent. Usage (from the repo root):
   ./venv/bin/python scripts/make_tables.py
@@ -52,6 +55,7 @@ ROUTING_SUMMARY = os.path.join(REPO_ROOT, "results", "routing", "summary.csv")
 ROUTING_META = os.path.join(REPO_ROOT, "results", "routing", "meta.json")
 FACES_SUMMARY = os.path.join(REPO_ROOT, "results", "faces", "summary.csv")
 FACES_META = os.path.join(REPO_ROOT, "results", "faces", "meta.json")
+SWEEP_SUMMARY = os.path.join(REPO_ROOT, "results", "faces_sweep", "summary.csv")
 
 SIZE_CLASSES = [("above_cap", "Above cap"), ("at_or_below_cap", "At or below cap")]
 COVERAGES = ["1", "5", "15"]
@@ -305,7 +309,53 @@ def faces():
     return "\n".join(lines)
 
 
-OPTIONAL = {"upscale": upscale, "routing": routing, "faces": faces}
+SWEEP_CONDS = [("bicubic", "Bicubic"), ("realesrgan", "Real-ESRGAN only"),
+               ("codeformer_f0.3", "Real-ESRGAN + CodeFormer, fidelity 0.3"),
+               ("codeformer_f0.7", "Real-ESRGAN + CodeFormer, fidelity 0.7"),
+               ("codeformer_f1.0", "Real-ESRGAN + CodeFormer, fidelity 1.0")]
+SWEEP_METRICS = FACE_METRICS + [("musiq", "MUSIQ", "{:.2f}"),
+                                ("identity_cos", "Identity cosine", "{:.4f}")]
+SWEEP_LEVELS = [("mild", "Mild damage (benchmark defaults)"),
+                ("severe", "Severe damage (4x down, blur 2, noise 15, JPEG 30)")]
+
+
+def faces_sweep():
+    rows = read_csv(SWEEP_SUMMARY)
+    metric = {(r["level"], r["condition"], r["metric"]): r for r in rows
+              if r["section"] == "metric"}
+    paired_ = {(r["level"], r["condition"], r["metric"]): r for r in rows
+               if r["section"] == "paired_diff"}
+    ran = {(r["level"], r["condition"]): r for r in rows if r["section"] == "codeformer_ran"}
+    out = []
+    for lv, lv_label in SWEEP_LEVELS:
+        n = metric[(lv, "bicubic", "psnr_y")]["n"]
+        ran_txt = ", ".join(f"{c.split('_f')[1]}: {ran[(lv, c)]['mean'].split('.')[0]} of {n}"
+                            for c, _ in SWEEP_CONDS if c.startswith("codeformer"))
+        out.append(f"**{lv_label}**, face box, {n} images. CodeFormer found a face to "
+                   f"restore ({ran_txt}).")
+        out.append("")
+        head = ["Method"] + [m[1] for m in SWEEP_METRICS]
+        out.append("| " + " | ".join(head) + " |")
+        out.append("|---|" + "---:|" * len(SWEEP_METRICS))
+        for c, label in SWEEP_CONDS:
+            cells = [label]
+            for m, _, fmt in SWEEP_METRICS:
+                r = metric[(lv, c, m)]
+                cells.append(ci(fmt, float(r["mean"]), float(r["ci_low"]), float(r["ci_high"])))
+            out.append("| " + " | ".join(cells) + " |")
+        for c, label in SWEEP_CONDS:
+            if c == "realesrgan":
+                continue
+            cells = [f"{label} vs Real-ESRGAN only: better / equal / worse"]
+            for m, _, _ in SWEEP_METRICS:
+                p = paired_[(lv, f"{c} - realesrgan", m)]
+                cells.append(f"{p['n_better']} / {p['n_equal']} / {p['n_worse']}")
+            out.append("| " + " | ".join(cells) + " |")
+        out.append("")
+    return "\n".join(out).rstrip("\n")
+
+
+OPTIONAL = {"upscale": upscale, "routing": routing, "faces": faces, "faces_sweep": faces_sweep}
 
 
 def replace_block(text, name, body):

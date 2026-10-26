@@ -1,0 +1,525 @@
+{
+  "evaluation": "faces_sweep",
+  "description": "CodeFormer at fidelity 0.3, 0.7 and 1.0 vs Real-ESRGAN only vs bicubic, at two damage levels, on the face box of the CLIC 2020 images with a face at least 64 px on its larger side",
+  "started": "2026-10-27T01:08:57+05:30",
+  "fidelity_direction": {
+    "source": "restorers/face.py module docstring and _restore_crop()",
+    "code": "self._raw(t, weight=float(fidelity)): the fidelity value is passed unchanged as CodeFormer's weight w",
+    "docstring": "0.0 leans on the generative prior for maximum quality (can subtly alter identity), 1.0 stays faithful to the input (but preserves more of its degradation). ~0.7 is a good default for old photos.",
+    "reading": "1.0 = most faithful to the (degraded) input; 0.0 = most generative"
+  },
+  "selection": {
+    "rule": "largest face in results/faces/meta.json with max(width, height) >= 64 px",
+    "images": [
+      "mobile/20151208_222739.png",
+      "mobile/20171109_082958.png",
+      "mobile/IMG_1502.png",
+      "mobile/IMG_1696.png",
+      "mobile/IMG_20170315_171546.png",
+      "professional/dogancan-ozturan-395.png",
+      "professional/roberto-nickson-48063.png"
+    ],
+    "detections_rechecked": "Diagnose's detector is re-run on every full image and its largest box must equal meta.json"
+  },
+  "parameters": {
+    "crop": "scripts/eval_faces.py square_crop + map_box: square of side 2 x the larger side of the largest face, centred on it, LANCZOS to 512x512",
+    "levels": {
+      "mild": {
+        "downscale_factor": 2,
+        "blur_sigma": 1.0,
+        "noise_sigma": 8.0,
+        "jpeg_quality": 60
+      },
+      "severe": {
+        "downscale_factor": 4,
+        "blur_sigma": 2.0,
+        "noise_sigma": 15.0,
+        "jpeg_quality": 30
+      }
+    },
+    "level_order": "run_benchmark/degrade: blur, then downscale (cv2 INTER_AREA), then Gaussian noise (seed), then JPEG; restore outscale = downscale factor",
+    "seed": 0,
+    "fidelities": [
+      0.3,
+      0.7,
+      1.0
+    ],
+    "run_benchmark_defaults": {
+      "downscale_factor": 2,
+      "blur_sigma": 1.0,
+      "noise_sigma": 8.0,
+      "jpeg_quality": 60,
+      "do_face": true,
+      "fidelity": 0.7,
+      "score": true,
+      "seed": 0
+    },
+    "calls": "run_benchmark(clean, **level, do_face=False, seed=0, score=False) and run_benchmark(clean, **level, do_face=True, fidelity=f, seed=0, score=False) for f in fidelities",
+    "scoring": {
+      "psnr_y, ssim_y, lpips": "IQAScorer.score_reference(out face box, clean face box)",
+      "musiq": "IQAScorer._score_one('musiq', out face box), pyiqa default",
+      "identity_cos": "dot product of L2-normalised ArcFace embeddings, output vs clean, aligned with the clean-crop landmarks"
+    },
+    "identity_model": {
+      "available_in_facexlib": true,
+      "module": "facexlib.recognition (init_recognition_model('arcface'))",
+      "architecture": "Backbone(num_layers=50, drop_ratio=0.6, mode='ir_se'), built directly because init_recognition_model hard-codes .to('cuda')",
+      "weights_url": "https://github.com/xinntao/facexlib/releases/download/v0.1.0/recognition_arcface_ir_se50.pth",
+      "weights_source": "official facexlib release v0.1.0, downloaded with facexlib.utils.load_file_from_url to facexlib's default weights folder",
+      "weights_path": "venv/lib/python3.11/site-packages/facexlib/weights/recognition_arcface_ir_se50.pth",
+      "weights_sha256": "a035c768259b98ab1ce0e646312f48b9e1e218197a0f80ac6765e88f8b6ddf28",
+      "alignment": "RetinaFace (Diagnose's detector, conf 0.9) 5 landmarks on the clean 512x512 crop, detection with the highest IoU against the face box; cv2.estimateAffinePartial2D (LMEDS) to the 112x112 ArcFace template; the same warp for every output",
+      "input": "RGB, (x/255 - 0.5) / 0.5"
+    }
+  },
+  "finished": "2026-10-27T01:21:12+05:30",
+  "device": {
+    "face_detector": "cpu",
+    "upscaler": "cpu",
+    "face_restorer": "cpu",
+    "metrics": "cpu",
+    "identity": "cpu"
+  },
+  "alignment": {
+    "mobile/20151208_222739.png": {
+      "clean_detection_iou": 0.8223051895109027,
+      "landmarks_512": [
+        [
+          200.64283752441406,
+          217.64859008789062
+        ],
+        [
+          291.45001220703125,
+          225.55966186523438
+        ],
+        [
+          243.8516845703125,
+          260.3326721191406
+        ],
+        [
+          212.48538208007812,
+          310.8226013183594
+        ],
+        [
+          273.6160888671875,
+          316.75958251953125
+        ]
+      ],
+      "crop_shift_xy": [
+        0,
+        0
+      ],
+      "crop_side_clamped": false
+    },
+    "mobile/20171109_082958.png": {
+      "clean_detection_iou": 0.8964248366755302,
+      "landmarks_512": [
+        [
+          200.26553344726562,
+          222.23876953125
+        ],
+        [
+          219.75668334960938,
+          231.86289978027344
+        ],
+        [
+          171.94895935058594,
+          268.0493469238281
+        ],
+        [
+          206.21136474609375,
+          314.0283508300781
+        ],
+        [
+          220.63137817382812,
+          320.0753173828125
+        ]
+      ],
+      "crop_shift_xy": [
+        0,
+        0
+      ],
+      "crop_side_clamped": false
+    },
+    "mobile/IMG_1502.png": {
+      "clean_detection_iou": 0.8590798414390506,
+      "landmarks_512": [
+        [
+          223.99508666992188,
+          267.6714172363281
+        ],
+        [
+          274.1278381347656,
+          224.51678466796875
+        ],
+        [
+          261.4996337890625,
+          291.56793212890625
+        ],
+        [
+          261.46258544921875,
+          333.1247253417969
+        ],
+        [
+          299.262939453125,
+          299.0231628417969
+        ]
+      ],
+      "crop_shift_xy": [
+        0,
+        0
+      ],
+      "crop_side_clamped": false
+    },
+    "mobile/IMG_1696.png": {
+      "clean_detection_iou": 0.9448730931973692,
+      "landmarks_512": [
+        [
+          189.4813232421875,
+          225.7883758544922
+        ],
+        [
+          266.81805419921875,
+          227.26097106933594
+        ],
+        [
+          206.75086975097656,
+          270.665771484375
+        ],
+        [
+          197.84207153320312,
+          320.0478210449219
+        ],
+        [
+          248.89524841308594,
+          320.338134765625
+        ]
+      ],
+      "crop_shift_xy": [
+        0,
+        0
+      ],
+      "crop_side_clamped": false
+    },
+    "mobile/IMG_20170315_171546.png": {
+      "clean_detection_iou": 0.7609942941589736,
+      "landmarks_512": [
+        [
+          293.4955139160156,
+          239.81101989746094
+        ],
+        [
+          300.3536071777344,
+          234.07984924316406
+        ],
+        [
+          323.4537353515625,
+          275.1945495605469
+        ],
+        [
+          298.67724609375,
+          331.9442443847656
+        ],
+        [
+          299.09295654296875,
+          326.8785400390625
+        ]
+      ],
+      "crop_shift_xy": [
+        0,
+        0
+      ],
+      "crop_side_clamped": false
+    },
+    "professional/dogancan-ozturan-395.png": {
+      "clean_detection_iou": 0.9396850216587179,
+      "landmarks_512": [
+        [
+          216.85382080078125,
+          227.1318817138672
+        ],
+        [
+          212.66055297851562,
+          233.52159118652344
+        ],
+        [
+          192.71234130859375,
+          277.20098876953125
+        ],
+        [
+          223.38385009765625,
+          325.44976806640625
+        ],
+        [
+          220.21240234375,
+          330.45074462890625
+        ]
+      ],
+      "crop_shift_xy": [
+        0,
+        0
+      ],
+      "crop_side_clamped": false
+    },
+    "professional/roberto-nickson-48063.png": {
+      "clean_detection_iou": 0.8328017516188713,
+      "landmarks_512": [
+        [
+          214.374755859375,
+          251.8402557373047
+        ],
+        [
+          220.72998046875,
+          255.15802001953125
+        ],
+        [
+          196.16281127929688,
+          298.85894775390625
+        ],
+        [
+          223.42095947265625,
+          333.22076416015625
+        ],
+        [
+          226.77471923828125,
+          334.7872314453125
+        ]
+      ],
+      "crop_shift_xy": [
+        0,
+        0
+      ],
+      "crop_side_clamped": false
+    }
+  },
+  "identity_reference_different_images": [
+    {
+      "a": "mobile/20151208_222739.png",
+      "b": "mobile/20171109_082958.png",
+      "cos": 0.14571523666381836
+    },
+    {
+      "a": "mobile/20151208_222739.png",
+      "b": "mobile/IMG_1502.png",
+      "cos": 0.13004682958126068
+    },
+    {
+      "a": "mobile/20151208_222739.png",
+      "b": "mobile/IMG_1696.png",
+      "cos": 0.17722775042057037
+    },
+    {
+      "a": "mobile/20151208_222739.png",
+      "b": "mobile/IMG_20170315_171546.png",
+      "cos": 0.04413815960288048
+    },
+    {
+      "a": "mobile/20151208_222739.png",
+      "b": "professional/dogancan-ozturan-395.png",
+      "cos": 0.23914834856987
+    },
+    {
+      "a": "mobile/20151208_222739.png",
+      "b": "professional/roberto-nickson-48063.png",
+      "cos": 0.20011208951473236
+    },
+    {
+      "a": "mobile/20171109_082958.png",
+      "b": "mobile/IMG_1502.png",
+      "cos": 0.025139370933175087
+    },
+    {
+      "a": "mobile/20171109_082958.png",
+      "b": "mobile/IMG_1696.png",
+      "cos": 0.430079847574234
+    },
+    {
+      "a": "mobile/20171109_082958.png",
+      "b": "mobile/IMG_20170315_171546.png",
+      "cos": 0.3609634041786194
+    },
+    {
+      "a": "mobile/20171109_082958.png",
+      "b": "professional/dogancan-ozturan-395.png",
+      "cos": 0.20704348385334015
+    },
+    {
+      "a": "mobile/20171109_082958.png",
+      "b": "professional/roberto-nickson-48063.png",
+      "cos": 0.260336309671402
+    },
+    {
+      "a": "mobile/IMG_1502.png",
+      "b": "mobile/IMG_1696.png",
+      "cos": 0.16952326893806458
+    },
+    {
+      "a": "mobile/IMG_1502.png",
+      "b": "mobile/IMG_20170315_171546.png",
+      "cos": 0.08570091426372528
+    },
+    {
+      "a": "mobile/IMG_1502.png",
+      "b": "professional/dogancan-ozturan-395.png",
+      "cos": 0.02943798154592514
+    },
+    {
+      "a": "mobile/IMG_1502.png",
+      "b": "professional/roberto-nickson-48063.png",
+      "cos": 0.13627763092517853
+    },
+    {
+      "a": "mobile/IMG_1696.png",
+      "b": "mobile/IMG_20170315_171546.png",
+      "cos": 0.31865525245666504
+    },
+    {
+      "a": "mobile/IMG_1696.png",
+      "b": "professional/dogancan-ozturan-395.png",
+      "cos": 0.24333922564983368
+    },
+    {
+      "a": "mobile/IMG_1696.png",
+      "b": "professional/roberto-nickson-48063.png",
+      "cos": 0.1665206104516983
+    },
+    {
+      "a": "mobile/IMG_20170315_171546.png",
+      "b": "professional/dogancan-ozturan-395.png",
+      "cos": 0.3258622884750366
+    },
+    {
+      "a": "mobile/IMG_20170315_171546.png",
+      "b": "professional/roberto-nickson-48063.png",
+      "cos": 0.2236354500055313
+    },
+    {
+      "a": "professional/dogancan-ozturan-395.png",
+      "b": "professional/roberto-nickson-48063.png",
+      "cos": 0.26824402809143066
+    }
+  ],
+  "reproduces_results_faces": {
+    "n_values": 54,
+    "all_equal": true
+  },
+  "weights_sha256": {
+    "codeformer": "1009e537e0c2a07d4cabce6355f53cb66767cd4b4297ec7a4a64ca4b8a5684b7",
+    "realesrgan": "4fa0d38905f75ac06eb49a7951b426670021be3018265fd191d2125df9d682f1",
+    "arcface": "a035c768259b98ab1ce0e646312f48b9e1e218197a0f80ac6765e88f8b6ddf28"
+  },
+  "provenance": {
+    "git_head": "d8124430d04497246c37c671941d697a695f6b34",
+    "git_branch": "writeup",
+    "git_dirty_tracked_paths": [
+      "docs/index.md",
+      "scripts/make_figures.py",
+      "scripts/make_tables.py"
+    ],
+    "scripts_sha256": {
+      "scripts/eval_faces_sweep.py": "3fda9b9ab0c082e7c1ccbdc32a934a9a61833addb43d3235a1a9ff595383a36b",
+      "scripts/eval_faces.py": "83ad823865638a10e7c7c40bb617d58b9abead67e767f6cb2390ec845ffaca5b",
+      "scripts/eval_common.py": "ca756083fa700d0919129cf57db0bbe9e9b5b28fc0246c561086e9c48f1e31d4"
+    },
+    "scripts_committed": "in the same commit as these results",
+    "restore_device_env": "cpu",
+    "python": "3.11.15",
+    "platform": "macOS-26.4.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "torch": "2.12.1",
+    "torch_threads": 4,
+    "pyiqa": "0.1.15.post2",
+    "spandrel": "0.4.2",
+    "opencv": "4.11.0",
+    "facexlib": "0.3.0",
+    "pillow": "9.5.0",
+    "numpy": "1.26.4",
+    "data_manifest_sha256": "6e1907224bb34e2859ca518273b9b7bd47fac5742aa24096383f1e8ec530d1a9",
+    "pip_freeze": [
+      "annotated-doc==0.0.4",
+      "annotated-types==0.7.0",
+      "anyio==4.14.0",
+      "brotli==1.2.0",
+      "certifi==2026.6.17",
+      "charset-normalizer==3.4.7",
+      "click==8.4.1",
+      "contourpy==1.3.3",
+      "cycler==0.12.1",
+      "einops==0.8.2",
+      "facexlib==0.3.0",
+      "fastapi==0.137.2",
+      "filelock==3.29.4",
+      "filterpy==1.4.5",
+      "fire==0.5.0",
+      "fonttools==4.63.0",
+      "fsspec==2026.6.0",
+      "ftfy==6.3.1",
+      "gradio==6.19.0",
+      "gradio_client==2.5.0",
+      "groovy==0.1.2",
+      "h11==0.16.0",
+      "hf-gradio==0.4.1",
+      "hf-xet==1.5.1",
+      "httpcore==1.0.9",
+      "httpx==0.28.1",
+      "huggingface_hub==1.20.1",
+      "idna==3.18",
+      "iniconfig==2.3.1",
+      "Jinja2==3.1.6",
+      "kiwisolver==1.5.0",
+      "llvmlite==0.47.0",
+      "markdown-it-py==4.2.0",
+      "MarkupSafe==3.0.3",
+      "matplotlib==3.11.0",
+      "mdurl==0.1.2",
+      "mpmath==1.3.0",
+      "networkx==3.6.1",
+      "numba==0.65.1",
+      "numpy==1.26.4",
+      "openai-clip==1.0.1",
+      "opencv-python==4.11.0.86",
+      "orjson==3.11.9",
+      "packaging==26.2",
+      "pandas==3.0.3",
+      "Pillow==9.5.0",
+      "pluggy==1.6.0",
+      "pydantic==2.13.4",
+      "pydantic_core==2.46.4",
+      "pydub==0.25.1",
+      "Pygments==2.20.0",
+      "pyiqa==0.1.15.post2",
+      "pyparsing==3.3.2",
+      "pytest==9.1.1",
+      "python-dateutil==2.9.0.post0",
+      "python-multipart==0.0.32",
+      "pytz==2026.2",
+      "PyYAML==6.0.3",
+      "regex==2026.5.9",
+      "requests==2.34.2",
+      "rich==15.0.0",
+      "safehttpx==0.1.7",
+      "safetensors==0.8.0",
+      "scipy==1.17.1",
+      "semantic-version==2.10.0",
+      "shellingham==1.5.4",
+      "simple-lama-inpainting==0.1.2",
+      "six==1.17.0",
+      "spandrel==0.4.2",
+      "spandrel_extra_arches==0.2.0",
+      "starlette==1.3.1",
+      "sympy==1.14.0",
+      "termcolor==3.3.0",
+      "timm==1.0.27",
+      "tomlkit==0.14.0",
+      "torch==2.12.1",
+      "torchvision==0.27.1",
+      "tqdm==4.68.3",
+      "typer==0.25.1",
+      "typing-inspection==0.4.2",
+      "typing_extensions==4.15.0",
+      "urllib3==2.7.0",
+      "uvicorn==0.49.0",
+      "wcwidth==0.8.1"
+    ]
+  }
+}

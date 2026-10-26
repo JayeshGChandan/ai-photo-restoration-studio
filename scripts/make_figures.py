@@ -72,6 +72,7 @@ ROUTING_SUMMARY = os.path.join(REPO_ROOT, "results", "routing", "summary.csv")
 ROUTING_META = os.path.join(REPO_ROOT, "results", "routing", "meta.json")
 FACES_SUMMARY = os.path.join(REPO_ROOT, "results", "faces", "summary.csv")
 FACES_META = os.path.join(REPO_ROOT, "results", "faces", "meta.json")
+SWEEP_SUMMARY = os.path.join(REPO_ROOT, "results", "faces_sweep", "summary.csv")
 FONT_PATH = os.path.join(matplotlib.get_data_path(), "fonts", "ttf", "DejaVuSans.ttf")
 
 
@@ -236,6 +237,26 @@ DEFAULT_RULES = {
               "error_bars": "95% bootstrap CI",
               "skip": "not drawn when results/faces/meta.json records that the evaluation "
                       "stopped"},
+    },
+    "faces_sweep": {
+        "chart": "8",
+        "source": "results/faces_sweep/summary.csv sections metric, reference_clean, "
+                  "identity_reference_different_images and codeformer_ran",
+        "levels": ["mild", "severe"],
+        "conditions": ["bicubic", "realesrgan", "codeformer_f0.3", "codeformer_f0.7",
+                       "codeformer_f1.0"],
+        "metrics": ["psnr_y", "ssim_y", "lpips", "musiq", "identity_cos"],
+        "error_bars": "95% bootstrap CI",
+        "colours": "bicubic N2 grey, Real-ESRGAN C_3 blue (as in chart 7); CodeFormer "
+                   "fidelity 0.3 / 0.7 / 1.0 as a one-hue aqua ordinal ramp #1baf7a / "
+                   "#06865c / #035f40 (OKLCH L 0.669 / 0.549 / 0.429 at the palette aqua's "
+                   "hue and chroma), passing validate_palette.js --ordinal on the light "
+                   "surface; fidelity bars carry direct value labels",
+        "reference_lines": {"musiq": "mean MUSIQ of the clean face box",
+                            "identity_cos": "mean ArcFace cosine between clean faces of "
+                                            "different images"},
+        "reference_line_labels": "outside each panel's right edge, so they never cover a bar",
+        "no_face_images": True,
     },
 }
 
@@ -1180,6 +1201,80 @@ def chart_7(rule, outputs):
     return {"drawn": True, "values": values, "n": n}
 
 
+SWEEP_COLOR = {"bicubic": COLOR["N2"], "realesrgan": COLOR["C_3"],
+               "codeformer_f0.3": "#1baf7a", "codeformer_f0.7": "#06865c",
+               "codeformer_f1.0": "#035f40"}
+SWEEP_LABEL = {"bicubic": "Bicubic", "realesrgan": "Real-ESRGAN only",
+               "codeformer_f0.3": "Real-ESRGAN + CodeFormer, fidelity 0.3",
+               "codeformer_f0.7": "Real-ESRGAN + CodeFormer, fidelity 0.7",
+               "codeformer_f1.0": "Real-ESRGAN + CodeFormer, fidelity 1.0"}
+SWEEP_TICK = {"bicubic": "", "realesrgan": "", "codeformer_f0.3": "0.3",
+              "codeformer_f0.7": "0.7", "codeformer_f1.0": "1.0"}
+SWEEP_AXIS = {**METRIC_AXIS, "musiq": "MUSIQ, higher is better",
+              "identity_cos": "ArcFace identity cosine, higher is better"}
+
+
+def chart_8(rule, outputs):
+    with open(SWEEP_SUMMARY, newline="") as f:
+        rows = list(csv.DictReader(f))
+    metric = {(r["level"], r["condition"], r["metric"]): r for r in rows
+              if r["section"] == "metric"}
+    clean_musiq = float(next(r["mean"] for r in rows if r["section"] == "reference_clean"))
+    diff_id = next((float(r["mean"]) for r in rows
+                    if r["section"] == "identity_reference_different_images"), None)
+    ran = {(r["level"], r["condition"]): int(float(r["mean"])) for r in rows
+           if r["section"] == "codeformer_ran"}
+    levels, conds, metrics = rule["levels"], rule["conditions"], rule["metrics"]
+    n = int(metric[(levels[0], conds[0], metrics[0])]["n"])
+    bw = 0.15
+    fig = plt.figure(figsize=(9.6, 6.2), dpi=100)
+    values = {}
+    for k, m in enumerate(metrics):
+        col, row_ = k % 3, k // 3
+        ax = fig.add_axes([0.07 + col * 0.33, 0.585 - row_ * 0.475, 0.25, 0.34])
+        style_axes(ax, grid_axis="y")
+        ticks, labels = [], []
+        for gi, lv in enumerate(levels):
+            for ci_, c in enumerate(conds):
+                r = metric[(lv, c, m)]
+                mean, lo, hi = float(r["mean"]), float(r["ci_low"]), float(r["ci_high"])
+                values[f"{lv}:{c}:{m}"] = [mean, lo, hi, int(r["n"])]
+                x = gi + (ci_ - (len(conds) - 1) / 2) * bw
+                ax.bar([x], [mean], width=bw, color=SWEEP_COLOR[c], edgecolor=SURFACE,
+                       linewidth=2 * PX, zorder=2)
+                ax.errorbar([x], [mean], yerr=[[mean - lo], [hi - mean]], fmt="none",
+                            ecolor=INK2, elinewidth=PX, capsize=2, capthick=PX, zorder=3)
+                ticks.append(x)
+                labels.append(SWEEP_TICK[c])
+        ax.set_xticks(ticks, labels, fontsize=9 * PX, color=INK2)
+        ax.tick_params(axis="x", length=0, pad=2)
+        for gi, lv in enumerate(levels):
+            ax.text(gi, -0.09, lv.capitalize(), transform=ax.get_xaxis_transform(),
+                    ha="center", va="top", color=INK, fontsize=11 * PX)
+        ax.set_xlim(-0.55, len(levels) - 0.45)
+        if m in ("ssim_y", "identity_cos"):
+            ax.set_ylim(0, 1)
+        ref = {"musiq": (clean_musiq, "clean\nface"),
+               "identity_cos": (diff_id, "different\nimages")}.get(m)
+        if ref and ref[0] is not None:
+            ax.axhline(ref[0], color=MUTED, linewidth=PX, linestyle=(0, (4, 3)), zorder=1)
+            ax.text(1.02, ref[0], ref[1], transform=ax.get_yaxis_transform(), ha="left",
+                    va="center", color=INK2, fontsize=9 * PX, linespacing=1.1)
+        ax.set_title(SWEEP_AXIS[m], loc="left", color=INK, fontsize=11 * PX)
+    handles = [plt.Rectangle((0, 0), 1, 1, color=SWEEP_COLOR[c]) for c in conds]
+    fig.legend(handles, [SWEEP_LABEL[c] for c in conds], loc="upper left",
+               bbox_to_anchor=(0.72, 0.46), handlelength=1.0, frameon=False,
+               fontsize=10 * PX)
+    ran_text = ", ".join(f"{lv} {ran[(lv, 'codeformer_f0.7')]} of {n}" for lv in levels)
+    fig.text(0.725, 0.22, f"Face bounding box only, {n} images,\n95% bootstrap CIs.\n"
+                          f"CodeFormer found a face to restore:\n{ran_text}.",
+             color=INK2, fontsize=10 * PX, va="top", linespacing=1.4)
+    save_chart(fig, "chart_8_faces_sweep", outputs)
+    return {"values": values, "n": n, "clean_musiq": clean_musiq,
+            "identity_different_images": diff_id,
+            "codeformer_ran": {f"{lv}:{c}": v for (lv, c), v in ran.items()}}
+
+
 # ---------------------------------------------------------------------------
 def main() -> int:
     os.makedirs(OUT_DIR, exist_ok=True)
@@ -1244,9 +1339,13 @@ def main() -> int:
         n0 = len(outputs)
         outcome = fn(outputs)
         charts[cid] = {"files": outputs[n0:], "outcome": outcome}
+    n0 = len(outputs)
+    outcome = chart_8(rules["faces_sweep"], outputs)
+    charts["8"] = {"files": outputs[n0:], "outcome": outcome}
 
     eval_inputs = {os.path.relpath(p, REPO_ROOT): sha256_file(p)
-                   for p in (UPSCALE_RAW, ROUTING_SUMMARY, ROUTING_META, FACES_META)
+                   for p in (UPSCALE_RAW, ROUTING_SUMMARY, ROUTING_META, FACES_META,
+                             SWEEP_SUMMARY)
                    + ((FACES_SUMMARY,) if os.path.exists(FACES_SUMMARY) else ())}
     images_used = [{"split": rep["split"], "filename": rep["filename"]}]
     g_img = {"split": out_g["image"]["split"], "filename": out_g["image"]["filename"]}

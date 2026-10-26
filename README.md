@@ -133,6 +133,13 @@ Face restoration, CodeFormer (results/faces/):
 ./venv/bin/python scripts/eval_faces.py summarise
 ```
 
+Face follow-up, damage level and fidelity (results/faces_sweep/):
+
+```bash
+./venv/bin/python scripts/eval_faces_sweep.py run
+./venv/bin/python scripts/eval_faces_sweep.py summarise
+```
+
 Make the figures and tables (from the committed results in results/compositing/):
 
 ```bash
