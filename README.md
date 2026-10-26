@@ -126,6 +126,13 @@ Diagnose routing (results/routing/):
 ./venv/bin/python scripts/eval_routing.py summarise
 ```
 
+Face restoration, CodeFormer (results/faces/):
+
+```bash
+./venv/bin/python scripts/eval_faces.py run
+./venv/bin/python scripts/eval_faces.py summarise
+```
+
 Make the figures and tables (from the committed results in results/compositing/):
 
 ```bash

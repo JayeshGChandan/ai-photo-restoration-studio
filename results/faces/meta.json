@@ -1,0 +1,1579 @@
+{
+  "evaluation": "faces",
+  "description": "CodeFormer face restoration vs Real-ESRGAN only vs bicubic, scored on the face box of CLIC 2020 images that contain a face",
+  "started": "2026-10-27T00:34:42+05:30",
+  "parameters": {
+    "detector": "diagnose._FaceDetector.detect (facexlib retinaface_resnet50) on the full-resolution clean image, the detector Diagnose uses for do_face",
+    "detector_conf": 0.9,
+    "qualifying_rule": "largest face box (by area) with width x2 - x1 >= 64 px",
+    "min_face_images": 5,
+    "crop": "square, side 2 x the larger side of the largest face, centred on its box centre; shifted inside the image if needed; side clamped to the image's short edge if longer; PIL LANCZOS to 512x512",
+    "benchmark": "run_benchmark(crop, do_face=False|True, seed=0, score=False) with its default degradations and fidelity",
+    "scoring": "metrics.IQAScorer.score_reference on the face box in crop coordinates (rounded outwards), output vs clean crop",
+    "codeformer_detection_note": "CodeFormer's own face helper detects again on the degraded input (FaceRestoreHelper, resize 640, conf 0.97); 'steps' records whether it found a face",
+    "run_benchmark_defaults": {
+      "downscale_factor": 2,
+      "blur_sigma": 1.0,
+      "noise_sigma": 8.0,
+      "jpeg_quality": 60,
+      "do_face": true,
+      "fidelity": 0.7,
+      "score": true,
+      "seed": 0
+    },
+    "weights_sha256": {
+      "codeformer": "1009e537e0c2a07d4cabce6355f53cb66767cd4b4297ec7a4a64ca4b8a5684b7",
+      "realesrgan": "4fa0d38905f75ac06eb49a7951b426670021be3018265fd191d2125df9d682f1"
+    }
+  },
+  "detection": {
+    "images_scanned": 102,
+    "images_with_any_face": 15,
+    "images_qualifying": 6,
+    "images_qualifying_if_larger_side_used": 7,
+    "qualifying": [
+      "mobile/20151208_222739.png",
+      "mobile/20171109_082958.png",
+      "mobile/IMG_1502.png",
+      "mobile/IMG_20170315_171546.png",
+      "professional/dogancan-ozturan-395.png",
+      "professional/roberto-nickson-48063.png"
+    ],
+    "per_image": [
+      {
+        "image": "0067.png",
+        "split": "mobile",
+        "image_index": 0,
+        "width": 1512,
+        "height": 2016,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "20151208_222739.png",
+        "split": "mobile",
+        "image_index": 1,
+        "width": 2048,
+        "height": 1152,
+        "num_faces": 5,
+        "boxes_xyxy_score": [
+          [
+            254.7894287109375,
+            184.4674835205078,
+            301.59307861328125,
+            239.16197204589844,
+            0.9975517392158508
+          ],
+          [
+            1062.9342041015625,
+            138.16209411621094,
+            1108.1641845703125,
+            196.31576538085938,
+            0.9968585968017578
+          ],
+          [
+            1526.5343017578125,
+            341.0990905761719,
+            1569.7464599609375,
+            385.9666442871094,
+            0.9920265078544617
+          ],
+          [
+            583.1414794921875,
+            455.96551513671875,
+            716.71337890625,
+            608.2778930664062,
+            0.9667903780937195
+          ],
+          [
+            1784.8765869140625,
+            166.8585968017578,
+            1896.93115234375,
+            288.60699462890625,
+            0.9233741164207458
+          ]
+        ],
+        "largest_box_xyxy": [
+          583.1414794921875,
+          455.96551513671875,
+          716.71337890625,
+          608.2778930664062
+        ],
+        "largest_width": 133.5718994140625,
+        "largest_height": 152.3123779296875,
+        "qualifies": true
+      },
+      {
+        "image": "2017-07-27 16.21.36.png",
+        "split": "mobile",
+        "image_index": 2,
+        "width": 2048,
+        "height": 1152,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "2017-08-28 10.51.27.png",
+        "split": "mobile",
+        "image_index": 3,
+        "width": 2048,
+        "height": 1152,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "2017-09-25 10.37.24.png",
+        "split": "mobile",
+        "image_index": 4,
+        "width": 2048,
+        "height": 1152,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "2017-09-26 11.52.39.png",
+        "split": "mobile",
+        "image_index": 5,
+        "width": 2048,
+        "height": 1152,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "2017-09-26 18.05.49.png",
+        "split": "mobile",
+        "image_index": 6,
+        "width": 2048,
+        "height": 1152,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "20170719_152434.png",
+        "split": "mobile",
+        "image_index": 7,
+        "width": 1512,
+        "height": 2016,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "20170930_131716.png",
+        "split": "mobile",
+        "image_index": 8,
+        "width": 2016,
+        "height": 980,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "20171109_082958.png",
+        "split": "mobile",
+        "image_index": 9,
+        "width": 2016,
+        "height": 980,
+        "num_faces": 2,
+        "boxes_xyxy_score": [
+          [
+            1616.9825439453125,
+            404.2447204589844,
+            1684.4718017578125,
+            511.772216796875,
+            0.9832029342651367
+          ],
+          [
+            466.5528564453125,
+            436.3720703125,
+            520.509521484375,
+            523.6729736328125,
+            0.9415513873100281
+          ]
+        ],
+        "largest_box_xyxy": [
+          1616.9825439453125,
+          404.2447204589844,
+          1684.4718017578125,
+          511.772216796875
+        ],
+        "largest_width": 67.4892578125,
+        "largest_height": 107.52749633789062,
+        "qualifies": true
+      },
+      {
+        "image": "IMG_0029.png",
+        "split": "mobile",
+        "image_index": 10,
+        "width": 1434,
+        "height": 1123,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_0318.png",
+        "split": "mobile",
+        "image_index": 11,
+        "width": 996,
+        "height": 756,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_0426.png",
+        "split": "mobile",
+        "image_index": 12,
+        "width": 1632,
+        "height": 1224,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_0470_1.png",
+        "split": "mobile",
+        "image_index": 13,
+        "width": 1632,
+        "height": 1224,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_1115.png",
+        "split": "mobile",
+        "image_index": 14,
+        "width": 1632,
+        "height": 1224,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_1134.png",
+        "split": "mobile",
+        "image_index": 15,
+        "width": 1632,
+        "height": 1224,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_1170.png",
+        "split": "mobile",
+        "image_index": 16,
+        "width": 1632,
+        "height": 1224,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_1502.png",
+        "split": "mobile",
+        "image_index": 17,
+        "width": 1512,
+        "height": 2016,
+        "num_faces": 2,
+        "boxes_xyxy_score": [
+          [
+            714.9659423828125,
+            496.0054016113281,
+            790.2222900390625,
+            643.8783569335938,
+            0.9948128461837769
+          ],
+          [
+            793.116455078125,
+            666.3734130859375,
+            858.9331665039062,
+            800.7259521484375,
+            0.9736645817756653
+          ]
+        ],
+        "largest_box_xyxy": [
+          714.9659423828125,
+          496.0054016113281,
+          790.2222900390625,
+          643.8783569335938
+        ],
+        "largest_width": 75.25634765625,
+        "largest_height": 147.87295532226562,
+        "qualifies": true
+      },
+      {
+        "image": "IMG_1696.png",
+        "split": "mobile",
+        "image_index": 18,
+        "width": 1224,
+        "height": 1632,
+        "num_faces": 1,
+        "boxes_xyxy_score": [
+          [
+            560.0884399414062,
+            1149.118896484375,
+            609.1141967773438,
+            1217.5118408203125,
+            0.9952071309089661
+          ]
+        ],
+        "largest_box_xyxy": [
+          560.0884399414062,
+          1149.118896484375,
+          609.1141967773438,
+          1217.5118408203125
+        ],
+        "largest_width": 49.0257568359375,
+        "largest_height": 68.3929443359375,
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20131106_201941.png",
+        "split": "mobile",
+        "image_index": 19,
+        "width": 1632,
+        "height": 1224,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20131224_110518010_HDR.png",
+        "split": "mobile",
+        "image_index": 20,
+        "width": 2048,
+        "height": 1153,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20150916_152101367.png",
+        "split": "mobile",
+        "image_index": 21,
+        "width": 1616,
+        "height": 1212,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20151008_204135138.png",
+        "split": "mobile",
+        "image_index": 22,
+        "width": 1153,
+        "height": 2048,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20151019_091406246.png",
+        "split": "mobile",
+        "image_index": 23,
+        "width": 2048,
+        "height": 1153,
+        "num_faces": 7,
+        "boxes_xyxy_score": [
+          [
+            602.6893920898438,
+            553.8016967773438,
+            626.4611206054688,
+            583.280517578125,
+            0.9935259819030762
+          ],
+          [
+            1498.3023681640625,
+            593.755126953125,
+            1514.2313232421875,
+            615.905029296875,
+            0.9916855096817017
+          ],
+          [
+            1139.3907470703125,
+            521.7907104492188,
+            1161.5242919921875,
+            550.48046875,
+            0.9912466406822205
+          ],
+          [
+            1877.522705078125,
+            575.5752563476562,
+            1897.294921875,
+            601.919677734375,
+            0.9678692817687988
+          ],
+          [
+            755.1472778320312,
+            548.3173828125,
+            772.820556640625,
+            571.5711669921875,
+            0.9659884572029114
+          ],
+          [
+            1516.141845703125,
+            591.7691040039062,
+            1530.702392578125,
+            613.5237426757812,
+            0.9450865387916565
+          ],
+          [
+            901.1693725585938,
+            550.1038208007812,
+            921.9714965820312,
+            574.8596801757812,
+            0.9306362271308899
+          ]
+        ],
+        "largest_box_xyxy": [
+          602.6893920898438,
+          553.8016967773438,
+          626.4611206054688,
+          583.280517578125
+        ],
+        "largest_width": 23.771728515625,
+        "largest_height": 29.47882080078125,
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20160312_095817.png",
+        "split": "mobile",
+        "image_index": 24,
+        "width": 1512,
+        "height": 2016,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20160518_132304.png",
+        "split": "mobile",
+        "image_index": 25,
+        "width": 2016,
+        "height": 1512,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20160522_165515.png",
+        "split": "mobile",
+        "image_index": 26,
+        "width": 1520,
+        "height": 2048,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20160528_214150.png",
+        "split": "mobile",
+        "image_index": 27,
+        "width": 1496,
+        "height": 2000,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20160612_183029.png",
+        "split": "mobile",
+        "image_index": 28,
+        "width": 2000,
+        "height": 1496,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20160723_191653.png",
+        "split": "mobile",
+        "image_index": 29,
+        "width": 1512,
+        "height": 2016,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20161023_122645.png",
+        "split": "mobile",
+        "image_index": 30,
+        "width": 2000,
+        "height": 1496,
+        "num_faces": 1,
+        "boxes_xyxy_score": [
+          [
+            57.65093994140625,
+            1078.0748291015625,
+            113.84178924560547,
+            1142.0308837890625,
+            0.9878491759300232
+          ]
+        ],
+        "largest_box_xyxy": [
+          57.65093994140625,
+          1078.0748291015625,
+          113.84178924560547,
+          1142.0308837890625
+        ],
+        "largest_width": 56.19084930419922,
+        "largest_height": 63.9560546875,
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20161117_134517.png",
+        "split": "mobile",
+        "image_index": 31,
+        "width": 1512,
+        "height": 2016,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20161119_134358.png",
+        "split": "mobile",
+        "image_index": 32,
+        "width": 2016,
+        "height": 1512,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20161218_170159.png",
+        "split": "mobile",
+        "image_index": 33,
+        "width": 2016,
+        "height": 1512,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170114_204239.png",
+        "split": "mobile",
+        "image_index": 34,
+        "width": 1518,
+        "height": 2024,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170114_204505.png",
+        "split": "mobile",
+        "image_index": 35,
+        "width": 2024,
+        "height": 1518,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170114_210112.png",
+        "split": "mobile",
+        "image_index": 36,
+        "width": 1518,
+        "height": 2024,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170114_213505.png",
+        "split": "mobile",
+        "image_index": 37,
+        "width": 2024,
+        "height": 1518,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170116_125356.png",
+        "split": "mobile",
+        "image_index": 38,
+        "width": 1512,
+        "height": 2016,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170207_160612.png",
+        "split": "mobile",
+        "image_index": 39,
+        "width": 1512,
+        "height": 2016,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170223_204015.png",
+        "split": "mobile",
+        "image_index": 40,
+        "width": 2016,
+        "height": 1512,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170315_171546.png",
+        "split": "mobile",
+        "image_index": 41,
+        "width": 2016,
+        "height": 1512,
+        "num_faces": 1,
+        "boxes_xyxy_score": [
+          [
+            968.9633178710938,
+            337.29962158203125,
+            1055.77783203125,
+            483.7936706542969,
+            0.997999370098114
+          ]
+        ],
+        "largest_box_xyxy": [
+          968.9633178710938,
+          337.29962158203125,
+          1055.77783203125,
+          483.7936706542969
+        ],
+        "largest_width": 86.81451416015625,
+        "largest_height": 146.49404907226562,
+        "qualifies": true
+      },
+      {
+        "image": "IMG_20170325_150351.png",
+        "split": "mobile",
+        "image_index": 42,
+        "width": 2016,
+        "height": 1512,
+        "num_faces": 2,
+        "boxes_xyxy_score": [
+          [
+            1327.6951904296875,
+            1444.654052734375,
+            1352.696044921875,
+            1473.212890625,
+            0.9676703214645386
+          ],
+          [
+            1356.32958984375,
+            1453.656494140625,
+            1380.3341064453125,
+            1479.2242431640625,
+            0.923083484172821
+          ]
+        ],
+        "largest_box_xyxy": [
+          1327.6951904296875,
+          1444.654052734375,
+          1352.696044921875,
+          1473.212890625
+        ],
+        "largest_width": 25.0008544921875,
+        "largest_height": 28.558837890625,
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170403_193339.png",
+        "split": "mobile",
+        "image_index": 43,
+        "width": 1518,
+        "height": 2024,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170404_160604.png",
+        "split": "mobile",
+        "image_index": 44,
+        "width": 2024,
+        "height": 1518,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170408_080227.png",
+        "split": "mobile",
+        "image_index": 45,
+        "width": 1518,
+        "height": 2024,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170421_143137.png",
+        "split": "mobile",
+        "image_index": 46,
+        "width": 2024,
+        "height": 1518,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170504_183130.png",
+        "split": "mobile",
+        "image_index": 47,
+        "width": 2016,
+        "height": 1512,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170621_062134.png",
+        "split": "mobile",
+        "image_index": 48,
+        "width": 2024,
+        "height": 1518,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170717_093530.png",
+        "split": "mobile",
+        "image_index": 49,
+        "width": 2016,
+        "height": 1512,
+        "num_faces": 4,
+        "boxes_xyxy_score": [
+          [
+            17.04126739501953,
+            1157.8995361328125,
+            41.44972229003906,
+            1189.481201171875,
+            0.9899660348892212
+          ],
+          [
+            276.1289978027344,
+            1143.85791015625,
+            296.2321472167969,
+            1164.7635498046875,
+            0.9601427912712097
+          ],
+          [
+            223.95118713378906,
+            1125.944091796875,
+            247.30752563476562,
+            1151.887939453125,
+            0.9595853686332703
+          ],
+          [
+            1752.1654052734375,
+            1089.3931884765625,
+            1771.233642578125,
+            1113.59033203125,
+            0.9167319536209106
+          ]
+        ],
+        "largest_box_xyxy": [
+          17.04126739501953,
+          1157.8995361328125,
+          41.44972229003906,
+          1189.481201171875
+        ],
+        "largest_width": 24.40845489501953,
+        "largest_height": 31.5816650390625,
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170721_103913.png",
+        "split": "mobile",
+        "image_index": 50,
+        "width": 1512,
+        "height": 2016,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170725_123034.png",
+        "split": "mobile",
+        "image_index": 51,
+        "width": 2024,
+        "height": 1518,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170730_133144.png",
+        "split": "mobile",
+        "image_index": 52,
+        "width": 2024,
+        "height": 1518,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170913_115628.png",
+        "split": "mobile",
+        "image_index": 53,
+        "width": 1518,
+        "height": 2024,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170913_185055.png",
+        "split": "mobile",
+        "image_index": 54,
+        "width": 1518,
+        "height": 2024,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_20170916_004924.png",
+        "split": "mobile",
+        "image_index": 55,
+        "width": 2024,
+        "height": 1518,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_2072.png",
+        "split": "mobile",
+        "image_index": 56,
+        "width": 1632,
+        "height": 1224,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_2940.png",
+        "split": "mobile",
+        "image_index": 57,
+        "width": 1224,
+        "height": 1632,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_3491.png",
+        "split": "mobile",
+        "image_index": 58,
+        "width": 1632,
+        "height": 1224,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_5377.png",
+        "split": "mobile",
+        "image_index": 59,
+        "width": 1632,
+        "height": 1224,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "IMG_5382.png",
+        "split": "mobile",
+        "image_index": 60,
+        "width": 1224,
+        "height": 1632,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "alberto-montalesi-176097.png",
+        "split": "professional",
+        "image_index": 61,
+        "width": 2048,
+        "height": 1363,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "alejandro-escamilla-6.png",
+        "split": "professional",
+        "image_index": 62,
+        "width": 2048,
+        "height": 1339,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "ales-krivec-15949.png",
+        "split": "professional",
+        "image_index": 63,
+        "width": 2048,
+        "height": 1188,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "alexander-shustov-73.png",
+        "split": "professional",
+        "image_index": 64,
+        "width": 2048,
+        "height": 1361,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "allef-vinicius-109434.png",
+        "split": "professional",
+        "image_index": 65,
+        "width": 2048,
+        "height": 1365,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "amy-zhang-15940.png",
+        "split": "professional",
+        "image_index": 66,
+        "width": 1632,
+        "height": 915,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "andrew-ruiz-376.png",
+        "split": "professional",
+        "image_index": 67,
+        "width": 2048,
+        "height": 1361,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "benjamin-sloth-lindgreen-705.png",
+        "split": "professional",
+        "image_index": 68,
+        "width": 2048,
+        "height": 1365,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "casey-fyfe-999.png",
+        "split": "professional",
+        "image_index": 69,
+        "width": 2048,
+        "height": 1360,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "clem-onojeghuo-33741.png",
+        "split": "professional",
+        "image_index": 70,
+        "width": 2048,
+        "height": 1365,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "daniel-robert-405.png",
+        "split": "professional",
+        "image_index": 71,
+        "width": 1500,
+        "height": 844,
+        "num_faces": 1,
+        "boxes_xyxy_score": [
+          [
+            934.7991943359375,
+            538.8475952148438,
+            946.804931640625,
+            554.3073120117188,
+            0.9591290354728699
+          ]
+        ],
+        "largest_box_xyxy": [
+          934.7991943359375,
+          538.8475952148438,
+          946.804931640625,
+          554.3073120117188
+        ],
+        "largest_width": 12.0057373046875,
+        "largest_height": 15.459716796875,
+        "qualifies": false
+      },
+      {
+        "image": "davide-ragusa-716.png",
+        "split": "professional",
+        "image_index": 72,
+        "width": 1945,
+        "height": 1292,
+        "num_faces": 2,
+        "boxes_xyxy_score": [
+          [
+            384.0364074707031,
+            670.3822631835938,
+            394.37255859375,
+            683.4805297851562,
+            0.9532443284988403
+          ],
+          [
+            335.0224914550781,
+            690.3911743164062,
+            345.7363586425781,
+            704.4373779296875,
+            0.9074788093566895
+          ]
+        ],
+        "largest_box_xyxy": [
+          335.0224914550781,
+          690.3911743164062,
+          345.7363586425781,
+          704.4373779296875
+        ],
+        "largest_width": 10.7138671875,
+        "largest_height": 14.04620361328125,
+        "qualifies": false
+      },
+      {
+        "image": "dogancan-ozturan-395.png",
+        "split": "professional",
+        "image_index": 73,
+        "width": 2040,
+        "height": 1360,
+        "num_faces": 6,
+        "boxes_xyxy_score": [
+          [
+            1772.9996337890625,
+            713.7708129882812,
+            1873.326416015625,
+            842.6358642578125,
+            0.9995887875556946
+          ],
+          [
+            387.1546936035156,
+            513.5305786132812,
+            479.4931335449219,
+            700.465576171875,
+            0.99774569272995
+          ],
+          [
+            1433.1412353515625,
+            638.640869140625,
+            1474.7305908203125,
+            698.764892578125,
+            0.9969274401664734
+          ],
+          [
+            620.7293701171875,
+            684.6314086914062,
+            653.2031860351562,
+            727.2697143554688,
+            0.996279776096344
+          ],
+          [
+            1636.9974365234375,
+            708.0975952148438,
+            1684.4893798828125,
+            782.7075805664062,
+            0.9919772744178772
+          ],
+          [
+            235.81942749023438,
+            652.2968139648438,
+            289.38262939453125,
+            731.3513793945312,
+            0.9902569055557251
+          ]
+        ],
+        "largest_box_xyxy": [
+          387.1546936035156,
+          513.5305786132812,
+          479.4931335449219,
+          700.465576171875
+        ],
+        "largest_width": 92.33843994140625,
+        "largest_height": 186.93499755859375,
+        "qualifies": true
+      },
+      {
+        "image": "felix-russell-saw-140699.png",
+        "split": "professional",
+        "image_index": 74,
+        "width": 1750,
+        "height": 1166,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "gian-reto-tarnutzer-45212.png",
+        "split": "professional",
+        "image_index": 75,
+        "width": 2048,
+        "height": 1370,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "jared-erondu-21325.png",
+        "split": "professional",
+        "image_index": 76,
+        "width": 2048,
+        "height": 1365,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "jason-briscoe-149782.png",
+        "split": "professional",
+        "image_index": 77,
+        "width": 2048,
+        "height": 1365,
+        "num_faces": 1,
+        "boxes_xyxy_score": [
+          [
+            491.69378662109375,
+            942.74609375,
+            521.94091796875,
+            978.4030151367188,
+            0.9954896569252014
+          ]
+        ],
+        "largest_box_xyxy": [
+          491.69378662109375,
+          942.74609375,
+          521.94091796875,
+          978.4030151367188
+        ],
+        "largest_width": 30.24713134765625,
+        "largest_height": 35.65692138671875,
+        "qualifies": false
+      },
+      {
+        "image": "jeremy-cai-1174.png",
+        "split": "professional",
+        "image_index": 78,
+        "width": 1936,
+        "height": 1220,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "juskteez-vu-1041.png",
+        "split": "professional",
+        "image_index": 79,
+        "width": 1145,
+        "height": 1725,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "kazuend-28556.png",
+        "split": "professional",
+        "image_index": 80,
+        "width": 2048,
+        "height": 1365,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "lobostudio-hamburg-75377.png",
+        "split": "professional",
+        "image_index": 81,
+        "width": 2048,
+        "height": 1365,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "martin-wessely-211.png",
+        "split": "professional",
+        "image_index": 82,
+        "width": 960,
+        "height": 640,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "martyn-seddon-220.png",
+        "split": "professional",
+        "image_index": 83,
+        "width": 2048,
+        "height": 1365,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "michael-durana-82941.png",
+        "split": "professional",
+        "image_index": 84,
+        "width": 2048,
+        "height": 1365,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "mullermarc-184.png",
+        "split": "professional",
+        "image_index": 85,
+        "width": 1158,
+        "height": 772,
+        "num_faces": 1,
+        "boxes_xyxy_score": [
+          [
+            428.7920837402344,
+            306.6833190917969,
+            456.0339050292969,
+            343.3691101074219,
+            0.973791241645813
+          ]
+        ],
+        "largest_box_xyxy": [
+          428.7920837402344,
+          306.6833190917969,
+          456.0339050292969,
+          343.3691101074219
+        ],
+        "largest_width": 27.2418212890625,
+        "largest_height": 36.685791015625,
+        "qualifies": false
+      },
+      {
+        "image": "nomao-saeki-33553.png",
+        "split": "professional",
+        "image_index": 86,
+        "width": 2048,
+        "height": 1366,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "paul-itkin-46101.png",
+        "split": "professional",
+        "image_index": 87,
+        "width": 960,
+        "height": 604,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "philipp-reiner-207.png",
+        "split": "professional",
+        "image_index": 88,
+        "width": 1440,
+        "height": 900,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "philippe-wuyts-45997.png",
+        "split": "professional",
+        "image_index": 89,
+        "width": 1922,
+        "height": 1281,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "roberto-nickson-48063.png",
+        "split": "professional",
+        "image_index": 90,
+        "width": 2048,
+        "height": 1365,
+        "num_faces": 1,
+        "boxes_xyxy_score": [
+          [
+            886.8076171875,
+            471.70654296875,
+            971.7854614257812,
+            628.1820678710938,
+            0.990382730960846
+          ]
+        ],
+        "largest_box_xyxy": [
+          886.8076171875,
+          471.70654296875,
+          971.7854614257812,
+          628.1820678710938
+        ],
+        "largest_width": 84.97784423828125,
+        "largest_height": 156.47552490234375,
+        "qualifies": true
+      },
+      {
+        "image": "schicka-307.png",
+        "split": "professional",
+        "image_index": 91,
+        "width": 512,
+        "height": 384,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "sergey-zolkin-1045.png",
+        "split": "professional",
+        "image_index": 92,
+        "width": 2048,
+        "height": 1365,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "sergey-zolkin-21232.png",
+        "split": "professional",
+        "image_index": 93,
+        "width": 1542,
+        "height": 1028,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "stefan-kunze-26931.png",
+        "split": "professional",
+        "image_index": 94,
+        "width": 2048,
+        "height": 1367,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "thong-vo-428.png",
+        "split": "professional",
+        "image_index": 95,
+        "width": 1264,
+        "height": 790,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "todd-quackenbush-222.png",
+        "split": "professional",
+        "image_index": 96,
+        "width": 720,
+        "height": 439,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "todd-quackenbush-27493.png",
+        "split": "professional",
+        "image_index": 97,
+        "width": 2048,
+        "height": 1033,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "veeterzy-82537.png",
+        "split": "professional",
+        "image_index": 98,
+        "width": 2048,
+        "height": 1366,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "vita-vilcina-3055.png",
+        "split": "professional",
+        "image_index": 99,
+        "width": 1848,
+        "height": 1224,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "wojciech-szaturski-3611.png",
+        "split": "professional",
+        "image_index": 100,
+        "width": 1988,
+        "height": 1325,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      },
+      {
+        "image": "zugr-108.png",
+        "split": "professional",
+        "image_index": 101,
+        "width": 2048,
+        "height": 1365,
+        "num_faces": 0,
+        "boxes_xyxy_score": [],
+        "qualifies": false
+      }
+    ]
+  },
+  "device": {
+    "face_detector": "cpu",
+    "upscaler": "cpu",
+    "face_restorer": "cpu",
+    "metrics": "cpu"
+  },
+  "finished": "2026-10-27T00:41:22+05:30",
+  "provenance": {
+    "git_head": "6cadedf3989a1ae06d510ee10101b6b52b39482b",
+    "git_branch": "writeup",
+    "git_dirty_tracked_paths": [
+      "docs/index.md",
+      "scripts/make_figures.py",
+      "scripts/make_tables.py"
+    ],
+    "scripts_sha256": {
+      "scripts/eval_faces.py": "83ad823865638a10e7c7c40bb617d58b9abead67e767f6cb2390ec845ffaca5b",
+      "scripts/eval_common.py": "ca756083fa700d0919129cf57db0bbe9e9b5b28fc0246c561086e9c48f1e31d4"
+    },
+    "scripts_committed": "in the same commit as these results",
+    "restore_device_env": "cpu",
+    "python": "3.11.15",
+    "platform": "macOS-26.4.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "torch": "2.12.1",
+    "torch_threads": 4,
+    "pyiqa": "0.1.15.post2",
+    "spandrel": "0.4.2",
+    "opencv": "4.11.0",
+    "facexlib": "0.3.0",
+    "pillow": "9.5.0",
+    "numpy": "1.26.4",
+    "data_manifest_sha256": "6e1907224bb34e2859ca518273b9b7bd47fac5742aa24096383f1e8ec530d1a9",
+    "pip_freeze": [
+      "annotated-doc==0.0.4",
+      "annotated-types==0.7.0",
+      "anyio==4.14.0",
+      "brotli==1.2.0",
+      "certifi==2026.6.17",
+      "charset-normalizer==3.4.7",
+      "click==8.4.1",
+      "contourpy==1.3.3",
+      "cycler==0.12.1",
+      "einops==0.8.2",
+      "facexlib==0.3.0",
+      "fastapi==0.137.2",
+      "filelock==3.29.4",
+      "filterpy==1.4.5",
+      "fire==0.5.0",
+      "fonttools==4.63.0",
+      "fsspec==2026.6.0",
+      "ftfy==6.3.1",
+      "gradio==6.19.0",
+      "gradio_client==2.5.0",
+      "groovy==0.1.2",
+      "h11==0.16.0",
+      "hf-gradio==0.4.1",
+      "hf-xet==1.5.1",
+      "httpcore==1.0.9",
+      "httpx==0.28.1",
+      "huggingface_hub==1.20.1",
+      "idna==3.18",
+      "iniconfig==2.3.1",
+      "Jinja2==3.1.6",
+      "kiwisolver==1.5.0",
+      "llvmlite==0.47.0",
+      "markdown-it-py==4.2.0",
+      "MarkupSafe==3.0.3",
+      "matplotlib==3.11.0",
+      "mdurl==0.1.2",
+      "mpmath==1.3.0",
+      "networkx==3.6.1",
+      "numba==0.65.1",
+      "numpy==1.26.4",
+      "openai-clip==1.0.1",
+      "opencv-python==4.11.0.86",
+      "orjson==3.11.9",
+      "packaging==26.2",
+      "pandas==3.0.3",
+      "Pillow==9.5.0",
+      "pluggy==1.6.0",
+      "pydantic==2.13.4",
+      "pydantic_core==2.46.4",
+      "pydub==0.25.1",
+      "Pygments==2.20.0",
+      "pyiqa==0.1.15.post2",
+      "pyparsing==3.3.2",
+      "pytest==9.1.1",
+      "python-dateutil==2.9.0.post0",
+      "python-multipart==0.0.32",
+      "pytz==2026.2",
+      "PyYAML==6.0.3",
+      "regex==2026.5.9",
+      "requests==2.34.2",
+      "rich==15.0.0",
+      "safehttpx==0.1.7",
+      "safetensors==0.8.0",
+      "scipy==1.17.1",
+      "semantic-version==2.10.0",
+      "shellingham==1.5.4",
+      "simple-lama-inpainting==0.1.2",
+      "six==1.17.0",
+      "spandrel==0.4.2",
+      "spandrel_extra_arches==0.2.0",
+      "starlette==1.3.1",
+      "sympy==1.14.0",
+      "termcolor==3.3.0",
+      "timm==1.0.27",
+      "tomlkit==0.14.0",
+      "torch==2.12.1",
+      "torchvision==0.27.1",
+      "tqdm==4.68.3",
+      "typer==0.25.1",
+      "typing-inspection==0.4.2",
+      "typing_extensions==4.15.0",
+      "urllib3==2.7.0",
+      "uvicorn==0.49.0",
+      "wcwidth==0.8.1"
+    ]
+  }
+}
