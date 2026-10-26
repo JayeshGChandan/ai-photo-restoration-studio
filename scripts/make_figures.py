@@ -5,8 +5,16 @@ Inputs, and nothing else:
   * data/manifest.csv and the images it lists (sha256-checked),
   * results/compositing/raw.csv and summary.csv (the committed full run),
   * the experiment seed, read from raw.csv,
+  * the Auto Restore evaluations: results/upscale/raw.csv, results/routing/
+    summary.csv and meta.json, results/faces/summary.csv and meta.json,
   * the selection rules in docs/figures/manifest.json ("rules"; the script
-    seeds the file with DEFAULT_RULES when it does not exist yet).
+    seeds the file with DEFAULT_RULES when it does not exist yet, and takes
+    rule keys the file lacks from DEFAULT_RULES).
+
+Figure G (upscaling crops) recomputes its image with the app's benchmark
+(Real-ESRGAN on CPU) and must match results/upscale/raw.csv exactly; it stops
+if the app's face detector finds a face in the crop. Charts 5-7 read the
+evaluation results; chart 7 is skipped when the face evaluation stopped.
 
 Example images are recomputed with the experiment's own code: the same mask
 (synthesize_mask), damage fill, LaMa at the 1536 px cap and at 512 px (CPU),
@@ -59,6 +67,11 @@ MANIFEST_JSON = os.path.join(OUT_DIR, "manifest.json")
 DATA_MANIFEST = os.path.join(REPO_ROOT, "data", "manifest.csv")
 RAW_CSV = os.path.join(REPO_ROOT, "results", "compositing", "raw.csv")
 SUMMARY_CSV = os.path.join(REPO_ROOT, "results", "compositing", "summary.csv")
+UPSCALE_RAW = os.path.join(REPO_ROOT, "results", "upscale", "raw.csv")
+ROUTING_SUMMARY = os.path.join(REPO_ROOT, "results", "routing", "summary.csv")
+ROUTING_META = os.path.join(REPO_ROOT, "results", "routing", "meta.json")
+FACES_SUMMARY = os.path.join(REPO_ROOT, "results", "faces", "summary.csv")
+FACES_META = os.path.join(REPO_ROOT, "results", "faces", "meta.json")
 FONT_PATH = os.path.join(matplotlib.get_data_path(), "fonts", "ttf", "DejaVuSans.ttf")
 
 
@@ -183,6 +196,46 @@ DEFAULT_RULES = {
         "4": {"source": "tests/test_compositing.py identity-test inputs (both sizes), "
                         "max Euclidean distance from the binary mask of any changed pixel",
               "radii": [0, 3, 15], "versions": ["legacy", "fixed"]},
+    },
+    # Auto Restore evaluations (results/upscale, results/routing, results/faces).
+    "G": {
+        "source": "results/upscale/raw.csv, rows with status ok",
+        "statistic": "LPIPS gain = bicubic lpips - realesrgan lpips, per image",
+        "median_over": "every scored image (both splits)",
+        "candidates": "split == professional",
+        "select": "candidate with the smallest |gain - median|",
+        "tie_break": "filename ascending",
+        "recompute": "run_benchmark(512x512 centre crop, do_face=False, seed=0); bicubic and "
+                     "Real-ESRGAN psnr_y, ssim_y and lpips must equal raw.csv exactly",
+        "no_face_check": "diagnose._FaceDetector.detect on the clean crop must find no face",
+        "panels": ["degraded", "bicubic", "realesrgan", "clean"],
+        "window": 128,
+        "window_positions": "top-left (y, x) both even, so the degraded input's 64x64 window "
+                            "covers the same area",
+        "energy": "sum over the window of gx^2 + gy^2, np.gradient of BT.601 luma Y (0-255) "
+                  "of the clean crop",
+        "percentile": 90,
+        "percentile_method": "inverted_cdf",
+        "percentile_over": "every allowed window position",
+        "select_window": "window whose energy is closest to the percentile; tie: smallest (y, x)",
+        "upscale": {"degraded": 8, "others": 4},
+        "upscale_method": "nearest",
+    },
+    "charts_eval": {
+        "5": {"source": "results/upscale/raw.csv, rows with status ok",
+              "x": "bicubic lpips", "y": "realesrgan lpips", "colour": "split",
+              "reference": "y = x"},
+        "6": {"source": "results/routing/summary.csv section confusion_route",
+              "rows": ["clean", "blur", "noise", "lowres", "soft", "jpeg20"],
+              "columns": ["no upscale", "Real-ESRGAN x2", "Real-ESRGAN x4"],
+              "cell": "count of images (share of the row)",
+              "outline": "the expected route for the row (results/routing/meta.json)"},
+        "7": {"source": "results/faces/summary.csv section metric",
+              "conditions": ["bicubic", "restore_noface", "restore_face"],
+              "metrics": ["psnr_y", "ssim_y", "lpips"],
+              "error_bars": "95% bootstrap CI",
+              "skip": "not drawn when results/faces/meta.json records that the evaluation "
+                      "stopped"},
     },
 }
 
@@ -910,6 +963,224 @@ def figure_f(outputs):
 
 
 # ---------------------------------------------------------------------------
+# Auto Restore evaluations: figure G and charts 5-7
+# ---------------------------------------------------------------------------
+SPLIT_COLOR = {"professional": COLOR["C_3"], "mobile": COLOR["N1"]}
+SPLIT_LABEL = {"professional": "Professional", "mobile": "Mobile"}
+FACE_COLOR = {"bicubic": COLOR["N2"], "restore_noface": COLOR["C_3"],
+              "restore_face": COLOR["N1"]}
+FACE_LABEL = {"bicubic": "Bicubic", "restore_noface": "Real-ESRGAN only",
+              "restore_face": "Real-ESRGAN + CodeFormer"}
+METRIC_AXIS = {"psnr_y": "PSNR-Y (dB), higher is better", "ssim_y": "SSIM-Y, higher is better",
+               "lpips": "LPIPS, lower is better"}
+
+
+def read_upscale():
+    with open(UPSCALE_RAW, newline="") as f:
+        rows = [r for r in csv.DictReader(f) if r["status"] == "ok"]
+    by = {}
+    for r in rows:
+        by.setdefault((r["split"], r["image"]), {})[r["condition"]] = r
+    if any(set(v) != {"bicubic", "realesrgan"} for v in by.values()):
+        raise SystemExit("results/upscale/raw.csv: an image lacks a condition")
+    return by
+
+
+def figure_g(rule, outputs):
+    """Four-panel crop: degraded input, bicubic, Real-ESRGAN, clean."""
+    from benchmark import run_benchmark
+    import diagnose as dg
+
+    by = read_upscale()
+    gain = {k: float(v["bicubic"]["lpips"]) - float(v["realesrgan"]["lpips"])
+            for k, v in by.items()}
+    median = statistics.median(gain.values())
+    cands = [k for k in gain if k[0] == "professional"]
+    ranked = sorted(cands, key=lambda k: (abs(gain[k] - median), k[1]))
+    best = ranked[0]
+    prof_median = statistics.median(gain[k] for k in cands)
+    alt = sorted(cands, key=lambda k: (abs(gain[k] - prof_median), k[1]))[0]
+    row_b = by[best]["bicubic"]
+
+    with open(DATA_MANIFEST, newline="") as f:
+        mrow = list(csv.DictReader(f))[int(row_b["image_index"])]
+    if (mrow["split"], mrow["filename"]) != best or mrow["split"] != "professional":
+        raise SystemExit("figure G: image_index does not point at a Professional image")
+    path = os.path.join(REPO_ROOT, "data", "clic2020", mrow["split"], mrow["filename"])
+    if sha256_file(path) != mrow["sha256"]:
+        raise SystemExit(f"{path}: sha256 does not match data/manifest.csv")
+    img = Image.open(path).convert("RGB")
+    x0, y0, cw, ch = (int(v) for v in row_b["crop_box_xywh"].split())
+    clean = img.crop((x0, y0, x0 + cw, y0 + ch))
+
+    faces = dg._get_detector().detect(clean)
+    if len(faces):
+        raise SystemExit(f"figure G: the selected crop contains {len(faces)} face(s); "
+                         "no face may appear in a figure")
+    r = run_benchmark(clean, do_face=False, seed=0, score=True)
+    checks = []
+    for cond, scores in (("bicubic", r.baseline_scores), ("realesrgan", r.restored_scores)):
+        for m in ("psnr_y", "ssim_y", "lpips"):
+            expected = float(by[best][cond][m])
+            checks.append({"condition": cond, "field": m, "recomputed": scores[m],
+                           "raw_csv": expected, "equal": scores[m] == expected})
+    bad = [c for c in checks if not c["equal"]]
+    if bad:
+        raise SystemExit("figure G: recomputed scores differ from results/upscale/raw.csv: "
+                         + "; ".join(f"{c['condition']} {c['field']} {c['recomputed']!r} vs "
+                                     f"{c['raw_csv']!r}" for c in bad))
+
+    k = rule["window"]
+    arrays = {"clean": np.asarray(clean), "bicubic": np.asarray(r.baseline),
+              "realesrgan": np.asarray(r.restored), "degraded": np.asarray(r.degraded)}
+    if arrays["degraded"].shape[:2] != (ch // 2, cw // 2):
+        raise SystemExit(f"figure G: degraded input is {arrays['degraded'].shape}, expected "
+                         "half the crop")
+    Y = luma_bt601(arrays["clean"]) * 255.0
+    gy, gx = np.gradient(Y)
+    energy = window_sums(gx * gx + gy * gy, k)
+    allowed = np.zeros_like(energy, dtype=bool)
+    allowed[::2, ::2] = True
+    vals = energy[allowed]
+    pct = float(np.percentile(vals, rule["percentile"], method=rule["percentile_method"]))
+    dist = np.where(allowed, np.abs(energy - pct), np.inf)
+    wy, wx = (int(v) for v in np.unravel_index(int(np.argmin(dist)), dist.shape))
+    box = (wx, wy, k, k)
+    up = rule["upscale"]
+    panels = [upscale(crop(arrays["degraded"], (wx // 2, wy // 2, k // 2, k // 2)),
+                      up["degraded"])]
+    panels += [upscale(crop(arrays[n], box), up["others"])
+               for n in ("bicubic", "realesrgan", "clean")]
+    labels = ["Degraded input", "Bicubic", "Real-ESRGAN", "Clean"]
+    save_png(compose(panels, labels, 22, gap=24, margin=24), "fig_g_upscale_crops.png", outputs)
+    return {
+        "image": {"split": best[0], "filename": best[1], "image_index": int(row_b["image_index"]),
+                  "crop_box_xywh": [x0, y0, cw, ch]},
+        "lpips_gain": gain[best], "median_gain_all": median, "n_scored": len(gain),
+        "n_candidates": len(cands), "distance_to_median": abs(gain[best] - median),
+        "runner_up": {"filename": ranked[1][1],
+                      "distance_to_median": abs(gain[ranked[1]] - median)},
+        "alternative_if_professional_only_median": {"median": prof_median, "filename": alt[1]},
+        "faces_in_crop": 0, "verification": checks,
+        "window_xywh_in_crop": list(box), "window_energy": float(energy[wy, wx]),
+        "percentile_value": pct, "n_window_positions": int(vals.size),
+    }
+
+
+def chart_5(outputs):
+    by = read_upscale()
+    lo = 0.0
+    hi = float(np.ceil(max(float(r["lpips"]) for v in by.values() for r in v.values()) * 10) / 10)
+    fig = plt.figure(figsize=(5.6, 5.0), dpi=100)
+    ax = fig.add_axes([0.13, 0.10, 0.82, 0.80])
+    style_axes(ax, grid_axis="both")
+    ax.plot([lo, hi], [lo, hi], color=MUTED, linewidth=PX, zorder=1)
+    counts = {}
+    for split in ("professional", "mobile"):
+        sel = [v for k, v in by.items() if k[0] == split]
+        xs = [float(v["bicubic"]["lpips"]) for v in sel]
+        ys = [float(v["realesrgan"]["lpips"]) for v in sel]
+        counts[split] = {"n": len(sel), "below_y_equals_x": sum(y < x for x, y in zip(xs, ys))}
+        ax.scatter(xs, ys, s=(9 * PX) ** 2, color=SPLIT_COLOR[split], edgecolors=SURFACE,
+                   linewidths=1.2 * PX, zorder=2, label=f"{SPLIT_LABEL[split]} ({len(sel)})")
+    ax.set_xlim(lo, hi)
+    ax.set_ylim(lo, hi)
+    ax.set_aspect("equal")
+    ax.set_xlabel("LPIPS, bicubic (lower is better)")
+    ax.set_ylabel("LPIPS, Real-ESRGAN (lower is better)")
+    ax.text(hi * 0.97, hi * 0.97, "y = x", ha="right", va="top", color=MUTED, fontsize=11 * PX,
+            rotation=45, rotation_mode="anchor")
+    fig.legend(*ax.get_legend_handles_labels(), loc="upper left", ncol=2,
+               bbox_to_anchor=(0.20, 0.995), markerscale=1.4)
+    save_chart(fig, "chart_5_upscale_lpips", outputs)
+    return {"axis_limits": [lo, hi], "points": counts,
+            "below_y_equals_x_total": sum(c["below_y_equals_x"] for c in counts.values()),
+            "n_total": sum(c["n"] for c in counts.values())}
+
+
+def chart_6(rule, outputs):
+    with open(ROUTING_SUMMARY, newline="") as f:
+        rows = [r for r in csv.DictReader(f) if r["section"] == "confusion_route"]
+    with open(ROUTING_META) as f:
+        expected = {c: v["route"] for c, v in json.load(f)["expected_mapping"].items()}
+    conds, routes = rule["rows"], rule["columns"]
+    cell = {(r["condition"], r["recommendation"]): (int(r["count"]), float(r["share"]),
+                                                     int(r["n"])) for r in rows}
+    counts = np.array([[cell[(c, rt)][0] for rt in routes] for c in conds])
+    shares = np.array([[cell[(c, rt)][1] for rt in routes] for c in conds])
+    lut = np.array([hex_rgb(SURFACE)] + [hex_rgb(BLUE_RAMP[i]) for i in (0, 3, 6, 9, 12)],
+                   dtype=float) / 255.0
+    fig = plt.figure(figsize=(7.2, 4.4), dpi=100)
+    ax = fig.add_axes([0.16, 0.08, 0.80, 0.78])
+    for i, c in enumerate(conds):
+        for j, rt in enumerate(routes):
+            s = shares[i, j]
+            level = 0 if counts[i, j] == 0 else 1 + min(4, int(s * 5 - 1e-9))
+            ax.add_patch(plt.Rectangle((j, i), 1, 1, facecolor=lut[level], edgecolor=SURFACE,
+                                       linewidth=2 * PX))
+            ink = SURFACE if level >= 4 else INK
+            ax.text(j + 0.5, i + 0.44, f"{counts[i, j]}", ha="center", va="center", color=ink,
+                    fontsize=14 * PX, fontweight="bold")
+            ax.text(j + 0.5, i + 0.72, f"{100 * s:.0f}%", ha="center", va="center", color=ink,
+                    fontsize=11 * PX)
+        j = routes.index(expected[c])
+        ax.add_patch(plt.Rectangle((j + 0.04, i + 0.04), 0.92, 0.92, fill=False,
+                                   edgecolor=INK, linewidth=2.2 * PX, zorder=3))
+    ax.set_xlim(0, len(routes))
+    ax.set_ylim(len(conds), 0)
+    ax.set_xticks([j + 0.5 for j in range(len(routes))], routes)
+    ax.xaxis.tick_top()
+    ax.set_yticks([i + 0.5 for i in range(len(conds))], conds)
+    ax.tick_params(length=0)
+    for side in ax.spines.values():
+        side.set_visible(False)
+    ax.set_xlabel("Recommended route", labelpad=8)
+    ax.xaxis.set_label_position("top")
+    ax.set_ylabel("Condition")
+    n = cell[(conds[0], routes[0])][2]
+    fig.text(0.16, 0.015, f"{n} images per row. Outlined: the route the design intends.",
+             color=INK2, fontsize=11 * PX)
+    save_chart(fig, "chart_6_routing_confusion", outputs)
+    return {"rows": conds, "columns": routes, "counts": counts.tolist(),
+            "expected": expected, "n_per_row": n}
+
+
+def chart_7(rule, outputs):
+    with open(FACES_META) as f:
+        meta = json.load(f)
+    if "stopped" in meta:
+        return {"drawn": False, "reason": meta["stopped"]}
+    with open(FACES_SUMMARY, newline="") as f:
+        rows = {(r["condition"], r["metric"]): r for r in csv.DictReader(f)
+                if r["section"] == "metric"}
+    conds, metrics = rule["conditions"], rule["metrics"]
+    fig = plt.figure(figsize=(9.6, 4.0), dpi=100)
+    values = {}
+    for mi, m in enumerate(metrics):
+        ax = fig.add_axes([0.07 + mi * 0.33, 0.12, 0.25, 0.66])
+        style_axes(ax, grid_axis="y")
+        for ci_, c in enumerate(conds):
+            r = rows[(c, m)]
+            mean, lo, hi = float(r["mean"]), float(r["ci_low"]), float(r["ci_high"])
+            values[f"{c}:{m}"] = [mean, lo, hi, int(r["n"])]
+            ax.bar([ci_], [mean], width=0.7, color=FACE_COLOR[c], zorder=2)
+            ax.errorbar([ci_], [mean], yerr=[[mean - lo], [hi - mean]], fmt="none",
+                        ecolor=INK2, elinewidth=PX, capsize=3, capthick=PX, zorder=3)
+        ax.set_xticks([])
+        ax.set_title(METRIC_AXIS[m], loc="left", color=INK, fontsize=12 * PX)
+        if m == "ssim_y":
+            ax.set_ylim(0, 1)
+    handles = [plt.Rectangle((0, 0), 1, 1, color=FACE_COLOR[c]) for c in conds]
+    n = int(rows[(conds[0], metrics[0])]["n"])
+    fig.legend(handles, [FACE_LABEL[c] for c in conds], loc="upper left", ncol=3,
+               bbox_to_anchor=(0.06, 0.99), handlelength=1.0, columnspacing=1.6)
+    fig.text(0.07, 0.03, f"Face bounding box only, {n} images, 95% bootstrap CIs.",
+             color=INK2, fontsize=11 * PX)
+    save_chart(fig, "chart_7_faces", outputs)
+    return {"drawn": True, "values": values, "n": n}
+
+
+# ---------------------------------------------------------------------------
 def main() -> int:
     os.makedirs(OUT_DIR, exist_ok=True)
     rules = load_rules()
@@ -959,6 +1230,29 @@ def main() -> int:
         outcome = fn(outputs)
         charts[cid] = {"files": outputs[n0:], "outcome": outcome}
 
+    # Auto Restore evaluations.
+    n0 = len(outputs)
+    out_g = figure_g(rules["G"], outputs)
+    figs["G"] = {"files": outputs[n0:],
+                 "source": f"{out_g['image']['split']}/{out_g['image']['filename']}",
+                 "location": {"crop_box_xywh": out_g["image"]["crop_box_xywh"],
+                              "window_xywh_in_crop": out_g["window_xywh_in_crop"]},
+                 "outcome": out_g}
+    ce = rules["charts_eval"]
+    for cid, fn in (("5", chart_5), ("6", lambda o: chart_6(ce["6"], o)),
+                    ("7", lambda o: chart_7(ce["7"], o))):
+        n0 = len(outputs)
+        outcome = fn(outputs)
+        charts[cid] = {"files": outputs[n0:], "outcome": outcome}
+
+    eval_inputs = {os.path.relpath(p, REPO_ROOT): sha256_file(p)
+                   for p in (UPSCALE_RAW, ROUTING_SUMMARY, ROUTING_META, FACES_META)
+                   + ((FACES_SUMMARY,) if os.path.exists(FACES_SUMMARY) else ())}
+    images_used = [{"split": rep["split"], "filename": rep["filename"]}]
+    g_img = {"split": out_g["image"]["split"], "filename": out_g["image"]["filename"]}
+    if g_img not in images_used:
+        images_used.append(g_img)
+
     manifest = {
         "generated_by": "scripts/make_figures.py",
         "code": {"git_head": git("rev-parse", "HEAD"),
@@ -968,11 +1262,11 @@ def main() -> int:
         "inputs": {"raw_csv_sha256": sha256_file(RAW_CSV),
                    "summary_csv_sha256": sha256_file(SUMMARY_CSV),
                    "data_manifest_sha256": sha256_file(DATA_MANIFEST), "seed": seed,
-                   "lama_devices": ex["lama_devices"]},
+                   "lama_devices": ex["lama_devices"], "evaluations": eval_inputs},
         "rules": rules,
         "outcomes": {"representative_image": rep, "verification": checks, "figures": figs,
                      "charts": charts},
-        "images_used": [{"split": rep["split"], "filename": rep["filename"]}],
+        "images_used": images_used,
         "files": {name: sha256_file(os.path.join(OUT_DIR, name)) for name in sorted(outputs)},
     }
     if any(i["split"] != "professional" for i in manifest["images_used"]):

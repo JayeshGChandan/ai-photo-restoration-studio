@@ -15,14 +15,26 @@ Tables and their sources:
   paired    summary.csv (paired_diff rows): every paired comparison, with the
             mean difference, its CI and better / equal / worse counts.
   upscaler  results/sr_fix_comparison.csv: mean, min and max per method.
-  credits   docs/figures/manifest.json (images_used) with the licence name and
-            URLs recorded in data/LICENSES.md.
+  credits   docs/figures/manifest.json: the source image of every figure whose
+            file docs/index.md embeds, with the licence name and URLs recorded
+            in data/LICENSES.md.
+  upscale   results/upscale/summary.csv: bicubic and Real-ESRGAN mean [95% CI]
+            per split and metric, the paired difference and Real-ESRGAN's
+            better / equal / worse count against bicubic.
+  routing   results/routing/summary.csv and meta.json: condition x recommended
+            route counts, the expected route and the share routed as expected.
+  faces     results/faces/summary.csv and meta.json: mean [95% CI] per method
+            on the face box, or the reason the evaluation stopped.
 
-Fails if a marker pair is missing or duplicated, or if a value it needs is
-absent. Usage (from the repo root):
+headline, paired, upscaler and credits must each have exactly one marker
+pair. upscale, routing and faces are written only when their markers are
+present (one pair each); without markers they are skipped. Fails if a value a
+table needs is absent. Usage (from the repo root):
   ./venv/bin/python scripts/make_tables.py
+  ./venv/bin/python scripts/make_tables.py --print upscale   # show, write nothing
 """
 
+import argparse
 import csv
 import json
 import os
@@ -35,6 +47,11 @@ SUMMARY_CSV = os.path.join(REPO_ROOT, "results", "compositing", "summary.csv")
 SR_CSV = os.path.join(REPO_ROOT, "results", "sr_fix_comparison.csv")
 FIG_MANIFEST = os.path.join(REPO_ROOT, "docs", "figures", "manifest.json")
 LICENSES_MD = os.path.join(REPO_ROOT, "data", "LICENSES.md")
+UPSCALE_SUMMARY = os.path.join(REPO_ROOT, "results", "upscale", "summary.csv")
+ROUTING_SUMMARY = os.path.join(REPO_ROOT, "results", "routing", "summary.csv")
+ROUTING_META = os.path.join(REPO_ROOT, "results", "routing", "meta.json")
+FACES_SUMMARY = os.path.join(REPO_ROOT, "results", "faces", "summary.csv")
+FACES_META = os.path.join(REPO_ROOT, "results", "faces", "meta.json")
 
 SIZE_CLASSES = [("above_cap", "Above cap"), ("at_or_below_cap", "At or below cap")]
 COVERAGES = ["1", "5", "15"]
@@ -153,14 +170,27 @@ def upscaler():
     return "\n".join(lines)
 
 
-def credits():
+def credits(index_text):
     with open(FIG_MANIFEST) as f:
-        used = json.load(f)["images_used"]
+        manifest = json.load(f)
     with open(LICENSES_MD) as f:
         licences_text = f.read()
+    used = manifest["images_used"]
+    # Credit the source image of each figure the page actually embeds.
+    shown = []
+    for fig in manifest["outcomes"]["figures"].values():
+        if fig.get("source") and any(f"figures/{name}" in index_text for name in fig["files"]):
+            split, filename = fig["source"].split("/", 1)
+            entry = {"split": split, "filename": filename}
+            if entry not in used:
+                raise SystemExit(f"{fig['source']} is a figure source but not in images_used")
+            if entry not in shown:
+                shown.append(entry)
+    if not shown:
+        raise SystemExit("docs/index.md embeds no figure with a source image")
     lines = ["| Image | Split | Licence | Licence source | Dataset source |",
              "|---|---|---|---|---|"]
-    for img in sorted(used, key=lambda i: (i["split"], i["filename"])):
+    for img in sorted(shown, key=lambda i: (i["split"], i["filename"])):
         if img["split"] != "professional":
             raise SystemExit(f"non-Professional image in figures: {img}")
         lic = LICENCES[img["split"]]
@@ -170,6 +200,112 @@ def credits():
         lines.append(f"| {img['filename']} | {img['split']} | {lic['name']} | "
                      f"<{lic['licence_url']}> | <{lic['archive_url']}> |")
     return "\n".join(lines)
+
+
+def read_csv(path):
+    with open(path, newline="") as f:
+        return list(csv.DictReader(f))
+
+
+UP_SPLITS = [("all", "All"), ("professional", "Professional"), ("mobile", "Mobile")]
+UP_METRICS = [("psnr_y", "PSNR-Y (dB)", "{:.2f}", "{:+.2f}"),
+              ("ssim_y", "SSIM-Y", "{:.4f}", "{:+.4f}"),
+              ("lpips", "LPIPS", "{:.4f}", "{:+.4f}"),
+              ("musiq", "MUSIQ", "{:.2f}", "{:+.2f}"),
+              ("niqe", "NIQE", "{:.3f}", "{:+.3f}")]
+
+
+def upscale():
+    rows = read_csv(UPSCALE_SUMMARY)
+    metric = {(r["split"], r["condition"], r["metric"]): r for r in rows
+              if r["section"] == "metric"}
+    paired_ = {(r["split"], r["metric"]): r for r in rows if r["section"] == "paired_diff"}
+    counts = {r["split"]: r for r in rows if r["section"] == "images"}
+    head = ["Split (images)", "Metric", "Bicubic", "Real-ESRGAN",
+            "Real-ESRGAN − bicubic", "Real-ESRGAN better / equal / worse"]
+    lines = ["| " + " | ".join(head) + " |", "|---|---|---:|---:|---:|---:|"]
+    for sp, label in UP_SPLITS:
+        c = counts[sp]
+        sp_label = f"{label} ({c['n']}" + (f", {c['n_excluded']} excluded)"
+                                           if c["n_excluded"] not in ("", "0") else ")")
+        for m, mlabel, fmt, dfmt in UP_METRICS:
+            b, r_ = metric[(sp, "bicubic", m)], metric[(sp, "realesrgan", m)]
+            p = paired_[(sp, m)]
+            cells = [sp_label, mlabel,
+                     ci(fmt, float(b["mean"]), float(b["ci_low"]), float(b["ci_high"])),
+                     ci(fmt, float(r_["mean"]), float(r_["ci_low"]), float(r_["ci_high"])),
+                     ci(dfmt, float(p["mean"]), float(p["ci_low"]), float(p["ci_high"])),
+                     f"{p['n_better']} / {p['n_equal']} / {p['n_worse']}"]
+            lines.append("| " + " | ".join(cells) + " |")
+    return "\n".join(lines)
+
+
+ROUTES = ["no upscale", "Real-ESRGAN x2", "Real-ESRGAN x4"]
+
+
+def routing():
+    rows = read_csv(ROUTING_SUMMARY)
+    with open(ROUTING_META) as f:
+        expected = {c: v["route"] for c, v in json.load(f)["expected_mapping"].items()}
+    conf = {(r["condition"], r["recommendation"]): r for r in rows
+            if r["section"] == "confusion_route"}
+    ok = {r["condition"]: r for r in rows if r["section"] == "as_expected"}
+    conds = list(expected)
+    head = ["Condition", "Expected route"] + ROUTES + ["Routed as expected [95% CI]"]
+    lines = ["| " + " | ".join(head) + " |", "|---|---|---:|---:|---:|---:|"]
+    for c in conds:
+        cells = [c, expected[c]]
+        for rt in ROUTES:
+            r = conf[(c, rt)]
+            cells.append(f"{r['count']} ({100 * float(r['share']):.1f}%)")
+        o = ok[c]
+        cells.append(f"{o['count']} / {o['n']}: "
+                     + ci("{:.1f}%", 100 * float(o["mean"]), 100 * float(o["ci_low"]),
+                          100 * float(o["ci_high"])))
+        lines.append("| " + " | ".join(cells) + " |")
+    return "\n".join(lines)
+
+
+FACE_CONDS = [("bicubic", "Bicubic"), ("restore_noface", "Real-ESRGAN only"),
+              ("restore_face", "Real-ESRGAN + CodeFormer")]
+FACE_METRICS = [("psnr_y", "PSNR-Y (dB)", "{:.2f}"), ("ssim_y", "SSIM-Y", "{:.4f}"),
+                ("lpips", "LPIPS", "{:.4f}")]
+
+
+def faces():
+    with open(FACES_META) as f:
+        meta = json.load(f)
+    det = meta["detection"]
+    if "stopped" in meta:
+        return ("| Images scanned | With any face | With a face at least 64 px across | "
+                "Evaluation |\n|---:|---:|---:|---|\n"
+                f"| {det['images_scanned']} | {det['images_with_any_face']} | "
+                f"{det['images_qualifying']} | stopped: fewer than {meta['parameters']['min_face_images']} "
+                "face images |")
+    rows = read_csv(FACES_SUMMARY)
+    metric = {(r["condition"], r["metric"]): r for r in rows if r["section"] == "metric"}
+    paired_ = {(r["condition"], r["metric"]): r for r in rows if r["section"] == "paired_diff"}
+    n = metric[("bicubic", "psnr_y")]["n"]
+    head = [f"Method (face box, {n} images)"] + [m[1] for m in FACE_METRICS]
+    lines = ["| " + " | ".join(head) + " |", "|---|" + "---:|" * len(FACE_METRICS)]
+    for c, label in FACE_CONDS:
+        cells = [label]
+        for m, _, fmt in FACE_METRICS:
+            r = metric[(c, m)]
+            cells.append(ci(fmt, float(r["mean"]), float(r["ci_low"]), float(r["ci_high"])))
+        lines.append("| " + " | ".join(cells) + " |")
+    for comp, label in (("restore_face - restore_noface", "CodeFormer vs Real-ESRGAN only: "
+                         "better / equal / worse"),
+                        ("restore_face - bicubic", "CodeFormer vs bicubic: better / equal / worse")):
+        cells = [label]
+        for m, _, _ in FACE_METRICS:
+            p = paired_[(comp, m)]
+            cells.append(f"{p['n_better']} / {p['n_equal']} / {p['n_worse']}")
+        lines.append("| " + " | ".join(cells) + " |")
+    return "\n".join(lines)
+
+
+OPTIONAL = {"upscale": upscale, "routing": routing, "faces": faces}
 
 
 def replace_block(text, name, body):
@@ -182,11 +318,31 @@ def replace_block(text, name, body):
 
 
 def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    ap.add_argument("--print", dest="show", choices=["headline", "paired", "upscaler",
+                                                      "credits"] + list(OPTIONAL),
+                    help="print one table to stdout and write nothing")
+    args = ap.parse_args()
     with open(INDEX_MD) as f:
         text = f.read()
+    if args.show:
+        rows = read_summary()
+        builders = {"headline": lambda: headline(rows), "paired": lambda: paired(rows),
+                    "upscaler": upscaler, "credits": lambda: credits(text), **OPTIONAL}
+        print(builders[args.show]())
+        return 0
     rows = read_summary()
     for name, body in (("headline", headline(rows)), ("paired", paired(rows)),
-                       ("upscaler", upscaler()), ("credits", credits())):
+                       ("upscaler", upscaler()), ("credits", credits(text))):
+        text = replace_block(text, name, body)
+        print(f"{name}: {body.count(chr(10)) - 1} rows")
+    for name, build in OPTIONAL.items():
+        begins = text.count(f"<!-- BEGIN {name} -->")
+        ends = text.count(f"<!-- END {name} -->")
+        if begins == 0 and ends == 0:
+            print(f"{name}: no markers in docs/index.md, skipped")
+            continue
+        body = build()
         text = replace_block(text, name, body)
         print(f"{name}: {body.count(chr(10)) - 1} rows")
     with open(INDEX_MD, "w") as f:
