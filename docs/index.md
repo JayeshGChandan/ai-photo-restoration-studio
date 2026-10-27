@@ -6,7 +6,7 @@ layout: default
 
 ## Summary
 
-On the 92 test photos larger than my app's 1536 px inpainting size, raw LaMa output changed on average 77.20 to 78.01% of the pixels far from any repair. Pasting only the fill back into the original, with a soft edge, changed none of them. Moving that soft edge outside the mask raised repair PSNR-Y on all 92 images, by a mean of 1.106 to 1.246 dB, at a measurable cost just beyond the mask. A separate fix to how Real-ESRGAN makes 2x output improved its mean PSNR-Y, SSIM-Y and LPIPS on 10 test crops.
+On the 92 test photos larger than my app's 1536 px inpainting size, raw LaMa output changed on average 77.20 to 78.01% of the pixels far from any repair. Pasting only the fill back into the original with a soft edge, changed none of them. Moving that soft edge outside the mask raised repair PSNR-Y on all 92 images, by a mean of 1.106 to 1.246 dB at a measurable cost just beyond the mask. A separate fix to how Real-ESRGAN makes 2x output improved its mean PSNR-Y, SSIM-Y and LPIPS on 10 test crops.
 
 ## Motivation
 
@@ -14,19 +14,19 @@ My app's Brush Repair tab runs LaMa on a copy of the photo whose long edge is at
 
 A user who brushes over one scratch expects the rest of the photo to stay as it was. Resampling breaks that expectation in a way that is hard to see but easy to measure.
 
-The usual answer is to paste only the repaired region back into the full-resolution original. I wanted to measure how well that works in my implementation, and what its soft edge costs.
+The usual answer is to paste only the repaired region back into the full-resolution original. I wanted to measure how well that works in my implementation and what its' soft edge costs.
 
 ## Related work and what this project adds
 
-The models come from other authors. LaMa, by Suvorov et al. [1], fills large masks using fast Fourier convolutions. Real-ESRGAN, by Wang et al. [2], restores and upscales degraded photos, and CodeFormer, by Zhou et al. [3], restores faces. I run LaMa through simple-lama-inpainting [4] and load the other two with spandrel [5].
+The models come from other authors. LaMa, by Suvorov et al. [1] which fills large masks using fast Fourier convolutions. Real-ESRGAN is by Wang et al. [2] which restores and upscales degraded photos and CodeFormer is by Zhou et al. [3] which restores faces. I run LaMa through simple-lama-inpainting [4] and load the other two with spandrel [5].
 
-Pasting an inpainted region back at full resolution is an established technique. [IOPaint](https://github.com/Sanster/IOPaint) [6], formerly Lama Cleaner, offers it as its **Resize** strategy, the same idea my compositing follows. Resize shrinks the image for inpainting and enlarges the result back, so the area outside the mask keeps its quality. Its **Crop** strategy instead inpaints a crop of the masked area, with a margin, at the original resolution.
+Pasting an inpainted region back at full resolution is an established technique. [IOPaint](https://github.com/Sanster/IOPaint) [6], formerly Lama Cleaner, offers it as its **Resize** strategy, my compositing follows the same idea. Resize shrinks the image for inpainting and enlarges the result back, so the area outside the mask keeps its quality. Its **Crop** strategy instead inpaints a crop of the masked area with a margin at original resolution.
 
 What this project adds is measurement. I test the paste-back on 306 image and mask pairs with synthetic damage and report what changes in each region. The measurements exposed a defect in my own feathering, which I fixed. They also exposed a dependence on the damage colour above the resize cap, which is still open.
 
 ## Pipeline overview
 
-Auto Restore routes faces to CodeFormer and blur, noise or low resolution to Real-ESRGAN. Brush Repair sends a user-drawn mask to LaMa, and Benchmark scores restorations of synthetically degraded images.
+Auto Restore routes faces to CodeFormer and noise or low resolution to Real-ESRGAN. Brush Repair sends a user-drawn mask to LaMa and Benchmark scores restorations of synthetically degraded images.
 
 This write-up is mostly about Brush Repair, whose two paths Figure F shows. The raw path returns LaMa's output after the round trip through 1536 px. The composite path blends that output into the damaged input with a soft mask, so only the mask and a thin band around it can change.
 
