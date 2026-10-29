@@ -315,8 +315,9 @@ SWEEP_CONDS = [("bicubic", "Bicubic"), ("realesrgan", "Real-ESRGAN only"),
                ("codeformer_f1.0", "Real-ESRGAN + CodeFormer, fidelity 1.0")]
 SWEEP_METRICS = FACE_METRICS + [("musiq", "MUSIQ", "{:.2f}"),
                                 ("identity_cos", "Identity cosine", "{:.4f}")]
-SWEEP_LEVELS = [("mild", "Mild damage (benchmark defaults)"),
-                ("severe", "Severe damage (4x down, blur 2, noise 15, JPEG 30)")]
+SWEEP_LEVELS = [("mild", "**Mild damage** (Benchmark tab default: half resolution, light blur, "
+                         "noise and JPEG)."),
+                ("severe", "**Severe damage** (quarter resolution, heavy blur, noise and JPEG).")]
 
 
 def faces_sweep():
@@ -329,10 +330,12 @@ def faces_sweep():
     out = []
     for lv, lv_label in SWEEP_LEVELS:
         n = metric[(lv, "bicubic", "psnr_y")]["n"]
-        ran_txt = ", ".join(f"{c.split('_f')[1]}: {ran[(lv, c)]['mean'].split('.')[0]} of {n}"
-                            for c, _ in SWEEP_CONDS if c.startswith("codeformer"))
-        out.append(f"**{lv_label}**, face box, {n} images. CodeFormer found a face to "
-                   f"restore ({ran_txt}).")
+        cf = [c for c, _ in SWEEP_CONDS if c.startswith("codeformer")]
+        found = {int(ran[(lv, c)]["mean"].split(".")[0]) for c in cf}
+        # "at every fidelity" below assumes the same count at each one.
+        assert len(found) == 1, f"{lv}: CodeFormer face counts differ across fidelities"
+        out.append(f"{lv_label} Face area only, {n} photos. CodeFormer found the face in "
+                   f"{found.pop()} of the {n} at every fidelity.")
         out.append("")
         head = ["Method"] + [m[1] for m in SWEEP_METRICS]
         out.append("| " + " | ".join(head) + " |")
