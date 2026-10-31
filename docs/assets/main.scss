@@ -1,0 +1,80 @@
+---
+---
+
+@import "minima";
+
+// Figures sit centred with room around them; captions read as captions.
+.page-content img {
+  display: block;
+  margin: $spacing-unit auto 0;
+}
+
+.page-content .caption {
+  font-size: $small-font-size;
+  color: lighten($text-color, 30%);
+  max-width: 700px;
+  margin: $spacing-unit / 4 auto $spacing-unit * 1.5;
+}
+
+// Tables keep each number on one line. A table wider than the text column
+// scrolls sideways inside its own box; on wide screens it may extend past
+// the column, centred on it, up to the window width.
+.page-content table {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
+  margin: $spacing-unit auto $spacing-unit / 4;
+  font-size: 0.8rem;
+
+  th, td {
+    padding: 6px 10px;
+  }
+
+  th {
+    vertical-align: bottom;
+  }
+
+  th[style*="right"], td[style*="right"] {
+    white-space: nowrap;
+  }
+}
+
+// Text that follows a table inside a generated block, such as the severe
+// damage heading after the mild damage table, needs the usual gap.
+.page-content table + p:not(.caption) {
+  margin-top: $spacing-unit;
+}
+
+@media screen and (min-width: 1200px) {
+  .page-content table {
+    max-width: calc(100vw - 64px);
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.page-content details {
+  margin-bottom: $spacing-unit / 4;
+}
+
+.page-content summary {
+  cursor: pointer;
+  color: $brand-color;
+}
+
+.page-content pre {
+  font-size: 13px;
+}
+
+// Long reference URLs wrap instead of running past a narrow screen.
+.page-content p, .page-content li {
+  overflow-wrap: anywhere;
+}
+
+@include media-query($on-palm) {
+  .site-title {
+    line-height: 1.3;
+    padding: $spacing-unit / 3 0;
+  }
+}

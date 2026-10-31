@@ -46,6 +46,7 @@ Brush Repair adds a compositing step after LaMa and Figure A shows its two paths
 ![Schematic with two paths. Raw LaMa round trip: damaged image D plus mask M, downscale to 1536 px, LaMa fills M, upscale to full size, N1. Composite: LaMa output L composited into D with the feather outside M, C_3.](figures/fig_f_schematic.svg)
 
 *Figure A. Brush Repair's two paths. N1 is LaMa's output after the round trip; C_3 is that output composited into the damaged image with the feather outside the mask.*
+{: .caption}
 
 Each restore shows no-reference scores and the Benchmark tab scores restorations of synthetically degraded images against the clean original.
 
@@ -84,6 +85,7 @@ Diagnose has no measure of compression, so a blocky photo that stays sharp gets 
 ![Confusion matrix of six conditions, clean, blur, noise, lowres, soft and jpeg20, against the recommended route, no upscale, Real-ESRGAN x2 or Real-ESRGAN x4, with counts, percentages and the expected route outlined.](figures/chart_6_routing_confusion.png)
 
 *Chart 1. Diagnose's recommendation for six versions of each of the 102 photos; outlined cells are the routes the design intends. Blur, noise, low resolution and soft land in their intended cell for every photo, while 86 of 102 JPEG versions get no upscaling.*
+{: .caption}
 
 <!-- BEGIN routing -->
 
@@ -99,6 +101,7 @@ Diagnose has no measure of compression, so a blocky photo that stays sharp gets 
 <!-- END routing -->
 
 *Table 1. Diagnose's recommended route for each condition across the 102 photos, with the share routed as expected and its 95% interval.*
+{: .caption}
 
 ## Upscaling
 
@@ -109,6 +112,7 @@ PSNR-Y fell from 29.01 to 28.80 dB and was better on only 39 crops. The differen
 ![Scatter of per-image LPIPS, bicubic on the x axis against Real-ESRGAN on the y axis, coloured by split, with the y = x line.](figures/chart_5_upscale_lpips.png)
 
 *Chart 2. LPIPS of each crop with bicubic (x) and Real-ESRGAN (y). 98 of 100 points lie below y = x, where Real-ESRGAN is better and the two above it are Mobile crops.*
+{: .caption}
 
 <!-- BEGIN upscale -->
 
@@ -133,6 +137,7 @@ PSNR-Y fell from 29.01 to 28.80 dB and was better on only 39 crops. The differen
 <!-- END upscale -->
 
 *Table 2. Upscaling scores on the centre crops, overall and per split, with 95% intervals and Real-ESRGAN's better, equal and worse counts.*
+{: .caption}
 
 Figure B shows the Professional crop whose LPIPS gain over bicubic, 0.2303, is closest to the median gain of 0.2311. Bicubic keeps the blur and blocky colour noise of the degraded input. Real-ESRGAN produces sharp window frames and flat, clean walls.
 
@@ -141,6 +146,7 @@ Some of that detail is not in the photo. On the right, the clean building has re
 ![Four crops of city buildings: the degraded input at 8x, then bicubic, Real-ESRGAN and the clean image at 4x.](figures/fig_g_upscale_crops.png)
 
 *Figure B. A 128 px window from the median-gain Professional crop; the degraded input is at 8x and the rest at 4x. Real-ESRGAN draws sharp windows, including a grey grid on the right where the clean image has reddish bands.*
+{: .caption}
 
 Blau and Michaeli call this the perception–distortion trade-off [18]. Beyond a point, a restorer cannot both look more natural and stay closer to the original. LPIPS rewards texture that resembles the original in a learned feature space and MUSIQ rewards images that people rate as sharp and natural. Neither checks that each window sits where the photo had it and PSNR-Y, which does, did not improve.
 
@@ -159,6 +165,7 @@ The current code runs the 4x network on the full input in 256 px tiles with 16 p
 <!-- END upscaler -->
 
 *Table 3. Bicubic, the old Real-ESRGAN path and the fixed path on 10 Mobile crops with the mean, minimum and maximum of each score.*
+{: .caption}
 
 On 10 Mobile crops, mean PSNR-Y rose from 28.88 to 30.28 dB and mean SSIM-Y from 0.7940 to 0.8320. Mean LPIPS fell from 0.2099 to 0.1843. The current path beat the old one on PSNR-Y and SSIM-Y for all 10 crops and on LPIPS for 9.
 
@@ -185,6 +192,7 @@ MUSIQ shows what a no-reference score measures. The clean faces score 27.24 [21.
 ![Three bar panels, PSNR-Y, SSIM-Y and LPIPS on the face box, for bicubic, Real-ESRGAN only and Real-ESRGAN with CodeFormer, with 95% CIs.](figures/chart_7_faces.png)
 
 *Chart 3. The first face run: 6 photos with a face at least 64 px wide, mild damage, fidelity 0.7, with 95% intervals. Real-ESRGAN with CodeFormer has the lowest PSNR-Y and SSIM-Y and the highest LPIPS of the three.*
+{: .caption}
 
 <!-- BEGIN faces -->
 
@@ -199,12 +207,14 @@ MUSIQ shows what a no-reference score measures. The clean faces score 27.24 [21.
 <!-- END faces -->
 
 *Table 4. The first face run: face-box scores on 6 photos at mild damage and fidelity 0.7, with 95% intervals and CodeFormer's per-photo counts.*
+{: .caption}
 
 In that first run, CodeFormer's mean PSNR-Y was 25.35 dB against 33.30 dB for Real-ESRGAN alone. The second run's mild level reproduces all 54 of its values.
 
 ![Five bar panels, PSNR-Y, SSIM-Y, LPIPS, MUSIQ and identity cosine on the face box, for bicubic, Real-ESRGAN only and Real-ESRGAN with CodeFormer at fidelity 0.3, 0.7 and 1.0, grouped by mild and severe damage, with 95% CIs.](figures/chart_8_faces_sweep.png)
 
 *Chart 4. Face-box scores for 7 photos at two damage levels, with CodeFormer at fidelity 0.3, 0.7 and 1.0 and 95% intervals. Dashed lines mark the clean faces' MUSIQ and the identity score between different people.*
+{: .caption}
 
 <!-- BEGIN faces_sweep -->
 
@@ -239,6 +249,7 @@ In that first run, CodeFormer's mean PSNR-Y was 25.35 dB against 33.30 dB for Re
 <!-- END faces_sweep -->
 
 *Table 5. The second face run: face-box scores on 7 photos at mild and severe damage, with 95% intervals and per-photo counts against Real-ESRGAN alone.*
+{: .caption}
 
 These results rest on 7 photos, and on 3 where CodeFormer ran at severe damage, so the intervals are wide. Identity uses one alignment per photo, taken from the clean face's landmarks. A face whose features CodeFormer moved is therefore compared at the original position.
 
@@ -265,14 +276,17 @@ Figures C to G use one Professional photo above the cap, chosen by a fixed rule.
 [Full-resolution change maps](figures/fig_a_change_maps_full.png)
 
 *Figure C. Absolute change from the original at 5% coverage, with the mask outlined. Raw LaMa changes pixels across the whole frame, most strongly in textured areas; the composite changes only the mask and a narrow band around it.*
+{: .caption}
 
 ![Four 128 px crops at 4x from a region outside the repair: original I, raw LaMa N1, 512 px LaMa N2, composite C_3.](figures/fig_b_detail_crops.png)
 
 *Figure D. A 128 px crop from U at 4x: original, raw LaMa, 512 px LaMa and composite. Raw LaMa is hard to tell from the original and 512 px LaMa is visibly blurred; of 16,384 pixels, they changed 15,272 and 16,344, and the composite none.*
+{: .caption}
 
 ![Grouped bar chart of untouched pixels changed, in percent, for 512 px LaMa N2, raw LaMa N1 and composite C_3 at 1, 5 and 15 percent coverage, above the cap, with 95% CIs.](figures/chart_1_u_changed.png)
 
 *Chart 5. Share of U pixels changed by each output above the cap, with 95% intervals. The composite's bars sit at zero for every coverage.*
+{: .caption}
 
 <!-- BEGIN headline -->
 
@@ -297,6 +311,7 @@ Figures C to G use one Professional photo above the cap, chosen by a fixed rule.
 <!-- END headline -->
 
 *Table 6. Brush Repair results for each output by size class and coverage, with 95% intervals; the U rows leave out pairs with an empty U.*
+{: .caption}
 
 ### Refining the feathered edge
 
@@ -307,10 +322,12 @@ Pillow's Gaussian blur is an extended box filter [8] with a finite footprint. I 
 ![Three panels at 4x: damaged input D, legacy composite, fixed composite C_3.](figures/fig_c_feather_defect.png)
 
 *Figure E. A mask edge at 4x: damaged input, legacy composite and current composite. The legacy result keeps a pale, see-through trace of the damage; the current one shows LaMa's own fill, which is crisper but still a visible pale streak here.*
+{: .caption}
 
 ![Line chart of alpha against pixels from the mask edge, legacy feather vs fixed feather, with the mask region shaded.](figures/fig_c_alpha_profile.png)
 
 *Figure E, alpha profile. Alpha along a line across the Figure E edge. The legacy alpha peaks at 0.663 inside the mask and drops to 0.376 at its inner edge, while the current alpha is 1 across the mask and falls to 0 by 17.5 px outside it.*
+{: .caption}
 
 Inside M the fix raised PSNR-Y in all 306 pairs. Above the cap the mean gain was 1.183, 1.106 and 1.246 dB, with all 92 images better at each coverage. Below the cap it was 10.319, 8.175 and 6.297 dB. There the fill was closer to the original, at 20.76 to 22.94 dB inside M against 11.37 to 13.35 dB above the cap.
 
@@ -319,6 +336,7 @@ The pale streak in the current composite is not left over from the old feather. 
 ![Two scatter panels, above the cap and at or below the cap: M PSNR-Y of the legacy composite against the fixed composite C_3, per image and coverage, with the y = x line.](figures/chart_2_m_psnr_legacy_vs_fixed.png)
 
 *Chart 6. M PSNR-Y of the legacy composite against the current one, per image and coverage, above the cap and at or below it. All 306 points lie above the y = x line.*
+{: .caption}
 
 The fix moves the soft edge onto pixels the old feather left alone. On the test images, the radius 3 feather now reaches 19.42 px beyond the mask, against 8.49 px before. Above the cap those pixels take part of LaMa's round-tripped output. Off-repair LPIPS rose by 0.0096, 0.0348 and 0.0744, worse for all 92 images at each coverage.
 
@@ -329,10 +347,12 @@ Figure F compares a hard edge with the radius 3 feather at the Figure E location
 ![Three panels at 4x: hard edge C_0, feathered C_3, original I.](figures/fig_d_seams.png)
 
 *Figure F. The same spot as Figure E. LaMa's fill pasted back with a hard edge and with a soft edge, next to the original. Here the two look almost the same.*
+{: .caption}
 
 ![Line chart of the maximum reach of changes beyond the mask against feather radius 0, 3 and 15, legacy feather vs fixed feather.](figures/chart_4_halo_reach.png)
 
 *Chart 7. Furthest distance from the mask at which any pixel changes, for feather radius 0, 3 and 15, measured on the two synthetic test images. The current feather reaches 19.42 and 97.45 px at radius 3 and 15, the legacy feather 8.49 and 41.01 px.*
+{: .caption}
 
 ### A lower-resolution fill
 
@@ -343,12 +363,17 @@ Outside the mask, the feather blends the blurrier 512 px fill into the halo. Off
 ![Three panels at 4x: 1536 px fill C_3, 512 px fill C_3_N2fill, original I.](figures/fig_e_n2fill.png)
 
 *Figure G. The same spot with LaMa run at 1536 px and at 512 px, next to the original. The 512 px repair is blurrier but the pale streak still shows.*
+{: .caption}
 
 ![Scatter of off-repair LPIPS against M LPIPS at 5 percent coverage above the cap for C_3, C_3_legacy, C_3_N2fill, N1 and N2, with 95% CIs on both axes.](figures/chart_3_lpips_tradeoff.png)
 
 *Chart 8. Off-repair LPIPS against M LPIPS at 5% coverage above the cap, with 95% intervals on both axes and a log x axis. C_3_legacy has the lowest off-repair LPIPS and C_3_N2fill the lowest M LPIPS among the composites.*
+{: .caption}
 
 Table 7 lists every per-image comparison in this section.
+
+<details markdown="1">
+<summary>Show all 90 per-image comparisons</summary>
 
 <!-- BEGIN paired -->
 
@@ -447,7 +472,10 @@ Table 7 lists every per-image comparison in this section.
 
 <!-- END paired -->
 
+</details>
+
 *Table 7. Paired per-image differences between Brush Repair outputs, with 95% intervals and counts of images where a was better, equal or worse.*
+{: .caption}
 
 ## What works well
 
@@ -573,7 +601,7 @@ Make the figures and tables (from the committed results in results/compositing/)
 
 | Image | Split | Licence | Licence source | Dataset source |
 |---|---|---|---|---|
-| andrew-ruiz-376.png | professional | Unsplash License | <https://data.vision.ee.ethz.ch/cvl/clic/LICENSE_professional_2020.txt> | <https://downloads.compression.cc/clic2020_professional_valid.zip> |
-| jeremy-cai-1174.png | professional | Unsplash License | <https://data.vision.ee.ethz.ch/cvl/clic/LICENSE_professional_2020.txt> | <https://downloads.compression.cc/clic2020_professional_valid.zip> |
+| andrew-ruiz-376.png | professional | Unsplash License | [CLIC licence](https://data.vision.ee.ethz.ch/cvl/clic/LICENSE_professional_2020.txt) | [Download](https://downloads.compression.cc/clic2020_professional_valid.zip) |
+| jeremy-cai-1174.png | professional | Unsplash License | [CLIC licence](https://data.vision.ee.ethz.ch/cvl/clic/LICENSE_professional_2020.txt) | [Download](https://downloads.compression.cc/clic2020_professional_valid.zip) |
 
 <!-- END credits -->

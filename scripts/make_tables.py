@@ -202,7 +202,7 @@ def credits(index_text):
             if value not in licences_text:
                 raise SystemExit(f"{value!r} not found in data/LICENSES.md")
         lines.append(f"| {img['filename']} | {img['split']} | {lic['name']} | "
-                     f"<{lic['licence_url']}> | <{lic['archive_url']}> |")
+                     f"[CLIC licence]({lic['licence_url']}) | [Download]({lic['archive_url']}) |")
     return "\n".join(lines)
 
 
