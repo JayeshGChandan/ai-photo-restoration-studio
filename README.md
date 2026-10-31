@@ -13,6 +13,8 @@ checked with image-quality metrics.
 ![Apple Silicon](https://img.shields.io/badge/Apple%20Silicon-supported-black.svg)
 
 ---
+## Design and evaluation write-up 
+https://jayeshgchandan.github.io/ai-photo-restoration-studio/
 
 ## Why this design
 
