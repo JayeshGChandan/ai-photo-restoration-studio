@@ -16,6 +16,7 @@ checked with image-quality metrics.
 ## Design and evaluation write-up 
 https://jayeshgchandan.github.io/ai-photo-restoration-studio/
 
+
 ## Why this design
 
 Old "AI photo repair" demos tend to push every image through a single Stable
